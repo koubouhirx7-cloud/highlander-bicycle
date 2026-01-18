@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ローンチ・ライド | 1日で世界へ | Ride & Talk | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #eee;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 4px solid white;
+            box-shadow: var(--shadow-small);
+        }
+
+        .timeline-time {
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .ai-feature-card {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                justify-content: flex-start !important;
+                padding-left: 60px;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-item::after {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="ride-and-talk.html" class="active">Ride & Talk</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">Shop</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <!-- Hero Section -->
+        <section class="page-hero"
+            style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/ride_and_talk_ai_hero.png') center/cover; padding: 160px 20px 100px; text-align: center; color: white;">
+            <div class="container">
+                <span
+                    style="color: var(--secondary-color); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.9rem;">The
+                    Flagship Plan</span>
+                <h1 style="font-family: 'Zen Old Mincho', serif; font-size: 3.5rem; margin-top: 20px;">ローンチ・ライド</h1>
+                <p style="font-size: 1.2rem; max-width: 600px; margin: 20px auto 0; opacity: 0.9;">
+                    1日で思考を具現化し、あなたのビジネスを世界へ解き放つ。</p>
+            </div>
+        </section>
+
+        <!-- Intro Section -->
+        <section class="section">
+            <div class="container" style="max-width: 800px;">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-size: 2rem;">「いつか」を「今日」にする。</h2>
+                    <p style="margin-top: 20px; line-height: 2;">
+                        Webサイトを作りたいけれど、どこから手をつければいいか分からない。コンセプトが固まらない。そんな悩みをお持ちの方のための、短期集中型ローンチプランです。
+                        里山の自然の中で身体を動かし、対話を通じて不純物を削ぎ落とした先に、あなたの新しい一歩が形になります。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="section bg-light">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <span
+                        style="color: var(--secondary-color); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem;">1Day
+                        Flow</span>
+                    <h2 style="margin-top: 10px;">当日のタイムスケジュール</h2>
+                    <hr style="width: 40px; border: 1px solid var(--secondary-color); margin: 15px auto;">
+                    <p style="color: #666;">事前にオンライン対話（1時間程度）を行い、方向性を固めた上で当日を迎えます。</p>
+                </div>
+
+                <div class="timeline">
+                    <!-- Item 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-time">09:00 - 集合・オリエンテーション</span>
+                            <p>ハイランダーにて当日の流れを確認。心身の状態を整え、ライドの準備をします。</p>
+                        </div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-time">10:00 - 里山ライド & 対話</span>
+                            <p>JR篠山口駅周辺の静かな里山を走ります。景色を楽しみながら、ビジネスの核となる想いや課題を対話形式で引き出します。</p>
+                        </div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-time">12:30 - 里山ランチ</span>
+                            <p>地元の食材を使ったランチでリフレッシュ。ライドで整理された思考を一度寝かせ、午後へのエネルギーを蓄えます。</p>
+                        </div>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-time">14:00 - AI爆速開発セッション</span>
+                            <p>工房に戻り、AIエンジニア「Antigravity」をフル活用。午前中に言葉にしたコンセプトが、リアルタイムでWebサイトの形になっていく様子を目撃してください。</p>
+                        </div>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-time">17:00 - ローンチ・祝杯</span>
+                            <p>完成したWebサイトを公開。あなたのビジネスが正式に産声を上げる瞬間です。ノンアルコールシャンパン等で小さくお祝いしましょう。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Antigravity Explanation -->
+        <section class="section" style="background: #111; color: white;">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <h2 style="color: white;">魔法の力を味方に。<br>AIエンジニア「Antigravity」</h2>
+                    <p style="margin-top: 20px; opacity: 0.8;">従来の制作会社では数ヶ月かかる工程を、魔法のようなスピードで駆け抜けます。</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <div class="ai-feature-card">
+                        <div style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 20px;"><i
+                                class="fas fa-magic"></i></div>
+                        <h3>あなたの言葉がコードになる</h3>
+                        <p style="margin-top: 15px; opacity: 0.8; font-size: 0.95rem;">
+                            エンジニアに指示を出すための「仕様書」は不要です。あなたの想いやアイデアを対話として投げかけるだけで、Antigravityがそれを汲み取り、高品質なコードへと変換します。
+                        </p>
+                    </div>
+                    <div class="ai-feature-card">
+                        <div style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 20px;"><i
+                                class="fas fa-infinity"></i></div>
+                        <h3>無限の試行錯誤</h3>
+                        <p style="margin-top: 15px; opacity: 0.8; font-size: 0.95rem;">
+                            「やっぱりこっちのデザインがいいかも」「この文章を少し変えたい」。その場での微細な調整も一瞬です。納得がいくまで、AIと共にブラッシュアップし続けることができます。
+                        </p>
+                    </div>
+                    <div class="ai-feature-card">
+                        <div style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 20px;"><i
+                                class="fas fa-rocket"></i></div>
+                        <h3>公開までの一気通貫サポート</h3>
+                        <p style="margin-top: 15px; opacity: 0.8; font-size: 0.95rem;">
+                            ドメインの設定、サーバーの公開まで、専門的な技術要件もAntigravityと店主がすべてサポート。あなたは「何を伝えたいか」にだけ集中してください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section">
+            <div class="container text-center">
+                <h2>さあ、新しい物語を始めましょう。</h2>
+                <p style="margin: 30px auto; max-width: 600px; line-height: 1.8;">
+                    ローンチ・ライドは月に数枠限定の完全予約制です。<br>
+                    まずは無料の事前相談（オンライン）からスタートします。
+                </p>
+                <div
+                    style="background: white; padding: 40px; border-radius: 12px; box-shadow: var(--shadow-deep); max-width: 500px; margin: 0 auto;">
+                    <h3 style="margin-bottom: 10px;">ローンチ・ライド</h3>
+                    <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">¥180,000〜</p>
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">（里山ライド、対話、Web制作、ランチ、公開サポート込）</p>
+                    <a href="access.html" class="btn"
+                        style="background: var(--primary-color); color: white; margin-top: 30px; width: 100%;">事前相談を申し込む</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

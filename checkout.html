@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ご注文手続き | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="ride-and-talk.html">Ride & Talk</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">オンラインショップ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <section class="page-hero">
+            <h1>ご注文手続き</h1>
+        </section>
+
+        <section class="section">
+            <div class="container checkout-container">
+                <div class="order-summary" id="order-summary">
+                    <h2>ご注文内容</h2>
+                    <div id="cart-items-list">
+                        <!-- Cart items will be injected here -->
+                    </div>
+                    <div class="summary-total">
+                        <span>合計金額</span>
+                        <span id="cart-total">¥0</span>
+                    </div>
+                </div>
+
+                <div class="checkout-form-area">
+                    <h2>お客様情報</h2>
+
+                    <!-- Amazon Pay Button Container -->
+                    <div id="amazon-pay-button-container"
+                        style="margin-bottom: 30px; padding: 20px; border: 1px dashed #ddd; border-radius: 8px; text-align: center;">
+                        <p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Amazonアカウントでお支払いいただけます</p>
+                        <div id="AmazonPayButton" style="display: flex; justify-content: center; cursor: pointer;">
+                            <img src="https://m.media-amazon.com/images/G/01/payments-static/checkout/amazon-pay-button.png"
+                                alt="Amazon Pay" style="width: 200px;">
+                        </div>
+                        <p style="font-size: 0.7rem; color: #888; margin-top: 10px;">※実際のお支払いにはAmazon
+                            Payへの事業者登録とAPI連携が必要です。</p>
+                    </div>
+
+                    <p
+                        style="text-align: center; margin-bottom: 30px; position: relative; color: #888; font-size: 0.8rem;">
+                        <span style="background: #fff; padding: 0 10px; position: relative; z-index: 1;">または下記を入力</span>
+                        <span
+                            style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #eee; z-index: 0;"></span>
+                    </p>
+                    <form class="checkout-form" id="checkout-form">
+                        <div class="form-group">
+                            <label for="name">お名前（フルネーム）</label>
+                            <input type="text" id="name" required placeholder="山田 太郎">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">メールアドレス</label>
+                            <input type="email" id="email" required placeholder="taro@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">配送先住所</label>
+                            <textarea id="address" rows="3" required placeholder="兵庫県丹波篠山市..."></textarea>
+                        </div>
+                        <button type="submit" class="add-to-cart-btn" style="margin-top: 20px;">注文を確定する</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

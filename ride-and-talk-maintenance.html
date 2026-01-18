@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メンテナンス・ライド | 心の点検と決断 | Ride & Talk | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .map-preview {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-deep);
+            border: 2px dashed #ddd;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .map-node {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            margin: 10px;
+            font-size: 0.9rem;
+        }
+
+        .map-node.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="ride-and-talk.html" class="active">Ride & Talk</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">Shop</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <!-- Hero Section -->
+        <section class="page-hero"
+            style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/hero_2.jpg') center/cover; padding: 160px 20px 100px; text-align: center; color: white;">
+            <div class="container">
+                <span
+                    style="color: var(--secondary-color); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.9rem;">Regular
+                    Support</span>
+                <h1 style="font-family: 'Zen Old Mincho', serif; font-size: 3.5rem; margin-top: 20px;">メンテナンス・ライド</h1>
+                <p style="font-size: 1.2rem; max-width: 600px; margin: 20px auto 0; opacity: 0.9;">
+                    決断を研ぎ澄まし、不純物を削ぎ落とす、月1回の思考点検。</p>
+            </div>
+        </section>
+
+        <!-- Feature Section -->
+        <section class="section">
+            <div class="container" style="max-width: 900px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                    <div>
+                        <h2 style="font-size: 2rem; line-height: 1.4;">自転車の整備と同じように、<br>心の整備を。</h2>
+                        <p style="margin-top: 30px; line-height: 1.8;">
+                            経営者や個人事業主にとって、最も重要な仕事は「決断」することです。しかし、日々の雑務や情報の波に揉まれる中で、本当に大切にすべき軸を見失ってしまうことがあります。
+                        </p>
+                        <p style="margin-top: 20px; line-height: 1.8;">
+                            月1回のメンテナンス・ライドでは、自転車を漕ぐという無心になれる行為を通じて、脳のデフォルト・モード・ネットワークを活性化。店主との対話を通じて、混沌とした思考を整理し、次の1ヶ月を戦うための明晰さを取り戻します。
+                        </p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 40px; border-radius: 12px;">
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
+                                <i class="fas fa-video"
+                                    style="color: var(--primary-color); margin-top: 5px; margin-right: 15px;"></i>
+                                <div>
+                                    <h4 style="margin-bottom: 5px;">事前オンライン対話</h4>
+                                    <p style="font-size: 0.9rem; color: #666;">今の「詰まり」を事前に共有。当日のライドの質を高めます。</p>
+                                </div>
+                            </li>
+                            <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
+                                <i class="fas fa-bicycle"
+                                    style="color: var(--primary-color); margin-top: 5px; margin-right: 15px;"></i>
+                                <div>
+                                    <h4 style="margin-bottom: 5px;">思考整理ライド</h4>
+                                    <p style="font-size: 0.9rem; color: #666;">里山の清涼な空気の中、店主が並走しながら思考をガイドします。</p>
+                                </div>
+                            </li>
+                            <li style="display: flex; align-items: flex-start;">
+                                <i class="fas fa-map"
+                                    style="color: var(--primary-color); margin-top: 5px; margin-right: 15px;"></i>
+                                <div>
+                                    <h4 style="margin-bottom: 5px;">思考マップの送付</h4>
+                                    <p style="font-size: 0.9rem; color: #666;">ライド中の対話を構造化し、後日デジタルデータでお送りします。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Thinking Map Section -->
+        <section class="section bg-light text-center">
+            <div class="container" style="max-width: 800px;">
+                <h2 style="margin-bottom: 20px;">可視化される、あなたの頭脳。</h2>
+                <p style="color: #666;">言葉を投げかけることで浮かび上がってくる、ビジネスの構造、情熱の源泉、そして解決すべき核心的な問い。</p>
+
+                <div class="map-preview">
+                    <span
+                        style="display: block; color: var(--secondary-color); font-weight: bold; margin-bottom: 20px;">思考マップの一部（イメージ）</span>
+                    <div class="map-node active">現在の最優先課題</div>
+                    <br>
+                    <i class="fas fa-long-arrow-alt-down" style="color: #ccc;"></i>
+                    <br>
+                    <div class="map-node">顧客の本質的価値</div>
+                    <div class="map-node">既存リソースの再配置</div>
+                    <br>
+                    <i class="fas fa-long-arrow-alt-down" style="color: #ccc;"></i>
+                    <br>
+                    <div class="map-node">来月までの具体的アクション</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section">
+            <div class="container text-center">
+                <h2>心を整える習慣を。</h2>
+                <p style="margin: 30px auto; max-width: 600px; line-height: 1.8;">
+                    メンテナンス・ライドは、あなたのビジネスの「良き伴走者」として、継続的にサポートいたします。
+                </p>
+                <div
+                    style="background: white; padding: 40px; border-radius: 12px; box-shadow: var(--shadow-deep); max-width: 500px; margin: 0 auto;">
+                    <h3 style="margin-bottom: 10px;">メンテナンス・ライド</h3>
+                    <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">月額 ¥20,000〜</p>
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">（オンライン対話、里山ライド、思考マップ作成込）</p>
+                    <a href="access.html" class="btn"
+                        style="background: var(--primary-color); color: white; margin-top: 30px; width: 100%;">プランの相談を申し込む</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
