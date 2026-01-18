@@ -942,22 +942,79 @@ h2::after {
 }
 
 @media (max-width: 768px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
     .about-grid.reverse {
         direction: ltr;
     }
+}
 
-    .layout-container {
-        grid-template-columns: 1fr;
-    }
+/* Members Section Refinements */
+.member-thumbnail {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 3px solid #f0f0f0;
+    box-shadow: var(--shadow-small);
+}
 
-    .layout-section {
-        padding: 30px 20px;
-    }
+.member-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.member-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.member-role {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.member-bio {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.member-link {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s;
+}
+
+.member-link:hover {
+    color: var(--secondary-color);
+}
+
+.member-link i {
+    font-size: 0.8rem;
+}
+
+direction: ltr;
+}
+
+.layout-container {
+    grid-template-columns: 1fr;
+}
+
+.layout-section {
+    padding: 30px 20px;
+}
 }
 
 /* --- Shop Page Styles --- */
