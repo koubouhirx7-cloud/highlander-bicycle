@@ -28,7 +28,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
 
             // Close mobile menu if open
-            // (Todo: Implement mobile menu toggle logic)
+            if (mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            }
         }
     });
 });
@@ -47,6 +50,17 @@ if (slides.length > 0) {
     }
 
     setInterval(nextSlide, slideInterval);
+}
+
+// Mobile Menu Toggle
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const mainNav = document.querySelector('.main-nav');
+
+if (mobileMenuBtn && mainNav) {
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.classList.toggle('active');
+        mainNav.classList.toggle('active');
+    });
 }
 
 /* --- Cart Logic --- */
