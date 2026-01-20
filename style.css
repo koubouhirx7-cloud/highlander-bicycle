@@ -1352,3 +1352,22 @@ h2::before {
     background-color: var(--primary-color);
     color: white;
 }
+/* Service Block Buttons */
+.service-block .btn {
+    display: inline-block;
+    width: 200px;
+    padding: 12px 0;
+    text-align: center;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.service-block .btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
