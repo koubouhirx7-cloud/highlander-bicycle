@@ -1336,7 +1336,9 @@ h2::before {
 /* About Grid Buttons */
 .about-text .btn-text {
     display: inline-block;
-    padding: 10px 25px;
+    width: 200px;
+    padding: 12px 0;
+    text-align: center;
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
     text-decoration: none;
