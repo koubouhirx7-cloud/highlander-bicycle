@@ -67,15 +67,15 @@
                         </dl>
                         <h3>Contact Us</h3>
                         <p class="mb-20">修理・カスタムのご相談、レンタルのご予約はこちらから。</p>
-                        <form style="display:grid; gap:15px;">
-                            <input type="text" placeholder="お名前"
+                        <form id="contact-form" style="display:grid; gap:15px;">
+                            <input type="text" id="contact-name" placeholder="お名前" required
                                 style="padding:10px; border:1px solid #ddd; border-radius:4px;">
-                            <input type="email" placeholder="メールアドレス"
+                            <input type="email" id="contact-email" placeholder="メールアドレス" required
                                 style="padding:10px; border:1px solid #ddd; border-radius:4px;">
-                            <textarea rows="4" placeholder="お問い合わせ内容"
+                            <textarea id="contact-message" rows="4" placeholder="お問い合わせ内容" required
                                 style="padding:10px; border:1px solid #ddd; border-radius:4px;"></textarea>
                             <button type="submit" class="btn btn-primary"
-                                style="background:var(--primary-color); color:white; border:none; padding:12px;">送信する</button>
+                                style="background:var(--primary-color); color:white; border:none; padding:12px; cursor: pointer;">送信する</button>
                         </form>
                     </div>
                 </div>
@@ -114,6 +114,35 @@
     <footer class="site-footer">
         <p>&copy; 2026 Highlander Bicycle Shop</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('contact-form');
+            if (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById('contact-name').value;
+                    const email = document.getElementById('contact-email').value;
+                    const message = document.getElementById('contact-message').value;
+
+                    if (!name || !email || !message) {
+                        alert('すべての項目を入力してください。');
+                        return;
+                    }
+
+                    const subject = encodeURIComponent('【お問い合わせ】' + name + '様より');
+                    const body = encodeURIComponent(
+                        'お名前: ' + name + '\n' +
+                        'メールアドレス: ' + email + '\n\n' +
+                        '【お問い合わせ内容】\n' + message
+                    );
+
+                    window.location.href = `mailto:info@high-lander2.com?subject=${subject}&body=${body}`;
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
