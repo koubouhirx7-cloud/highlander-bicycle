@@ -256,9 +256,22 @@ h2::after {
     content: '';
     display: block;
     width: 60px;
-    height: 3px;
+    height: 2px;
     background: var(--secondary-color);
-    margin: 15px auto 0;
+    margin: 15px auto 8px;
+}
+
+h2::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--secondary-color);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.6;
 }
 
 /* About Section */
