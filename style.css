@@ -1312,12 +1312,13 @@ h2::before {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
+
 /* Service Card Buttons */
 .service-card .btn-text {
     display: inline-block;
     padding: 10px 25px;
-    border: 1px solid var(--secondary-color);
-    color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 500;
     margin-top: 20px;
@@ -1326,7 +1327,7 @@ h2::before {
 }
 
 .service-card .btn-text:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -1334,8 +1335,8 @@ h2::before {
 .about-text .btn-text {
     display: inline-block;
     padding: 10px 25px;
-    border: 1px solid var(--secondary-color);
-    color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 500;
     margin-top: 15px;
@@ -1344,6 +1345,6 @@ h2::before {
 }
 
 .about-text .btn-text:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
 }
