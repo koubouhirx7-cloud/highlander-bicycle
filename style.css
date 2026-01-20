@@ -1312,3 +1312,20 @@ h2::before {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
+/* Service Card Buttons */
+.service-card .btn-text {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.service-card .btn-text:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
