@@ -415,6 +415,16 @@ h2::before {
     border-top: 1px solid #f0f0f0;
 }
 
+.gallery-social {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: var(--shadow-medium);
+}
+
 /* Portfolio Grid Improvements */
 .portfolio-grid {
     display: grid;
