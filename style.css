@@ -1316,7 +1316,9 @@ h2::before {
 /* Service Card Buttons */
 .service-card .btn-text {
     display: inline-block;
-    padding: 10px 25px;
+    width: 200px;
+    padding: 12px 0;
+    text-align: center;
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
     text-decoration: none;
