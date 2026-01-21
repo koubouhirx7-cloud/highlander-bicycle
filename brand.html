@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand List | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Specific styles for Brand Page */
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .brand-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #f9f9f9;
+            padding: 20px;
+        }
+
+        .brand-info {
+            padding: 20px;
+        }
+
+        .brand-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+            display: inline-block;
+        }
+
+        .brand-info p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .brand-bigrock {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .brand-bigrock {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .brand-bigrock .brand-img {
+                width: 50%;
+                height: 300px;
+            }
+
+            .brand-bigrock .brand-info {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="brand.html" class="active">Brand</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="ride-and-talk.html">Ride & Talk</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">Shop</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <section class="page-hero">
+            <h1>Brands</h1>
+            <p>取り扱いブランド一覧</p>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <!-- Bigrock Specific Section -->
+                <div class="brand-card brand-bigrock">
+                    <img src="images/portfolio_bigrock.png" alt="Bigrock" class="brand-img" style="object-fit: cover;">
+                    <div class="brand-info">
+                        <h3>BIGROCK</h3>
+                        <p>
+                            カーボン一体型ハンドルを中心に、高性能なサイクルパーツを展開する新進気鋭のブランド。T800カーボンを使用した高剛性かつ軽量なプロダクトは、シリアスレーサーからホビーライダーまで幅広く支持されています。ハイランダーはBIGROCKの正規取扱店として、製品の販売・取り付け・サポートを行っています。
+                        </p>
+                        <div style="margin-top: 20px;">
+                            <a href="#" class="btn btn-outline" style="margin-right: 15px;">製品ラインナップ (Catalog)</a>
+                            <a href="https://kokyaku-kanri.pages.dev/survey" target="_blank" class="btn btn-primary"><i
+                                    class="fas fa-edit"></i> アンケートに回答する (Survey)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 40px;">
+                    <div
+                        style="color: var(--secondary-color); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; margin-bottom: 5px;">
+                        Our Partners</div>
+                    <h2
+                        style="display: inline-block; position: relative; left: 0; transform: none; margin: 0 auto 15px;">
+                        Other Brands</h2>
+                </div>
+
+                <div class="brand-grid">
+                    <!-- Surly -->
+                    <div class="brand-card">
+                        <img src="images/surly_straggler.png" alt="Surly" class="brand-img">
+                        <div class="brand-info">
+                            <h3>Surly</h3>
+                            <p>「使える自転車」を真剣に考えるアメリカのブランド。タフで実用的、そして何より乗って楽しい。日常から冒険まで、あなたの相棒となる一台です。</p>
+                        </div>
+                    </div>
+
+                    <!-- All-City -->
+                    <div class="brand-card">
+                        <div
+                            style="width:100%; height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">
+                            <!-- Placeholder if no image -->
+                            <i class="fas fa-bicycle fa-3x"></i>
+                        </div>
+                        <div class="brand-info">
+                            <h3>All-City</h3>
+                            <p>美しさと速さを兼ね備えた、自転車界のアーティスト。細部までこだわり抜かれたフレームデザインとペイントは、所有する喜びを与えてくれます。</p>
+                        </div>
+                    </div>
+
+                    <!-- YONEX -->
+                    <div class="brand-card">
+                        <div
+                            style="width:100%; height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">
+                            <i class="fas fa-bolt fa-3x"></i>
+                        </div>
+                        <div class="brand-info">
+                            <h3>YONEX</h3>
+                            <p>「Made in Japan」の誇り。カーボン加工技術の粋を集めた超軽量フレームは、ヒルクライムやロングライドで圧倒的なパフォーマンスを発揮します。</p>
+                        </div>
+                    </div>
+
+                    <!-- TREK -->
+                    <div class="brand-card">
+                        <div
+                            style="width:100%; height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">
+                            <i class="fas fa-road fa-3x"></i>
+                        </div>
+                        <div class="brand-info">
+                            <h3>TREK</h3>
+                            <p>世界最高峰の技術と開発力を持つトップブランド。ロードバイクからE-bikeまで、あらゆるライダーのニーズに応えるラインナップを揃えています。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
