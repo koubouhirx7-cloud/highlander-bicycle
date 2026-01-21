@@ -119,53 +119,231 @@
 
         <section class="section">
             <div class="container">
-                <div
-                    style="text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 40px;">
-                    <h2
-                        style="display: inline-block; position: relative; left: 0; transform: none; margin: 0 auto 15px;">
-                        Partner Brands</h2>
+                <div class="brand-filter">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="frames">Frames</button>
+                    <button class="filter-btn" data-filter="components">Components</button>
+                    <button class="filter-btn" data-filter="tools">Tools</button>
+                    <button class="filter-btn" data-filter="accessories">Accessories</button>
                 </div>
 
                 <div class="brand-grid">
                     <!-- BIGROCK -->
-                    <div class="brand-card">
-                        <img src="images/portfolio_bigrock.png" alt="Bigrock" class="brand-img"
-                            style="object-fit: cover;">
+                    <div class="brand-card" data-category="components">
+                        <div class="brand-img-container">
+                            <img src="images/portfolio_bigrock.png" alt="Bigrock"
+                                style="width:100%; height:100%; object-fit: contain; padding: 20px;">
+                            <span class="category-tag">Components</span>
+                        </div>
                         <div class="brand-info">
                             <h3>BIGROCK</h3>
-                            <p>
-                                カーボン一体型ハンドルを中心に、高性能なサイクルパーツを展開する新進気鋭のブランド。T800カーボンを使用した高剛性かつ軽量なプロダクトは、シリアスレーサーからホビーライダーまで幅広く支持されています。ハイランダーはBIGROCKの正規取扱店として、製品の販売・取り付け・サポートを行っています。
+                            <p class="brand-description">
+                                カーボン一体型ハンドルを中心に、高性能なサイクルパーツを展開する新進気鋭のブランド。T800カーボンを使用した高剛性かつ軽量なプロダクトが特徴です。
                             </p>
-                            <div style="margin-top: 15px;">
-                                <a href="#" class="btn btn-outline" style="font-size: 0.8rem;">製品ラインナップ (Catalog)</a>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Integrated Handlebars</li>
+                                    <li>Seatposts</li>
+                                    <li>Wheelsets</li>
+                                </ul>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <a href="#" class="btn btn-outline" style="font-size: 0.8rem; width: 100%;">View
+                                    Catalog</a>
                             </div>
                         </div>
                     </div>
 
-
                     <!-- YONEX -->
-                    <div class="brand-card">
-                        <div
-                            style="width:100%; height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">
-                            <i class="fas fa-bolt fa-3x"></i>
+                    <div class="brand-card" data-category="frames">
+                        <div class="brand-img-container">
+                            <i class="fas fa-bolt fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Frames</span>
                         </div>
                         <div class="brand-info">
                             <h3>YONEX</h3>
-                            <p>「Made in Japan」の誇り。カーボン加工技術の粋を集めた超軽量フレームは、ヒルクライムやロングライドで圧倒的なパフォーマンスを発揮します。</p>
+                            <p class="brand-description">
+                                「Made in Japan」の誇り。カーボン加工技術の粋を集めた超軽量フレームは、ヒルクライムやロングライドで圧倒的なパフォーマンスを発揮します。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>CARBONEX Series</li>
+                                    <li>GROWENT</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <!-- TREK -->
-                    <div class="brand-card">
-                        <div
-                            style="width:100%; height:200px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999;">
-                            <i class="fas fa-road fa-3x"></i>
+                    <div class="brand-card" data-category="frames">
+                        <div class="brand-img-container">
+                            <i class="fas fa-road fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Frames</span>
                         </div>
                         <div class="brand-info">
                             <h3>TREK</h3>
-                            <p>世界最高峰の技術と開発力を持つトップブランド。ロードバイクからE-bikeまで、あらゆるライダーのニーズに応えるラインナップを揃えています。</p>
+                            <p class="brand-description">
+                                世界最高峰の技術と開発力を持つトップブランド。ロードバイクからE-bikeまで、あらゆるライダーのニーズに応えるラインアップを揃えています。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Madone</li>
+                                    <li>Domane</li>
+                                    <li>Checkpoint</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Galfer -->
+                    <div class="brand-card" data-category="components">
+                        <div class="brand-img-container">
+                            <i class="fas fa-compact-disc fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Components</span>
+                        </div>
+                        <div class="brand-info">
+                            <h3>Galfer</h3>
+                            <p class="brand-description">
+                                モーターサイクルで培った最高の制動技術を。圧倒的なコントロール性と放熱性を誇るディスクローターとブレーキパッドを提供します。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Wave Rotors</li>
+                                    <li>Brake Pads</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tune -->
+                    <div class="brand-card" data-category="components">
+                        <div class="brand-img-container">
+                            <i class="fas fa-dharmachakra fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Components</span>
+                        </div>
+                        <div class="brand-info">
+                            <h3>Tune</h3>
+                            <p class="brand-description">
+                                ドイツが生んだ超軽量コンポーネント。卓越した旋盤技術とカーボン加工により、究極の軽さと美しさを両立したハブやホイールを展開します。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Lightweight Hubs</li>
+                                    <li>Carbon Wheels</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OAK Components -->
+                    <div class="brand-card" data-category="components">
+                        <div class="brand-img-container">
+                            <i class="fas fa-gears fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Components</span>
+                        </div>
+                        <div class="brand-info">
+                            <h3>OAK Components</h3>
+                            <p class="brand-description">
+                                エンジニアリングの粋を集めたアップグレードパーツ。独自の機構と高精度な加工により、バイクのパフォーマンスを向上させます。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Brake Levers</li>
+                                    <li>Upgrade Kits</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Garbaruk -->
+                    <div class="brand-card" data-category="components">
+                        <div class="brand-img-container">
+                            <i class="fas fa-circle-nodes fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Components</span>
+                        </div>
+                        <div class="brand-info">
+                            <h3>Garbaruk</h3>
+                            <p class="brand-description">
+                                美しさと軽さを追求したドライブトレイン。高精度なCNC加工によるカセットスプロケットやチェーンリングは、まさに機能美の象徴です。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Cassettes</li>
+                                    <li>Chainrings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UNIOR TOOLS -->
+                    <div class="brand-card" data-category="tools">
+                        <div class="brand-img-container">
+                            <i class="fas fa-wrench fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Tools</span>
+                        </div>
+                        <div class="brand-info">
+                            <h3>UNIOR TOOLS</h3>
+                            <p class="brand-description">
+                                プロメカニックも信頼を寄せる高品質ツール。スロベニア発、自転車専用に設計された堅牢な工具たちが、確実なメンテナンスを支えます。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Shop Tools</li>
+                                    <li>Precision Instruments</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vorsprung -->
+                    <div class="brand-card" data-category="components">
+                        <div class="brand-img-container">
+                            <i class="fas fa-arrows-up-down fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Components</span>
+                        </div>
+                        <div class="brand-info">
+                            <h3>Vorsprung</h3>
+                            <p class="brand-description">
+                                サスペンション性能を極限まで高めるチューニング。独自の内部パーツにより、理想のライディングフィールを実現します。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Suspension Upgrades</li>
+                                    <li>Tuning Kits</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PYC Chain -->
+                    <div class="brand-card" data-category="components">
+                        <div class="brand-img-container">
+                            <i class="fas fa-link fa-3x" style="color: #ddd;"></i>
+                            <span class="category-tag">Components</span>
+                        </div>
+                        <div class="brand-info">
+                            <h3>PYC Chain</h3>
+                            <p class="brand-description">
+                                世界最軽量レベルを誇るチェーン。耐久性と低フリクションを両立し、スムーズな変速とパワー伝達を可能にします。
+                            </p>
+                            <div class="product-lineup">
+                                <h4>Main Lineup</h4>
+                                <ul class="product-list">
+                                    <li>Lightweight Chains</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>

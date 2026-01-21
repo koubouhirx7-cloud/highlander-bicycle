@@ -96,22 +96,38 @@ document.querySelectorAll('.add-to-cart-btn').forEach(button => {
 // Initialize UI
 updateCartUI();
 
-/* --- Category Filter --- */
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelector('.filter-btn.active').classList.remove('active');
-        btn.classList.add('active');
+/* --- Brand Filter Logic --- */
+const filterBtns = document.querySelectorAll('.brand-filter .filter-btn');
+const brandCards = document.querySelectorAll('.brand-grid .brand-card');
 
-        const category = btn.getAttribute('data-category');
-        document.querySelectorAll('.product-card').forEach(card => {
-            if (category === 'all' || card.getAttribute('data-category') === category) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
+if (filterBtns.length > 0 && brandCards.length > 0) {
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            brandCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                if (filterValue === 'all' || category === filterValue) {
+                    card.style.display = 'flex';
+                    // Trigger a small animation
+                    card.style.opacity = '0';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                    }, 50);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         });
     });
-});
+}
+
+/* --- Category Filter (General - Existing) --- */
 
 /* --- Checkout Page Logic --- */
 function renderCheckout() {

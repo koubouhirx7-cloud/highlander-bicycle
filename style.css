@@ -1371,3 +1371,121 @@ h2::before {
     background-color: var(--primary-color);
     color: white;
 }
+
+/* --- Brand Page Enhancements --- */
+.brand-filter {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.brand-filter .filter-btn {
+    padding: 8px 20px;
+    border: 1px solid var(--secondary-color);
+    background: transparent;
+    color: var(--secondary-color);
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.brand-filter .filter-btn.active,
+.brand-filter .filter-btn:hover {
+    background: var(--secondary-color);
+    color: #fff;
+}
+
+.brand-card {
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    opacity: 1; /* For script animation */
+}
+
+.brand-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.brand-img-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background: #fdfdfd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.category-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #555;
+    letter-spacing: 0.5px;
+}
+
+.brand-info {
+    padding: 25px;
+    flex-grow: 1;
+}
+
+.brand-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    font-family: 'Outfit', sans-serif;
+    color: var(--primary-color);
+}
+
+.brand-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.product-lineup {
+    border-top: 1px dashed #ddd;
+    padding-top: 15px;
+}
+
+.product-lineup h4 {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+}
+
+.product-list li {
+    background: #f5f5f5;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #444;
+}
