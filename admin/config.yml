@@ -1,7 +1,5 @@
 backend:
-  name: github
-  repo: koubouhirx7-cloud/highlander-bicycle
-  branch: main # 自分のブランチ名に合わせて調整してください（通常はmain）
+  name: git-gateway
 
 media_folder: "images/blog"
 public_folder: "/images/blog"
