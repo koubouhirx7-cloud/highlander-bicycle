@@ -3,6 +3,7 @@ backend:
 
 media_folder: "images/blog"
 public_folder: "/images/blog"
+locale: ja
 
 collections:
   - name: "blog"
