@@ -1,0 +1,20 @@
+backend:
+  name: github
+  repo: koubouhirx7-cloud/highlander-bicycle
+  branch: main # 自分のブランチ名に合わせて調整してください（通常はmain）
+
+media_folder: "images/blog"
+public_folder: "/images/blog"
+
+collections:
+  - name: "blog"
+    label: "ブログ記事"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "タイトル", name: "title", widget: "string" }
+      - { label: "公開日", name: "date", widget: "datetime" }
+      - { label: "カテゴリ", name: "category", widget: "select", options: ["お知らせ", "イベント", "里山便り", "技術・メンテ"] }
+      - { label: "アイキャッチ画像", name: "image", widget: "image", required: false }
+      - { label: "内容", name: "body", widget: "markdown" }

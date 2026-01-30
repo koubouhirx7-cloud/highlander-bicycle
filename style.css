@@ -153,6 +153,45 @@ body {
     transition: opacity 1.5s ease-in-out;
 }
 
+/* Global Section Padding Fix for Mobile */
+@media (max-width: 768px) {
+    .page-hero {
+        padding: 100px 20px 60px !important;
+    }
+
+    .custom-story-grid.responsive-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+
+    .detail-img-card img,
+    .about-image img,
+    .custom-hero-img img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .story-details {
+        margin-top: 40px;
+    }
+}
+
+/* Timeline Responsive Fix */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 20px !important;
+    }
+
+    .timeline-item {
+        padding-left: 50px !important;
+    }
+
+    .timeline-item::after {
+        left: 20px !important;
+    }
+}
+
 /* Mobile: Slideshow Mode */
 @media (max-width: 768px) {
     .hero-gallery {
@@ -272,6 +311,41 @@ h2::before {
     left: 50%;
     transform: translateX(-50%);
     opacity: 0.6;
+}
+
+/* Responsive Grid System */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+@media (max-width: 768px) {
+    .responsive-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .section {
+        padding: 60px 0;
+    }
+
+    h1 {
+        font-size: 2.2rem !important;
+    }
+
+    h2 {
+        font-size: 1.6rem !important;
+        margin-bottom: 40px;
+    }
+
+    h3 {
+        font-size: 1.3rem !important;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
 }
 
 /* About Section */
@@ -584,7 +658,6 @@ h2::before {
 
 /* Rental Grid */
 .rental-grid {
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
@@ -1068,8 +1141,22 @@ h2::before {
 }
 
 @media (max-width: 768px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
     .about-grid.reverse {
         direction: ltr;
+    }
+
+    .about-text h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .about-text h2::after {
+        margin: 15px auto 0;
     }
 }
 
@@ -1352,6 +1439,7 @@ h2::before {
     background-color: var(--primary-color);
     color: white;
 }
+
 /* Service Block Buttons */
 .service-block .btn {
     display: inline-block;
@@ -1409,7 +1497,8 @@ h2::before {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    opacity: 1; /* For script animation */
+    opacity: 1;
+    /* For script animation */
 }
 
 .brand-card:hover {
@@ -1488,4 +1577,20 @@ h2::before {
     border-radius: 4px;
     font-size: 0.8rem;
     color: #444;
+}
+
+/* Final Global Responsive Resets */
+@media (max-width: 768px) {
+
+    .member-grid,
+    .layout-container,
+    .rental-grid,
+    .access-grid,
+    .product-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .layout-section {
+        padding: 40px 20px !important;
+    }
 }

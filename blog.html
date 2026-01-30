@@ -11,6 +11,8 @@
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
@@ -42,31 +44,88 @@
 
         <section class="section">
             <div class="container">
-                <div class="blog-list" style="max-width: 800px; margin: 0 auto;">
-                    <article class="blog-item"
-                        style="background:white; padding:30px; margin-bottom:40px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.05);">
-                        <div class="blog-meta" style="color:#888; font-size:0.9rem; margin-bottom:10px;">2026.01.15 |
-                            お知らせ</div>
-                        <h2 style="font-size:1.5rem; margin-bottom:15px; text-align:left; transform:none; left:auto;">
-                            冬季の営業時間についてのお知らせ</h2>
-                        <p>1月、2月の営業時間は11:00〜18:00に変更となります。また、積雪時はクローズする場合もございますので、ご来店の際はSNSをご確認ください。</p>
-                    </article>
-
-                    <article class="blog-item"
-                        style="background:white; padding:30px; margin-bottom:40px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.05);">
-                        <div class="blog-meta" style="color:#888; font-size:0.9rem; margin-bottom:10px;">2026.01.10 |
-                            イベント</div>
-                        <h2 style="font-size:1.5rem; margin-bottom:15px; text-align:left; transform:none; left:auto;">
-                            新作グラベルロード試乗会レポート</h2>
-                        <div style="background:#ddd; height:200px; margin-bottom:15px;">Image</div>
-                        <p>先週末開催した試乗会には、多くのお客様にお越しいただきました。里山のグラベルを存分に楽しんでいただけたようです...</p>
-                    </article>
+                <div id="blog-list" class="blog-list" style="max-width: 800px; margin: 0 auto;">
+                    <!-- Posts will be loaded here dynamically -->
                 </div>
             </div>
         </section>
+
+        <script>
+            const REPO_OWNER = 'koubouhirx7-cloud';
+            const REPO_NAME = 'highlander-bicycle';
+            const CONTENT_PATH = 'content/blog';
+
+            async function fetchWithRetry(url, options = {}, retries = 3) {
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const response = await fetch(url, options);
+                        if (response.ok) return response;
+                    } catch (e) {
+                        if (i === retries - 1) throw e;
+                    }
+                }
+            }
+
+            async function loadBlog() {
+                const container = document.getElementById('blog-list');
+                try {
+                    // Fetch file list from GitHub API
+                    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`;
+                    const response = await fetch(url);
+                    const files = await response.json();
+
+                    if (!Array.isArray(files)) throw new Error('Not a folder');
+
+                    // Filter only markdown files and fetch content
+                    const posts = await Promise.all(
+                        files.filter(f => f.name.endsWith('.md'))
+                            .map(async (file) => {
+                                const res = await fetch(file.download_url);
+                                const text = await res.text();
+                                const parts = text.split('---');
+                                if (parts.length < 3) return null;
+
+                                const metadata = jsyaml.load(parts[1]);
+                                const content = marked.parse(parts.slice(2).join('---'));
+
+                                return {
+                                    ...metadata,
+                                    content,
+                                    date: new Date(metadata.date)
+                                };
+                            })
+                    );
+
+                    const validPosts = posts.filter(p => p !== null)
+                        .sort((a, b) => b.date - a.date);
+
+                    container.innerHTML = validPosts.map(post => `
+                        <article class="blog-item"
+                            style="background:white; padding:30px; margin-bottom:40px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+                            <div class="blog-meta" style="color:#888; font-size:0.9rem; margin-bottom:10px;">
+                                ${post.date.getFullYear()}.${String(post.date.getMonth() + 1).padStart(2, '0')}.${String(post.date.getDate()).padStart(2, '0')} | ${post.category}
+                            </div>
+                            <h2 style="font-size:1.5rem; margin-bottom:15px; text-align:left; transform:none; left:auto;">
+                                ${post.title}</h2>
+                            ${post.image ? `<img src="${post.image}" style="width:100%; border-radius:8px; margin-bottom:15px; box-shadow:var(--shadow-small);">` : ''}
+                            <div class="blog-content">${post.content}</div>
+                        </article>
+                    `).join('');
+                } catch (error) {
+                    console.error('Error loading blog:', error);
+                    container.innerHTML = '<p>ブログを読み込めませんでした。現在メインメンテナンス中の可能性があります。</p>';
+                }
+            }
+            window.onload = loadBlog;
+        </script>
     </main>
 
-    <footer class="site-footer"><div class="container" style="margin-bottom: 20px;"><a href="brand.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Brand List</a> | <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a></div>
+    <footer class="site-footer">
+        <div class="container" style="margin-bottom: 20px;"><a href="brand.html"
+                style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Brand
+                List</a> | <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank"
+                style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a>
+        </div>
         <p>&copy; 2026 Highlander Bicycle Shop</p>
     </footer>
 </body>

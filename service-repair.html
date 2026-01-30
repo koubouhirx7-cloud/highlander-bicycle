@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repair & Custom | Service | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .service-hero {
+            padding: 160px 0 80px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/hero-repair.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .price-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .price-category {
+            margin-bottom: 60px;
+        }
+
+        .price-category h3 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .price-category h3 i {
+            margin-right: 15px;
+            color: var(--secondary-color);
+        }
+
+        .price-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-label {
+            font-weight: 500;
+        }
+
+        .price-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .specialty-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 100px 0;
+        }
+
+        .specialty-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .specialty-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .specialty-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .badge-new {
+            background: var(--secondary-color);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .price-note {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        .maintenance-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .maintenance-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .consultation-box {
+            background: #fdf6e3;
+            border: 2px dashed var(--secondary-color);
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="brand.html">Brand</a></li>
+                    <li><a href="service.html" class="active">Service</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="ride-and-talk.html">Ride & Talk</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">Shop</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="service-hero">
+            <div class="container">
+                <h1 style="font-family: 'Outfit', sans-serif; margin-bottom: 20px;">Repair & Custom
+                </h1>
+                <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">パンク修理から、世界に一台のカスタムバイク制作まで。</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container price-container">
+                <div class="maintenance-header" style="text-align: center; margin-bottom: 60px;">
+                    <h2
+                        style="position: static; transform: none; display: inline-block; margin: 0 auto; text-align: center; left: auto; border-bottom: none;">
+                        Maintenance<br>Menu</h2>
+                    <div style="width: 40px; height: 2px; background: var(--secondary-color); margin: 15px auto;"></div>
+                    <p style="text-align: center; opacity: 0.8;">標準的な修理・点検の基本工賃（税込）</p>
+                    <p class="price-note" style="text-align: center;">※パーツ代は別途頂戴いたします。他店購入車も同料金で承ります。</p>
+                </div>
+
+                <div class="price-category">
+                    <h3><i class="fas fa-dot-circle"></i> 車輪・タイヤ・ブレーキ</h3>
+                    <ul class="price-list">
+                        <li class="price-item">
+                            <span class="price-label">パンク修理（1箇所）</span>
+                            <span class="price-value">¥1,100 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">タイヤ・チューブ交換（前輪）</span>
+                            <span class="price-value">¥1,650 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">タイヤ・チューブ交換（後輪）</span>
+                            <span class="price-value">¥2,750 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">ブレーキ本体交換（片側）</span>
+                            <span class="price-value">¥1,760 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">ブレーキワイヤー調整</span>
+                            <span class="price-value">¥880 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">ホイール振れ取り</span>
+                            <span class="price-value">¥2,200 〜</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="price-category">
+                    <h3><i class="fas fa-random"></i> 駆動・変速系</h3>
+                    <ul class="price-list">
+                        <li class="price-item">
+                            <span class="price-label">チェーン交換</span>
+                            <span class="price-value">¥1,650 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">変速調整（前後各）</span>
+                            <span class="price-value">¥1,100 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">ディレイラー交換</span>
+                            <span class="price-value">¥2,750 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">BB（ボトムブラケット）交換</span>
+                            <span class="price-value">¥3,300 〜</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="price-category">
+                    <h3><i class="fas fa-check-double"></i> 組立・総合点検</h3>
+                    <ul class="price-list">
+                        <li class="price-item">
+                            <span class="price-label">安心点検（全体チェック・注油）</span>
+                            <span class="price-value">¥3,300 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">新車組立（箱出し・調整）</span>
+                            <span class="price-value">¥11,000 〜</span>
+                        </li>
+                        <li class="price-item">
+                            <span class="price-label">フレーム組み上げ</span>
+                            <span class="price-value">¥22,000 〜</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="specialty-section">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <h2
+                        style="position: static; transform: none; display: inline-block; margin: 0 auto; text-align: center; left: auto; font-size: 2.5rem; border-bottom: none; color: white;">
+                        Highlander<br>Specialty</h2>
+                    <div style="width: 60px; height: 2px; background: var(--secondary-color); margin: 20px auto;"></div>
+                    <p style="opacity: 0.8; text-align: center; color: rgba(255,255,255,0.8);">
+                        形式的なメニューを超えた、お客様の「こだわり」を実現するサービス</p>
+                </div>
+
+                <div class="responsive-grid" style="gap: 30px;">
+                    <div class="specialty-card">
+                        <h4>フルオーバーホール (Re-Build)</h4>
+                        <p>Highlanderの真骨頂。すべてのパーツを一度解体し、一点一点洗浄・点検・グリスアップ。新車以上の輝きと回転性能を蘇らせます。</p>
+                        <p style="margin-top: 15px; font-weight: 700; color: var(--secondary-color);">¥66,000 〜</p>
+                    </div>
+
+                    <div class="specialty-card">
+                        <h4>ヴィンテージ・レストア</h4>
+                        <p>納屋で眠っていた数十年を、再び路上へ。古いフレームの再生、当時のパーツ探し、固着したネジの救出など、思い出の一台を復活させます。</p>
+                        <p style="margin-top: 15px; font-weight: 700; color: var(--secondary-color);">ASK (要相談)</p>
+                    </div>
+
+                    <div class="specialty-card">
+                        <h4>カテゴリー・トランスフォーム</h4>
+                        <p>古いマウンテンバイクを最新のグラベルロード仕様に。お客様の現在の用途に合わせて、自転車のキャラクターを劇的に変化させます。</p>
+                        <p style="margin-top: 15px; font-weight: 700; color: var(--secondary-color);">ASK (要相談)</p>
+                    </div>
+
+                    <div class="specialty-card">
+                        <h4>ワンオフ・パーツ制作・加工</h4>
+                        <p>市販品では解決できない悩み。キャリアの穴あけ加工、特殊なステーの制作など、工作機械を駆使して「無いものは作る」姿勢で臨みます。</p>
+                        <p style="margin-top: 15px; font-weight: 700; color: var(--secondary-color);">¥3,300 〜</p>
+                    </div>
+
+                    <div class="specialty-card">
+                        <h4>カスタムペイント・コンサル</h4>
+                        <p>フレームの塗り替えで、別次元のルックスへ。提携ペイントショップと連携し、カラーコーディネートからデザイン案までトータルサポート。</p>
+                        <p style="margin-top: 15px; font-weight: 700; color: var(--secondary-color);">ASK (要相談)</p>
+                    </div>
+
+                    <div class="specialty-card">
+                        <h4>電動化 (Di2/e-Tap) アップグレード</h4>
+                        <p>アナログな操作感から、指先一つのテクノロジーへ。最新コンポーネントへの換装と、完璧なシンクロ調整を施します。</p>
+                        <p style="margin-top: 15px; font-weight: 700; color: var(--secondary-color);">¥55,000 〜</p>
+                    </div>
+                </div>
+
+                <div class="consultation-box">
+                    <h3 style="color: var(--primary-color); margin-bottom: 20px;">「こんなことできる？」が、私たちの原動力です。</h3>
+                    <p style="color: #444; margin-bottom: 30px;">
+                        私たちは「できない」と断る前に、どうすれば実現できるかを考えます。<br>
+                        他店で断られた修理や、無理難題と思われるカスタムこそ、Highlanderにお持ち込みください。
+                    </p>
+                    <a href="access.html" class="btn btn-primary">まずはお気軽にご相談ください</a>
+                </div>
+
+                <div class="mt-50 text-center" style="margin-top: 50px;">
+                    <a href="service.html" class="btn btn-outline"><i class="fas fa-chevron-left"
+                            style="margin-right: 10px;"></i>サービス一覧に戻る</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container" style="margin-bottom: 20px;"><a href="brand.html"
+                style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Brand
+                List</a> | <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank"
+                style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a>
+        </div>
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
