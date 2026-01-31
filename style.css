@@ -1594,21 +1594,23 @@ h2::before {
         padding: 40px 20px !important;
     }
 }
+
 /* Sticky Contact Footer */
 .sticky-footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(30, 30, 30, 0.95);
+    background: rgba(30, 30, 30, 0.85);
     backdrop-filter: blur(5px);
-    padding: 15px 0 25px; /* Added extra padding at bottom for iPhone home bar */
+    padding: 15px 0 25px;
+    /* Added extra padding at bottom for iPhone home bar */
     z-index: 9999;
     box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
     display: block;
     transform: translateY(0);
     transition: transform 0.3s ease;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sticky-footer-container {
@@ -1628,12 +1630,12 @@ h2::before {
 
 .footer-btn-label {
     display: block;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.75rem;
     margin-bottom: 8px;
     font-weight: 700;
     letter-spacing: 0.05em;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .footer-btn {
@@ -1647,7 +1649,7 @@ h2::before {
     color: white;
     font-weight: 700;
     font-size: 1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s, opacity 0.2s;
     border: none;
     line-height: 1.2;
@@ -1684,10 +1686,12 @@ body {
 }
 
 @media (min-width: 768px) {
+
     /* Optional: Hide on desktop if preferred, or adjust style */
     .sticky-footer {
-        display: none; 
+        display: none;
     }
+
     body {
         padding-bottom: 0;
     }
