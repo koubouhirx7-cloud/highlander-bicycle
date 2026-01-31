@@ -1696,3 +1696,46 @@ body {
         padding-bottom: 0;
     }
 }
+/* Footer Toggle Handle */
+.footer-handle {
+    text-align: center;
+    background: rgba(20, 20, 20, 0.9);
+    color: white;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    /* Arrow indicator */
+}
+.footer-handle i {
+    margin-right: 5px;
+    transition: transform 0.3s ease;
+}
+
+/* Initially collapsed logic */
+.sticky-footer {
+    transform: translateY(100%); /* Start hidden */
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    bottom: 40px; /* Offset so the handle peeks up? No, simpler: */
+    /* Let's redo positioning: */
+    bottom: 0;
+    transform: translateY(calc(100% - 35px)); /* Show only 35px (height of handle) */
+}
+
+.sticky-footer.open {
+    transform: translateY(0); /* Fully visible */
+}
+
+/* Rotate arrow when open */
+.sticky-footer.open .footer-handle i {
+    transform: rotate(180deg);
+}
+
+/* Add padding to handle area so it's touchable */
+.footer-handle {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

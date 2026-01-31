@@ -174,3 +174,11 @@ if (checkoutForm) {
 
 // Re-run for checkout page
 renderCheckout();
+
+/* --- Sticky Footer Toggle --- */
+function toggleFooter() {
+    const footer = document.getElementById('stickyFooter');
+    if (footer) {
+        footer.classList.toggle('open');
+    }
+}
