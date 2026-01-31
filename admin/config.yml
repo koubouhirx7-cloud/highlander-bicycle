@@ -1,5 +1,7 @@
 backend:
   name: git-gateway
+  repo: koubouhirx7-cloud/highlander-bicycle
+  branch: main
 
 media_folder: "images/blog"
 public_folder: "/images/blog"
