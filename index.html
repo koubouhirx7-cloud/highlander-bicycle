@@ -11,19 +11,6 @@
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/admin/";
-                    });
-                }
-            });
-        }
-    </script>
     <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
 </head>
 
@@ -193,43 +180,32 @@
                     <!-- News items will be loaded here -->
                 </div>
                 <script>
-                    const REPO_OWNER = 'koubouhirx7-cloud';
-                    const REPO_NAME = 'highlander-bicycle';
-                    const CONTENT_PATH = 'content/blog';
+                    const API_ENDPOINT = 'https://pnjcsnhgx7.microcms.io/api/v1/blogs';
+                    const API_KEY = 'izujN0WKzG78ahuntKOZ6JrmA1hje1DL6HTF';
 
                     async function loadNews() {
                         const container = document.getElementById('index-blog-list');
                         try {
-                            const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`;
-                            const response = await fetch(url);
-                            const files = await response.json();
+                            const response = await fetch(`${API_ENDPOINT}?limit=3`, {
+                                headers: {
+                                    'X-MICROCMS-API-KEY': API_KEY
+                                }
+                            });
+                            const data = await response.json();
+                            const posts = data.contents;
 
-                            if (!Array.isArray(files)) return;
-
-                            const posts = await Promise.all(
-                                files.filter(f => f.name.endsWith('.md'))
-                                    .map(async (file) => {
-                                        const res = await fetch(file.download_url);
-                                        const text = await res.text();
-                                        const parts = text.split('---');
-                                        if (parts.length < 3) return null;
-                                        return { ...jsyaml.load(parts[1]), date: new Date(jsyaml.load(parts[1]).date) };
-                                    })
-                            );
-
-                            const validPosts = posts.filter(p => p !== null)
-                                .sort((a, b) => b.date - a.date)
-                                .slice(0, 3);
-
-                            container.innerHTML = validPosts.map(post => `
-                                <a href="blog.html" class="blog-item"
-                                    style="display:flex; gap:20px; align-items:center; background:white; padding:20px; margin-bottom:20px; border-radius:8px; text-decoration:none; color:inherit;">
-                                    <div class="blog-date" style="color:#888; font-size:0.8rem;">
-                                        ${post.date.getFullYear()}.${String(post.date.getMonth() + 1).padStart(2, '0')}.${String(post.date.getDate()).padStart(2, '0')}
-                                    </div>
-                                    <div class="blog-title" style="flex:1; font-weight:500;">${post.title}</div>
-                                </a>
-                            `).join('');
+                            container.innerHTML = posts.map(post => {
+                                const date = new Date(post.publishedAt || post.createdAt);
+                                return `
+                                    <a href="blog.html" class="blog-item"
+                                        style="display:flex; gap:20px; align-items:center; background:white; padding:20px; margin-bottom:20px; border-radius:8px; text-decoration:none; color:inherit;">
+                                        <div class="blog-date" style="color:#888; font-size:0.8rem;">
+                                            ${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}
+                                        </div>
+                                        <div class="blog-title" style="flex:1; font-weight:500;">${post.title}</div>
+                                    </a>
+                                `;
+                            }).join('');
                         } catch (e) {
                             console.error('Error loading news:', e);
                         }
