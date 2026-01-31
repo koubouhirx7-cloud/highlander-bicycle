@@ -1594,3 +1594,101 @@ h2::before {
         padding: 40px 20px !important;
     }
 }
+/* Sticky Contact Footer */
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(5px);
+    padding: 15px 0 25px; /* Added extra padding at bottom for iPhone home bar */
+    z-index: 9999;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
+    display: block;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.sticky-footer-container {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 0 20px;
+}
+
+.footer-btn-wrapper {
+    flex: 1;
+    text-align: center;
+    max-width: 300px;
+}
+
+.footer-btn-label {
+    display: block;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.footer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s, opacity 0.2s;
+    border: none;
+    line-height: 1.2;
+}
+
+.footer-btn:active {
+    transform: scale(0.96);
+}
+
+.footer-btn i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.btn-contact {
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+}
+
+.btn-contact:hover {
+    background: linear-gradient(135deg, #e53935, #c62828);
+}
+
+.btn-line {
+    background: linear-gradient(135deg, #06c755, #00b900);
+}
+
+.btn-line:hover {
+    background: linear-gradient(135deg, #00d200, #00c300);
+}
+
+/* Add padding to body so footer doesn't cover content */
+body {
+    padding-bottom: 110px;
+}
+
+@media (min-width: 768px) {
+    /* Optional: Hide on desktop if preferred, or adjust style */
+    .sticky-footer {
+        display: none; 
+    }
+    body {
+        padding-bottom: 0;
+    }
+}
