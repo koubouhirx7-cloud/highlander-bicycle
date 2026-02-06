@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids & Junior | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .anniversary-section {
+            padding: 120px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .anniversary-section:nth-child(even) {
+            background-color: #fdfaf6;
+        }
+
+        .brand-label {
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 35px;
+            font-family: 'Zen Old Mincho', serif;
+            line-height: 1.3;
+        }
+
+        .section-text {
+            line-height: 2;
+            color: #444;
+            font-size: 1.05rem;
+            margin-bottom: 40px;
+        }
+
+        .featured-img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.4s ease;
+        }
+
+        .featured-img:hover {
+            transform: scale(1.02);
+        }
+
+        .brand-badges {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .badge {
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #666;
+        }
+
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .anniversary-section {
+                padding: 80px 0;
+            }
+
+            .order-mobile-2 {
+                order: 2;
+            }
+
+            .order-mobile-1 {
+                order: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="brand.html">Brand</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="kids.html" class="active">Kids</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">Shop</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <!-- Hero Section -->
+        <section class="page-hero"
+            style="background: var(--primary-color); padding: 180px 20px 140px; text-align: center;">
+            <div class="container">
+                <span
+                    style="color: var(--secondary-color); text-transform: uppercase; letter-spacing: 0.4em; font-size: 0.9rem; font-weight: 700;">Kids
+                    & Junior</span>
+                <h1
+                    style="color: white; margin-top: 25px; font-size: 3.5rem; font-family: 'Zen Old Mincho', serif; line-height: 1.2;">
+                    初めて買った日が、記念日。</h1>
+                <p style="color: white; font-size: 1.3rem; opacity: 0.9; margin-top: 25px;">お子様の「最初の一歩」を、一生の思い出に。</p>
+            </div>
+        </section>
+
+        <!-- Concept: Image Left -->
+        <section class="anniversary-section">
+            <div class="container">
+                <div class="responsive-grid" style="align-items: center; gap: 80px;">
+                    <div class="visual">
+                        <img src="images/kids/tokyobike_little.jpg" alt="tokyobike little" class="featured-img">
+                    </div>
+                    <div class="content">
+                        <span class="brand-label">Our Concept</span>
+                        <h2 class="section-title">世界を広げる「魔法の道具」</h2>
+                        <div class="section-text">
+                            <p>自転車は、ただの乗り物ではありません。それは、子供たちが初めて「自分の力で、昨日より遠くへ行ける」ようになる魔法の道具です。</p>
+                            <p>お子様の自転車デビューを家族の「記念日」として大切にします。最適な一台の提案はもちろん、安全な乗り方のレクチャーから将来のメンテナンスまで、成長に寄り添い続けます。</p>
+                        </div>
+                        <div class="brand-badges">
+                            <span class="badge">tokyobike</span>
+                            <span class="badge">STRIDER</span>
+                            <span class="badge">ヨツバサイクル</span>
+                            <span class="badge">RITEWAY ZIT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STRIDER: Image Right -->
+        <section class="anniversary-section">
+            <div class="container">
+                <div class="responsive-grid" style="align-items: center; gap: 80px;">
+                    <div class="content order-mobile-2">
+                        <span class="brand-label">Start Here</span>
+                        <h2 class="section-title">遊びながら、自由に走り出す。</h2>
+                        <div class="section-text">
+                            <p>世界中で愛されるランニングバイク「STRIDER」。ペダルがないからこそ、直感的に足で地面を蹴って進む楽しさを体感できます。</p>
+                            <p>初めて跨った日の少し緊張した顔が、自分一人で風を切る瞬間に満面の笑みに変わる。ストライダーは、お子様の「できた！」という自信を育む、最高のパートナーです。</p>
+                        </div>
+                    </div>
+                    <div class="visual order-mobile-1">
+                        <img src="images/kids/strider_blue.jpg" alt="STRIDER" class="featured-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- tokyobike: Image Left -->
+        <section class="anniversary-section">
+            <div class="container">
+                <div class="responsive-grid" style="align-items: center; gap: 80px;">
+                    <div class="visual">
+                        <img src="images/kids/tokyobike_jr.jpg" alt="tokyobike Jr" class="featured-img">
+                    </div>
+                    <div class="content">
+                        <span class="brand-label">Design & Life</span>
+                        <h2 class="section-title">街の景色に馴染む、美しい一台。</h2>
+                        <div class="section-text">
+                            <p>大人と同じように、子供たちにも「質の高い、美しい道具」を。tokyobikeのキッズラインは、シンプルでありながら洗練された佇まいが魅力です。</p>
+                            <p>公園への何気ないお出かけも、この一台があれば特別な景色に。少し大きくなったお子様には、大人っぽいカラーリングの「tokyobike Jr.」が新しい世界への扉を開きます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support: Image Right -->
+        <section class="anniversary-section">
+            <div class="container">
+                <div class="responsive-grid" style="align-items: center; gap: 80px;">
+                    <div class="content order-mobile-2">
+                        <span class="brand-label">After Support</span>
+                        <h2 class="section-title">ずっと大切にしたい、約束。</h2>
+                        <div class="section-text">
+                            <p>ハイランダーは、販売して終わりではありません。</p>
+                            <p>「ブレーキは握りやすいか」「高さは合っているか」など、専門スタッフが一人ひとりに合わせて細かく調整。ショップの前で撮った最高の一枚が、数年後に家族の絆を思い出す温かなきっかけになれば幸いです。
+                            </p>
+                        </div>
+                        <a href="access.html" class="btn btn-primary" style="padding: 18px 60px;">ご相談・ご来店予約</a>
+                    </div>
+                    <div class="visual order-mobile-1">
+                        <img src="images/kids/family_shop.jpg" alt="Support" class="featured-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="section" style="background: #f4f5f7; text-align: center; padding: 100px 20px;">
+            <div class="container">
+                <h3 style="font-family: 'Zen Old Mincho', serif; font-size: 2.2rem; margin-bottom: 25px;">Ready for the
+                    Adventure?</h3>
+                <p style="margin-bottom: 45px; color: #666; font-size: 1.1rem;">お子様の成長に合わせた最適な一台を、一緒に見つけましょう。</p>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <a href="access.html" class="btn btn-outline" style="padding: 15px 40px;">店舗アクセス</a>
+                    <a href="contact.html" class="btn btn-outline" style="padding: 15px 40px;">お問い合わせ</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
