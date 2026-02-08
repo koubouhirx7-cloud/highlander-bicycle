@@ -26,7 +26,8 @@
                     <li><a href="service.html">Service</a></li>
                     <li><a href="custom.html">Custom</a></li>
                     <li><a href="rental.html">Rental & Tour</a></li>
-                    <li><a href="https://xs001364.xsrv.jp" target="_blank" style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="https://xs001364.xsrv.jp" target="_blank"
+                            style="font-weight: 700; color: #d35400;">WEB部</a></li>
                     <li><a href="blog.html" class="active">Blog</a></li>
                     <li><a href="access.html">Access</a></li>
                     <li><a href="shop.html" class="nav-btn">Shop</a></li>
@@ -44,7 +45,24 @@
 
         <section class="section">
             <div class="container">
-                <div id="blog-list" class="blog-list" style="max-width: 800px; margin: 0 auto;">
+                <!-- Filter Controls -->
+                <div class="blog-filter-container">
+                    <button class="blog-filter-btn active" onclick="filterBlog('all', this)">
+                        <i class="fas fa-th-large"></i> すべて
+                    </button>
+                    <button class="blog-filter-btn" onclick="filterBlog('week', this)">
+                        <i class="far fa-calendar-alt"></i> 今週
+                    </button>
+                    <button class="blog-filter-btn" onclick="filterBlog('month', this)">
+                        <i class="far fa-calendar"></i> 今月
+                    </button>
+                    <button class="blog-filter-btn" onclick="filterBlog('year', this)">
+                        <i class="fas fa-calendar-week"></i> 今年
+                    </button>
+                </div>
+
+                <!-- Blog Grid -->
+                <div id="blog-grid" class="blog-grid">
                     <!-- Posts will be loaded here dynamically -->
                 </div>
             </div>
@@ -53,94 +71,169 @@
         <script>
             const API_ENDPOINT = 'https://pnjcsnhgx7.microcms.io/api/v1/blogs';
             const API_KEY = 'izujN0WKzG78ahuntkOZ6JrmA1hje1DL6HTF';
+            let allPosts = []; // Store all fetched posts
 
             async function loadBlog() {
-                const container = document.getElementById('blog-list');
-                container.innerHTML = '<p>記事を読み込んでいます...</p>';
+                const container = document.getElementById('blog-grid');
+                container.innerHTML = '<p style="text-align:center; width:100%; grid-column:1/-1;">ロード中...</p>';
 
                 try {
-                    console.log('Fetching from:', API_ENDPOINT);
-                    const response = await fetch(API_ENDPOINT, {
+                    // Fetch more posts to ensure filtering works effectively (limit=100)
+                    const response = await fetch(`${API_ENDPOINT}?limit=100`, {
                         headers: {
                             'X-MICROCMS-API-KEY': API_KEY
                         }
                     });
 
                     if (!response.ok) {
-                        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                        throw new Error(`API Error: ${response.status}`);
                     }
 
                     const data = await response.json();
-                    console.log('Data received:', data);
+                    allPosts = data.contents || [];
 
-                    if (!data.contents || !Array.isArray(data.contents)) {
-                        throw new Error('データ形式が正しくありません (contentsが見つかりません)');
-                    }
-
-                    const posts = data.contents;
-
-                    if (posts.length === 0) {
-                        container.innerHTML = '<p>記事がまだありません。</p>';
+                    if (allPosts.length === 0) {
+                        container.innerHTML = '<p style="text-align:center; width:100%; grid-column:1/-1;">記事がまだありません。</p>';
                         return;
                     }
 
-                    container.innerHTML = posts.map(post => {
-                        const date = new Date(post.publishedAt || post.createdAt);
-                        const categoryName = post.category ? post.category.name : '未分類';
-                        const imageUrl = post.eyecatch ? post.eyecatch.url : null;
+                    // Initial render (All posts)
+                    renderPosts(allPosts);
 
-                        // Generate a unique ID for each post's toggle
-                        const postId = post.id;
-
-                        return `
-                            <article class="blog-item"
-                                style="background:white; padding:30px; margin-bottom:40px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.05);">
-                                <div class="blog-meta" style="color:#888; font-size:0.9rem; margin-bottom:10px;">
-                                    ${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')} | ${categoryName}
-                                </div>
-                                <h2 style="font-size:1.5rem; margin-bottom:15px; text-align:left; transform:none; left:auto;">
-                                    ${post.title}</h2>
-                                ${imageUrl ? `<img src="${imageUrl}" style="width:100%; max-width:300px; height:200px; object-fit:cover; border-radius:8px; margin-bottom:15px; box-shadow:var(--shadow-small);">` : ''}
-                                
-                                <div class="blog-content-wrapper" id="content-${postId}" style="position:relative; max-height: 200px; overflow:hidden; transition: max-height 0.4s ease;">
-                                    <div class="blog-content">${post.content}</div>
-                                    <div class="fade-overlay" id="fade-${postId}" style="position:absolute; bottom:0; left:0; width:100%; height:80px; background:linear-gradient(rgba(255,255,255,0), white); pointer-events:none;"></div>
-                                </div>
-                                
-                                <div style="text-align:center; margin-top:15px;">
-                                    <button onclick="toggleBlog('${postId}')" id="btn-${postId}" 
-                                        style="background:none; border:1px solid #333; padding:8px 24px; border-radius:4px; cursor:pointer; font-size:0.9rem; transition:all 0.3s;">
-                                        続きを読む
-                                    </button>
-                                </div>
-                            </article>
-                        `;
-                    }).join('');
                 } catch (error) {
                     console.error('Error loading blog:', error);
-                    container.innerHTML = `<p style="color:red;">読み込みエラー: ${error.message}</p>`;
+                    container.innerHTML = `<p style="color:red; text-align:center; width:100%; grid-column:1/-1;">読み込みエラー: ${error.message}</p>`;
                 }
             }
 
-            // Toggle function for Read More / Close
-            window.toggleBlog = function (postId) {
-                const content = document.getElementById(`content-${postId}`);
-                const fade = document.getElementById(`fade-${postId}`);
-                const btn = document.getElementById(`btn-${postId}`);
+            function renderPosts(posts) {
+                const container = document.getElementById('blog-grid');
 
-                if (content.style.maxHeight !== 'none') {
-                    // Open
-                    content.style.maxHeight = 'none';
-                    fade.style.display = 'none';
-                    btn.innerText = '閉じる';
-                } else {
-                    // Close
-                    content.style.maxHeight = '200px';
-                    fade.style.display = 'block';
-                    btn.innerText = '続きを読む';
-                    // Optional: Scroll back to top of article if needed
-                    // content.scrollIntoView({behavior: "smooth", block: "center"}); 
+                if (posts.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; width:100%; grid-column:1/-1; padding: 40px; color: #888;">該当する記事はありません。</p>';
+                    return;
                 }
+
+                container.innerHTML = posts.map(post => {
+                    const date = new Date(post.publishedAt || post.createdAt);
+                    const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+                    const categoryName = post.category ? post.category.name : '未分類';
+                    const imageUrl = post.eyecatch ? post.eyecatch.url : null;
+                    const postId = post.id;
+
+                    // Fallback image if no eyecatch
+                    const displayImage = imageUrl || 'https://placehold.co/600x400/eee/999?text=No+Image';
+
+                    return `
+                        <div class="blog-card-wrapper" id="card-${postId}">
+                            <div class="blog-card" onclick="toggleExpand('${postId}')">
+                                <img src="${displayImage}" alt="${post.title}" class="blog-card-img">
+                                <div class="blog-card-content">
+                                    <div class="blog-card-title">${post.title}</div>
+                                    <div class="blog-card-meta">
+                                        <span><i class="far fa-clock"></i> ${dateStr}</span>
+                                        <span class="blog-card-tag">${categoryName}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Hidden Expanded Content -->
+                            <div id="content-${postId}" style="display:none;">
+                                <div class="post-content">${post.content}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Filter Logic
+            window.filterBlog = function (filterType, btnElement) {
+                // Update active button state
+                document.querySelectorAll('.blog-filter-btn').forEach(btn => btn.classList.remove('active'));
+                btnElement.classList.add('active');
+
+                const now = new Date();
+                let filteredPosts = [];
+
+                switch (filterType) {
+                    case 'week':
+                        filteredPosts = allPosts.filter(post => {
+                            const postDate = new Date(post.publishedAt || post.createdAt);
+                            const oneWeekAgo = new Date();
+                            oneWeekAgo.setDate(now.getDate() - 7);
+                            return postDate >= oneWeekAgo && postDate <= now;
+                        });
+                        break;
+                    case 'month':
+                        filteredPosts = allPosts.filter(post => {
+                            const postDate = new Date(post.publishedAt || post.createdAt);
+                            return postDate.getMonth() === now.getMonth() && postDate.getFullYear() === now.getFullYear();
+                        });
+                        break;
+                    case 'year':
+                        filteredPosts = allPosts.filter(post => {
+                            const postDate = new Date(post.publishedAt || post.createdAt);
+                            return postDate.getFullYear() === now.getFullYear();
+                        });
+                        break;
+                    default: // 'all'
+                        filteredPosts = allPosts;
+                }
+
+                renderPosts(filteredPosts);
+            }
+
+            // Expand/Collapse Logic (Inline Grid Expansion - Notion-ish)
+            window.toggleExpand = function (postId) {
+                const fetchedContent = document.getElementById(`content-${postId}`).innerHTML;
+                const cardWrapper = document.getElementById(`card-${postId}`);
+
+                // Check if already open
+                const existingExpanded = document.getElementById(`expanded-${postId}`);
+
+                // Close any other open expansions first (optional, keeps UI clean)
+                document.querySelectorAll('.blog-expanded-view').forEach(el => el.remove());
+                document.querySelectorAll('.blog-card').forEach(el => el.style.opacity = '1');
+
+                if (existingExpanded) {
+                    // If clicking same card, just close it (already handled by remove above)
+                    return;
+                }
+
+                // Create expanded view container
+                const expandedDiv = document.createElement('div');
+                expandedDiv.id = `expanded-${postId}`;
+                expandedDiv.className = 'blog-expanded-view';
+                expandedDiv.innerHTML = `
+                    <div style="text-align:right;">
+                        <span class="close-expanded-btn" onclick="closeExpand(event)"><i class="fas fa-times"></i> 閉じる</span>
+                    </div>
+                    ${fetchedContent}
+                `;
+
+                // Insert after the current row? 
+                // Simple approach: Insert purely in DOM, grid-column: 1/-1 handles positioning.
+                // We insert it AFTER the card wrapper in the DOM. 
+                // Note: In CSS grid, simply appending to the container might put it at the end.
+                // To put it visibly "after" the clicked card's row is complex without JS row calculation.
+                // Simpler alternative for "Notion Gallery": Open as a modal overlay or insert after the specific item.
+                // Let's try inserting it right after the card wrapper element in the grid container for now, styling it to span full width.
+                // CSS Grid auto-placement might flow it to the next available slot. To force full width, applied grid-column: 1/-1.
+
+                // For proper visual flow, we need to insert it. 
+                // Ideally, we'd find the last item in the current row. 
+                // For simplicity, let's insert it immediately after the clicked card.
+                // It will appear "next" in flow, forcing a new row because of grid-column: 1/-1.
+
+                cardWrapper.insertAdjacentElement('afterend', expandedDiv);
+
+                // Scroll to it
+                expandedDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            window.closeExpand = function (e) {
+                e.stopPropagation(); // Prevent re-triggering card click
+                const view = e.target.closest('.blog-expanded-view');
+                if (view) view.remove();
             }
 
             window.onload = loadBlog;
