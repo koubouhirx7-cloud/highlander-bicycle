@@ -1614,8 +1614,8 @@ h2::before {
     bottom: env(safe-area-inset-bottom, 10px);
     left: 2%;
     width: 96%;
-    background: rgba(30, 30, 30, 0.75);
-    /* 75% opacity as requested */
+    background: rgba(30, 30, 30, 0.50);
+    /* 50% opacity as requested */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 10px 5px;
