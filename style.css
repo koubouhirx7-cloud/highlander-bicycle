@@ -1610,19 +1610,21 @@ h2::before {
 /* Sticky Contact Footer */
 .sticky-footer {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(30, 30, 30, 0.65);
-    backdrop-filter: blur(5px);
-    padding: 15px 0 25px;
-    /* Added extra padding at bottom for iPhone home bar */
+    bottom: 4vh;
+    /* Elevate from the bottom so it comes up higher */
+    left: 4%;
+    width: 92%;
+    background: rgba(30, 30, 30, 0.98);
+    /* Almost solid to fix transparency */
+    backdrop-filter: blur(10px);
+    padding: 12px 5px;
+    border-radius: 12px;
     z-index: 9999;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     display: block;
-    transform: translateY(0);
-    transition: transform 0.3s ease;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(150%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sticky-footer-container {
@@ -1630,7 +1632,8 @@ h2::before {
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    gap: 8px; /* Reduced gap for 3 items */
+    gap: 8px;
+    /* Reduced gap for 3 items */
     padding: 0 10px;
 }
 
@@ -1642,7 +1645,8 @@ h2::before {
 .footer-btn-label {
     display: block;
     color: rgba(255, 255, 255, 0.9);
-    font-size: 0.65rem; /* Smaller font for 3 items */
+    font-size: 0.65rem;
+    /* Smaller font for 3 items */
     margin-bottom: 5px;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -1660,7 +1664,8 @@ h2::before {
     text-decoration: none;
     color: white;
     font-weight: 700;
-    font-size: 0.85rem; /* Smaller font */
+    font-size: 0.85rem;
+    /* Smaller font */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s, opacity 0.2s;
     border: none;
@@ -1703,10 +1708,11 @@ h2::before {
 
 /* Add padding to body so footer doesn't cover content */
 body {
-    padding-bottom: 90px;
+    padding-bottom: 120px;
 }
 
 @media (min-width: 768px) {
+
     /* Optional: Hide on desktop if preferred, or adjust style */
     .sticky-footer {
         display: none;
@@ -1718,13 +1724,6 @@ body {
 }
 
 /* Initially collapsed logic - Scroll reveal */
-.sticky-footer {
-    transform: translateY(100%);
-    /* Start hidden */
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    bottom: 0;
-}
-
 .sticky-footer.show {
     transform: translateY(0);
     /* Fully visible */
