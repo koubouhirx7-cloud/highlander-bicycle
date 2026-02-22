@@ -176,10 +176,10 @@ if (checkoutForm) {
 renderCheckout();
 
 /* --- Sticky Footer Scroll Reveal --- */
-const stickyFooter = document.getElementById('stickyFooter');
 let lastScrollTop = 0;
 
 window.addEventListener('scroll', () => {
+    const stickyFooter = document.getElementById('stickyFooter');
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     if (stickyFooter) {
         // Show after scrolling down 200px
