@@ -180,14 +180,23 @@ let lastScrollTop = 0;
 
 window.addEventListener('scroll', () => {
     const stickyFooter = document.getElementById('stickyFooter');
+    if (!stickyFooter) return;
+
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (stickyFooter) {
-        // Show after scrolling down 200px
-        if (scrollTop > 200) {
-            stickyFooter.classList.add('show');
-        } else {
-            stickyFooter.classList.remove('show');
-        }
+
+    // Determine scroll direction
+    if (scrollTop > lastScrollTop && scrollTop > 50) {
+        // Scrolling DOWN -> Show Footer
+        stickyFooter.classList.add('show');
+    } else if (scrollTop < lastScrollTop) {
+        // Scrolling UP -> Hide Footer
+        stickyFooter.classList.remove('show');
     }
+
+    // Hide at the very top of the page
+    if (scrollTop <= 50) {
+        stickyFooter.classList.remove('show');
+    }
+
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
