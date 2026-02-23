@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人様向けサービス | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .concept-hero {
+            padding: 160px 0 80px;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/hero_1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .philosophy-section {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+
+        .highlight-card {
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .quality-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--secondary-color);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            letter-spacing: 0.1em;
+        }
+
+        .sales-intro {
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-icon-wrapper {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .menu-icon-wrapper.sales {
+            background: #2c3e50;
+        }
+
+        .menu-icon-wrapper.custom {
+            background: #d35400;
+        }
+
+        .menu-icon-wrapper.paint {
+            background: #8e44ad;
+        }
+
+        .menu-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .menu-content p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .menu-btn {
+            display: inline-block;
+            margin-top: auto;
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .menu-card:hover .menu-btn {
+            color: #e67e22;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="brand.html">Brand</a></li>
+                    <li><a href="service.html" class="active">Service</a></li>
+                    <li><a href="kids.html">Kids</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="https://xs001364.xsrv.jp" target="_blank"
+                            style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">Shop</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="concept-hero">
+            <div class="container">
+                <span class="quality-badge">PRIVATE SERVICES</span>
+                <h1 style="font-family: 'Outfit', sans-serif; margin-bottom: 20px; letter-spacing: 0.05em;">
+                    あなたのイメージを形にする</h1>
+                <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; font-weight: 300;">
+                    自転車を売るだけではない、Highlanderのフィロソフィー</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="highlight-card"
+                    style="max-width: 900px; margin: -100px auto 60px; position: relative; z-index: 10;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <span
+                            style="color: var(--secondary-color); font-size: 2rem; margin-bottom: 15px; display: block;">
+                            <i class="fas fa-quote-left"></i>
+                        </span>
+                        <h2
+                            style="font-family: 'Zen Old Mincho', serif; font-size: 1.6rem; line-height: 1.6; margin-bottom: 20px; font-weight: 700;">
+                            お客様の頭の中にあるイメージを、<br>一緒に実現させてください。
+                        </h2>
+                    </div>
+
+                    <div class="sales-intro text-center">
+                        <p>Highlanderは、単に「自転車を販売する」だけのお店ではありません。<br>
+                            お客様が想い描いていること、走りたい場所、休日の風景…<br>
+                            その頭の中にあるフワッとしたアイディアやイメージを、<br>プロの技術と知見をもって「形」にするためのお手伝いをしています。</p>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px dashed #ddd; margin: 40px 0;">
+
+                    <div class="grid-2">
+                        <div>
+                            <h3
+                                style="color: var(--primary-color); font-size: 1.3rem; margin-bottom: 20px; border-left: 3px solid var(--secondary-color); padding-left: 15px;">
+                                時間と手間をかける理由
+                            </h3>
+                            <p style="line-height: 1.8; color: #555;">
+                                他のお店では「それは難しい」と断られてしまうようなこだわりのオーダーや、特殊なカスタマイズこそ、私たちが真価を発揮する領域です。<br><br>
+                                だからこそ、最適解を導き出すために多くの時間をかけて考え、お客様と対話を重ねます。<br>
+                                <strong>その分、対応にかかるお時間や工賃は、通常よりも高く設定させていただいております。</strong><br><br>
+                                すべては、決して妥協のない「最高の一台」と「最高の体験」を生み出すための、Highlanderの覚悟です。
+                            </p>
+                        </div>
+                        <div>
+                            <img src="images/store_interior.jpg" alt="Philosophy"
+                                style="width: 100%; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="text-align: center; display: flex; flex-direction: column; align-items: center; margin-top: 80px; margin-bottom: 40px;">
+                    <span class="quality-badge" style="background: var(--primary-color); margin-bottom: 5px;">MENU
+                        DETAILS</span>
+                    <h2
+                        style="display: inline-block; position: relative; left: 0; transform: none; margin: 0 auto 15px;">
+                        詳しいサービスメニュー</h2>
+                    <p style="opacity: 0.8; margin-top: 5px;">それぞれのニーズに特化した詳細ページへ</p>
+                </div>
+
+                <div class="menu-grid">
+                    <!-- Sales -->
+                    <a href="service-sales.html" class="menu-card">
+                        <div class="menu-icon-wrapper sales">
+                            <i class="fas fa-bicycle"></i>
+                        </div>
+                        <div class="menu-content">
+                            <h3>車体・パーツ販売</h3>
+                            <p>あなたの日常を豊かにする最高のパートナーをご提案。納車前の徹底した再構築によって、本来の性能を引き出します。</p>
+                            <span class="menu-btn">詳細を見る <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- Custom -->
+                    <a href="custom.html" class="menu-card">
+                        <div class="menu-icon-wrapper custom">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="menu-content">
+                            <h3>カスタマイズ・修理</h3>
+                            <p>ポジション調整から、フレームの載せ替え、特殊なパーツアセンブルまで。「こうしたい」という想いに技術で応えます。</p>
+                            <span class="menu-btn">詳細を見る <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- Paint -->
+                    <a href="service-paint.html" class="menu-card">
+                        <div class="menu-icon-wrapper paint">
+                            <i class="fas fa-paint-roller"></i>
+                        </div>
+                        <div class="menu-content">
+                            <h3>自転車の塗装 (ペイント)</h3>
+                            <p>愛着のあるフレームを新たな顔に。補修からフルオリジナルペイントまで、世界に一つだけの色を纏わせます。</p>
+                            <span class="menu-btn">詳細を見る <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section" style="padding: 40px 0; background: #fff;">
+            <div class="container text-center">
+                <a href="service.html" class="btn btn-outline"><i class="fas fa-chevron-left"
+                        style="margin-right: 10px;"></i>サービス総合ページに戻る</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container" style="margin-bottom: 20px;"><a href="brand.html"
+                style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Brand
+                List</a> | <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank"
+                style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a>
+        </div>
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <div class="sticky-footer" id="stickyFooter">
+        <div class="sticky-footer-container">
+            <div class="footer-btn-wrapper">
+                <span class="footer-btn-label">お電話</span>
+                <a href="tel:0795982334" class="footer-btn btn-contact">
+                    <i class="fas fa-phone-alt"></i>電話
+                </a>
+            </div>
+            <div class="footer-btn-wrapper">
+                <span class="footer-btn-label">チャット</span>
+                <a href="https://lin.ee/iUseF0W" target="_blank" class="footer-btn btn-line">
+                    <i class="fab fa-line"></i>LINE
+                </a>
+            </div>
+            <div class="footer-btn-wrapper">
+                <span class="footer-btn-label">ご相談</span>
+                <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank" class="footer-btn btn-reserve">
+                    <i class="far fa-calendar-alt"></i>来店予約
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
