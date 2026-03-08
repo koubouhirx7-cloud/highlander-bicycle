@@ -147,7 +147,8 @@
                     <li><a href="service.html" class="active">Service</a></li>
                     <li><a href="custom.html">Custom</a></li>
                     <li><a href="rental.html">Rental & Tour</a></li>
-                    <li><a href="https://xs001364.xsrv.jp" target="_blank" style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="https://xs001364.xsrv.jp" target="_blank"
+                            style="font-weight: 700; color: #d35400;">WEB部</a></li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="access.html">Access</a></li>
                     <li><a href="shop.html" class="nav-btn">Shop</a></li>
@@ -177,78 +178,260 @@
                         style="position: static; transform: none; display: inline-block; margin: 0 auto; text-align: center; left: auto; border-bottom: none;">
                         Maintenance<br>Menu</h2>
                     <div style="width: 40px; height: 2px; background: var(--secondary-color); margin: 15px auto;"></div>
-                    <p style="text-align: center; opacity: 0.8;">標準的な修理・点検の基本工賃（税込）</p>
-                    <p class="price-note" style="text-align: center;">※パーツ代は別途頂戴いたします。他店購入車も同料金で承ります。</p>
+                    <p style="text-align: center; opacity: 0.8;">プロショップならではの、確かな技術と安心。（税込）</p>
+                    <p class="price-note" style="text-align: center;">
+                        ※記載のない作業に関しての作業目安料金は１時間あたり¥10000〜<br>
+                        ※パーツ代は別途頂戴いたします。<br>※他店購入車や特殊規格の場合は追加料金が発生する場合がございます。</p>
+                </div>
+
+                <style>
+                    .detailed-price-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 50px;
+                        background: white;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+                        border-radius: 8px;
+                        overflow: hidden;
+                    }
+
+                    .detailed-price-table th,
+                    .detailed-price-table td {
+                        padding: 15px 20px;
+                        text-align: left;
+                        border-bottom: 1px solid #f0f0f0;
+                    }
+
+                    .detailed-price-table th {
+                        background-color: var(--primary-color);
+                        color: white;
+                        font-weight: 500;
+                        letter-spacing: 0.05em;
+                    }
+
+                    .detailed-price-table td.price-col {
+                        font-family: 'Outfit', sans-serif;
+                        font-weight: 700;
+                        color: var(--secondary-color);
+                        text-align: right;
+                        white-space: nowrap;
+                    }
+
+                    .detailed-price-table tr:last-child td {
+                        border-bottom: none;
+                    }
+
+                    .detailed-price-table tr:hover {
+                        background-color: #fcfbf9;
+                    }
+
+                    .table-note {
+                        display: block;
+                        font-size: 0.8rem;
+                        color: #888;
+                        margin-top: 5px;
+                        font-weight: 400;
+                    }
+                </style>
+
+                <div class="price-category">
+                    <h3><i class="fas fa-comments"></i> 各種ご相談・コンサルティング</h3>
+                    <p style="margin-bottom: 20px; font-size: 0.95rem; color: #555;">
+                        持ち込みパーツでの組み立てや、修理・カスタムに関する総合的なご相談を承ります。</p>
+                    <table class="detailed-price-table">
+                        <thead>
+                            <tr>
+                                <th>コース名・作業内容</th>
+                                <th style="text-align: right;">作業工賃</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>パーツマッチング・各種ご相談</strong>
+                                    <span class="table-note">お持ち込み前提での可否判断、他店購入車の互換性確認、さまざまな自転車に関するコンサルティング</span>
+                                </td>
+                                <td class="price-col">¥10,000 / 1時間</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="price-category">
-                    <h3><i class="fas fa-dot-circle"></i> 車輪・タイヤ・ブレーキ</h3>
-                    <ul class="price-list">
-                        <li class="price-item">
-                            <span class="price-label">パンク修理（1箇所）</span>
-                            <span class="price-value">¥1,100 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">タイヤ・チューブ交換（前輪）</span>
-                            <span class="price-value">¥1,650 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">タイヤ・チューブ交換（後輪）</span>
-                            <span class="price-value">¥2,750 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">ブレーキ本体交換（片側）</span>
-                            <span class="price-value">¥1,760 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">ブレーキワイヤー調整</span>
-                            <span class="price-value">¥880 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">ホイール振れ取り</span>
-                            <span class="price-value">¥2,200 〜</span>
-                        </li>
-                    </ul>
+                    <h3><i class="fas fa-tools"></i> 総合メンテナンス・オーバーホール</h3>
+                    <p style="margin-bottom: 20px; font-size: 0.95rem; color: #555;">
+                        愛車を長く、最高の状態で乗るためのトータルケア。お預かりして熟練のメカニックが仕上げます。</p>
+                    <table class="detailed-price-table">
+                        <thead>
+                            <tr>
+                                <th>コース名・作業内容</th>
+                                <th style="text-align: right;">作業工賃</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>セミ・オーバーホール (ライト)</strong>
+                                    <span
+                                        class="table-note">温水での洗車、清掃、ブレーキ・シフト調整(交換なし)、ホイール振れ取り、ヘッド分解・BB・ハブ清掃(分解なし)、バーテープ交換等</span>
+                                </td>
+                                <td class="price-col">¥35,200 〜</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>スタンダード・オーバーホール</strong>
+                                    <span
+                                        class="table-note">フレーム全分解・清掃、ご指定の消耗品交換(部品代金別途)、BB・ハブ分解清掃、フレーム簡易コーティング、再組立・各部微調整</span>
+                                </td>
+                                <td class="price-col">¥55,000 〜</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>フル・オーバーホール</strong>
+                                    <span class="table-note">スタンダード内容＋ペダル分解、より細かい洗浄、フレームガラスコーティング</span>
+                                </td>
+                                <td class="price-col">¥77,000 〜</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: -30px; margin-bottom: 50px;">
+                        ※油圧ディスクブレーキ車、フルサスペンション車は別途追加工賃(¥12,000〜)がかかります。</p>
                 </div>
 
                 <div class="price-category">
-                    <h3><i class="fas fa-random"></i> 駆動・変速系</h3>
-                    <ul class="price-list">
-                        <li class="price-item">
-                            <span class="price-label">チェーン交換</span>
-                            <span class="price-value">¥1,650 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">変速調整（前後各）</span>
-                            <span class="price-value">¥1,100 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">ディレイラー交換</span>
-                            <span class="price-value">¥2,750 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">BB（ボトムブラケット）交換</span>
-                            <span class="price-value">¥3,300 〜</span>
-                        </li>
-                    </ul>
+                    <h3><i class="fas fa-dot-circle"></i> タイヤ・ホイール関連</h3>
+                    <table class="detailed-price-table">
+                        <thead>
+                            <tr>
+                                <th>作業項目</th>
+                                <th style="text-align: right;">作業工賃</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>タイヤ・チューブ交換 (クリンチャー / 1本)</td>
+                                <td class="price-col">¥2,640</td>
+                            </tr>
+                            <tr>
+                                <td>タイヤ交換 (チューブレス / 1本)<span class="table-note">シーラント注入・ビード上げ含む</span></td>
+                                <td class="price-col">¥4,950</td>
+                            </tr>
+                            <tr>
+                                <td>ホイール振れ取り (縦横両方 / 1本)<span class="table-note">(タイヤ分解必要な車輪は脱着費用別途)一般車の場合は要相談</span>
+                                </td>
+                                <td class="price-col">¥2,750 〜</td>
+                            </tr>
+                            <tr>
+                                <td>ハブ オーバーホール (分解・清掃・グリスアップ / 片側)</td>
+                                <td class="price-col">¥6,800</td>
+                            </tr>
+                            <tr>
+                                <td>ホイール組み換え (手組み / 1本)<span class="table-note">スポーク・ニップル代別途</span></td>
+                                <td class="price-col">¥12,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="price-category">
-                    <h3><i class="fas fa-check-double"></i> 組立・総合点検</h3>
-                    <ul class="price-list">
-                        <li class="price-item">
-                            <span class="price-label">安心点検（全体チェック・注油）</span>
-                            <span class="price-value">¥3,300 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">新車組立（箱出し・調整）</span>
-                            <span class="price-value">¥11,000 〜</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-label">フレーム組み上げ</span>
-                            <span class="price-value">¥22,000 〜</span>
-                        </li>
-                    </ul>
+                    <h3><i class="fas fa-hand-paper"></i> ブレーキ関連</h3>
+                    <table class="detailed-price-table">
+                        <thead>
+                            <tr>
+                                <th>作業項目</th>
+                                <th style="text-align: right;">作業工賃</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ブレーキシュー交換・調整 (前後セット / リム)</td>
+                                <td class="price-col">¥3,740</td>
+                            </tr>
+                            <tr>
+                                <td>ディスクブレーキパッド交換・調整 (前後セット)</td>
+                                <td class="price-col">¥5,800</td>
+                            </tr>
+                            <tr>
+                                <td>油圧ブレーキ ブリーディング (オイル交換 / 前後セット)<span class="table-note">※SRAM等は専用フルード代別途</span></td>
+                                <td class="price-col">¥11,040</td>
+                            </tr>
+                            <tr>
+                                <td>油圧ブレーキホース＋オイル交換 (完全内装式 / 前後セット)</td>
+                                <td class="price-col">¥16,000</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="price-category">
+                    <h3><i class="fas fa-random"></i> 駆動系 (ドライブトレイン)・変速関連</h3>
+                    <table class="detailed-price-table">
+                        <thead>
+                            <tr>
+                                <th>作業項目</th>
+                                <th style="text-align: right;">作業工賃</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>シフト・ブレーキワイヤー全交換 (前後セット)<span
+                                        class="table-note">インナー・アウターケーブル交換および全調整(全部内装のバイクはオーバーホールプランのみ受付)</span></td>
+                                <td class="price-col">¥15,000〜</td>
+                            </tr>
+                            <tr>
+                                <td>チェーン交換・調整</td>
+                                <td class="price-col">¥3,960</td>
+                            </tr>
+                            <tr>
+                                <td>ボトムブラケット (BB) 交換 (圧入式・ねじ切り含む)</td>
+                                <td class="price-col">¥8,000 〜</td>
+                            </tr>
+                            <tr>
+                                <td>コンポーネント一式交換 (油圧ディスクブレーキモデル)<span class="table-note">ブリーディング・全調整含む</span></td>
+                                <td class="price-col">¥33,000 〜</td>
+                            </tr>
+                            <tr>
+                                <td>Di2 / eTap 診断・ファームウェアアップデート</td>
+                                <td class="price-col">¥3,960</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="price-category">
+                    <h3><i class="fas fa-sparkles"></i> 洗車・コーティングサービス</h3>
+                    <table class="detailed-price-table">
+                        <thead>
+                            <tr>
+                                <th>コース名・作業内容</th>
+                                <th style="text-align: right;">作業工賃</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>プレミアム洗車</strong>
+                                    <span class="table-note">フレーム・ホイール・駆動系の温水での徹底洗浄(分解なし)＋簡易コーティング</span>
+                                </td>
+                                <td class="price-col">¥7,700</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>ディープクリーニング (駆動系)</strong>
+                                    <span class="table-note">チェーン・スプロケット・クランク分解・温水洗浄</span>
+                                </td>
+                                <td class="price-col">¥11,000</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>プレミアム ガラスコーティング (フレーム＋フォーク)</strong>
+                                    <span class="table-note">耐久2〜3年。持込/使用中フレームの下地処理・磨き・強固な被膜形成</span>
+                                </td>
+                                <td class="price-col">¥45,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -268,7 +451,7 @@
                     <div class="specialty-card">
                         <h4>フルオーバーホール (Re-Build)</h4>
                         <p>Highlanderの真骨頂。すべてのパーツを一度解体し、一点一点洗浄・点検・グリスアップ。新車以上の輝きと回転性能を蘇らせます。</p>
-                        <p style="margin-top: 15px; font-weight: 700; color: var(--secondary-color);">¥66,000 〜</p>
+                        <p style="margin-top: 15px; font-weight: 700; color: var(--secondary-color);">¥55,000〜</p>
                     </div>
 
                     <div class="specialty-card">
