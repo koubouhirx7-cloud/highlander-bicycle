@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>詳細作業料金表 | Highlander</title>
+    <meta name="description" content="Highlander自転車の、より詳細な各種パーツ交換・組み付け・調整の作業料金表です。プロショップならではの確実な作業をご提供します。">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Serif+JP:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .detailed-price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 50px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .detailed-price-table th,
+        .detailed-price-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detailed-price-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .detailed-price-table td.price-col {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .detailed-price-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .detailed-price-table tr:hover {
+            background-color: #fcfbf9;
+        }
+
+        .table-note {
+            display: block;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 12px 30px;
+            background-color: #eee;
+            color: #444;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .category-tab.active,
+        .category-tab:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .price-section {
+            display: none;
+        }
+
+        .price-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ヘッダー -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="index.html"
+                    style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-decoration: none; letter-spacing: 1px;">
+                    HIGHLANDER
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="concept.html">Concept</a></li>
+                    <li class="has-dropdown">
+                        <a href="service.html" class="active">Service</a>
+                        <ul class="dropdown">
+                            <li><a href="service-repair.html">Repair & Custom</a></li>
+                            <li><a href="service-paint.html">Paint</a></li>
+                            <li><a href="service-private-concept.html">Private Services</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://xs001364.xsrv.jp" target="_blank"
+                            style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">Shop</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header"
+            style="background-color: var(--primary-color); color: white; padding: 60px 0; text-align: center;">
+            <div class="container">
+                <h1 style="font-family: 'Outfit', sans-serif; margin-bottom: 20px;">Detailed Price List</h1>
+                <p style="font-size: 1.2rem; opacity: 0.9;">パーツごとの細かな作業工賃一覧</p>
+            </div>
+        </section>
+
+        <section class="section" style="background-color: #f7f9fa;">
+            <div class="container price-container">
+
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <p class="price-note"
+                        style="display: inline-block; text-align: left; background: white; padding: 20px 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        <strong>【工賃に関する注意事項】</strong><br><br>
+                        ※ 店舗で購入いただいた自転車に関しては<strong>20パーセント割引</strong>となります。<br>
+                        ※ パーツ・部品代金は別途頂戴いたします。<br>
+                        ※ 表に記載のない作業に関しての作業目安料金は、<strong>1時間あたり¥10,000〜</strong>となります。<br>
+                        ※ フレーム内装ケーブル、特殊規格、他店購入車など、状態によって追加調整費用が発生する場合がございます。<br>
+                        ※ 全て税込価格の目安表示です。
+                    </p>
+                </div>
+
+                <div class="category-tabs">
+                    <div class="category-tab active" data-target="sports">スポーツバイク向け工賃</div>
+                    <div class="category-tab" data-target="city">一般自転車・E-Bike向け工賃</div>
+                </div>
+
+                <!-- スポーツバイク向け -->
+                <div id="sports" class="price-section active">
+                    <h2
+                        style="margin-bottom: 30px; color: var(--primary-color); border-left: 4px solid var(--secondary-color); padding-left: 15px;">
+                        スポーツバイク向け (ロード・クロス・MTB等)</h2>
+
+                    <div class="price-category">
+                        <h3><i class="fas fa-dot-circle"></i> 足回り（タイヤ・チューブ・ホイール関連）</h3>
+                        <table class="detailed-price-table">
+                            <thead>
+                                <tr>
+                                    <th>作業項目</th>
+                                    <th style="text-align: right;">作業工賃 (税込)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>パンク修理（1ヶ所〜）<span class="table-note">水調べ・状態確認含む。追加穴+550円</span></td>
+                                    <td class="price-col">¥1,430〜</td>
+                                </tr>
+                                <tr>
+                                    <td>タイヤ・チューブ交換（クリンチャー）<span class="table-note">1本あたり / 車輪持ち込み時は割引あり</span></td>
+                                    <td class="price-col">¥2,640〜</td>
+                                </tr>
+                                <tr>
+                                    <td>チューブレス / レディ タイヤ交換・セッティング<span class="table-note">シーラント注入・ビード上げ等含む</span></td>
+                                    <td class="price-col">¥4,290〜</td>
+                                </tr>
+                                <tr>
+                                    <td>チューブラータイヤ貼り付け（テープ / セメント）<span
+                                            class="table-note">テープ代・セメント代別途。セメントは¥6,490〜</span></td>
+                                    <td class="price-col">¥4,290〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ホイール振れ取り<span class="table-note">車輪脱着不要の場合。脱着が必要な場合は追加費用</span></td>
+                                    <td class="price-col">¥1,650〜</td>
+                                </tr>
+                                <tr>
+                                    <td>スポーク交換<span class="table-note">振れ取り調整含む。前後輪により変動</span></td>
+                                    <td class="price-col">¥3,300〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ホイール手組み・組み換え（1本）<span class="table-note">バラし作業が必要な場合は別途</span></td>
+                                    <td class="price-col">¥11,000〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ハブオーバーホール（カップ・コーン分解グリスアップ）<span
+                                            class="table-note">前後輪・フリーボディ・ベアリング交換等により変動</span></td>
+                                    <td class="price-col">¥4,840〜</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="price-category">
+                        <h3><i class="fas fa-cogs"></i> 駆動系（ドライブトレイン・ギア・BB）</h3>
+                        <table class="detailed-price-table">
+                            <thead>
+                                <tr>
+                                    <th>作業項目</th>
+                                    <th style="text-align: right;">作業工賃 (税込)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>チェーン交換<span class="table-note">長さ調整・変速微調整含む</span></td>
+                                    <td class="price-col">¥3,960〜</td>
+                                </tr>
+                                <tr>
+                                    <td>チェーンリング交換・スプロケット交換<span class="table-note">クランク脱着が必要な場合は追加費用</span></td>
+                                    <td class="price-col">¥2,640〜</td>
+                                </tr>
+                                <tr>
+                                    <td>クランクセット交換（片側 / 左右）<span class="table-note">BB変更がない場合の交換・調整</span></td>
+                                    <td class="price-col">¥2,530〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ボトムブラケット (BB) 交換（ねじ切り / 圧入）<span
+                                            class="table-note">圧入式などの特殊BBは¥9,900〜の場合あり</span></td>
+                                    <td class="price-col">¥5,500〜</td>
+                                </tr>
+                                <tr>
+                                    <td>BBシェル タッピング・フェイシング<span class="table-note">BB周りの精度出し・面出し作業</span></td>
+                                    <td class="price-col">¥5,500〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ペダル交換・クリート取付・位置調整<span class="table-note">固着が激しい場合は別途見積</span></td>
+                                    <td class="price-col">¥1,760〜</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="price-category">
+                        <h3><i class="fas fa-random"></i> 変速関係（ワイヤー・ディレーラー・Di2など）</h3>
+                        <table class="detailed-price-table">
+                            <thead>
+                                <tr>
+                                    <th>作業項目</th>
+                                    <th style="text-align: right;">作業工賃 (税込)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ディレーラー（変速機）前後調整<span class="table-note">調整のみ</span></td>
+                                    <td class="price-col">¥1,760〜</td>
+                                </tr>
+                                <tr>
+                                    <td>変速ワイヤー交換（インナーのみ / フルセット 1本）<span class="table-note">フレーム内装式は追加費用あり</span></td>
+                                    <td class="price-col">¥2,200〜</td>
+                                </tr>
+                                <tr>
+                                    <td>前後ディレーラー本体交換<span class="table-note">交換および変速再セットアップ</span></td>
+                                    <td class="price-col">¥4,730〜</td>
+                                </tr>
+                                <tr>
+                                    <td>プーリー交換 / リプレイスエンド交換<span class="table-note">ディレーラーハンガー交換後の変速調整含む</span></td>
+                                    <td class="price-col">¥2,750〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ディレーラーハンガー（エンド）曲がり修正<span class="table-note">専用工具による精度出し</span></td>
+                                    <td class="price-col">¥6,930〜</td>
+                                </tr>
+                                <tr>
+                                    <td>Di2・eTap 等 電動コンポーネント交換・調整<span
+                                            class="table-note">ファームウェア設定、シンクロナイズドシフト設定等</span></td>
+                                    <td class="price-col">¥3,960〜</td>
+                                </tr>
+                                <tr>
+                                    <td>STI / デュアルコントロールレバー交換（機械式 左右）<span
+                                            class="table-note">バーテープ巻き直し等が必要になる場合があります</span></td>
+                                    <td class="price-col">¥13,420〜</td>
+                                </tr>
+                                <tr>
+                                    <td>STI / デュアルコントロールレバー交換（油圧式 左右）<span class="table-note">ブリーディング・ホース接続等の一連作業</span>
+                                    </td>
+                                    <td class="price-col">¥24,200〜</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="price-category">
+                        <h3><i class="fas fa-hand-paper"></i> ブレーキ周辺</h3>
+                        <table class="detailed-price-table">
+                            <thead>
+                                <tr>
+                                    <th>作業項目</th>
+                                    <th style="text-align: right;">作業工賃 (税込)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ブレーキ調整（前後）<span class="table-note">クリアランス調整や片効き取り等</span></td>
+                                    <td class="price-col">¥1,760〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ブレーキワイヤー交換（インナー / フルセット 1本）<span class="table-note">フレーム内装式は追加費用あり</span></td>
+                                    <td class="price-col">¥1,760〜</td>
+                                </tr>
+                                <tr>
+                                    <td>油圧ディスクブレーキ フルード交換・ブリーディング（1本）<span class="table-note">エア抜き・オイル全交換</span></td>
+                                    <td class="price-col">¥5,500〜</td>
+                                </tr>
+                                <tr>
+                                    <td>油圧ディスクブレーキ ホース交換・セッティング（1本）<span class="table-note">内装式などは追加費用あり</span></td>
+                                    <td class="price-col">¥7,150〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ブレーキシュー / パッド交換（片側 リム / ディスク）<span class="table-note">ディスクパッド交換は¥2,970〜</span>
+                                    </td>
+                                    <td class="price-col">¥1,430〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ブレーキキャリパー本体交換（リム / 機械式ディスク）<span class="table-note">機械式ディスクキャリパーは¥5,170〜</span>
+                                    </td>
+                                    <td class="price-col">¥3,080〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ディスクローター交換<span class="table-note">センターロック / 6ボルト対応</span></td>
+                                    <td class="price-col">¥3,740〜</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="price-category">
+                        <h3><i class="fas fa-bicycle"></i> ハンドル・コックピット・フォーク周り</h3>
+                        <table class="detailed-price-table">
+                            <thead>
+                                <tr>
+                                    <th>作業項目</th>
+                                    <th style="text-align: right;">作業工賃 (税込)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ドロップハンドル交換 / フラットバー交換<span class="table-note">ワイヤー類の再セッティングが必要な場合は別途</span></td>
+                                    <td class="price-col">¥7,700〜</td>
+                                </tr>
+                                <tr>
+                                    <td>バーテープ巻きつけ・交換<span class="table-note">古いテープの剥がし・清掃含む。テープ代別途</span></td>
+                                    <td class="price-col">¥4,400〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ステム交換 / サドル・シートポスト交換<span class="table-note">サドル位置出し・角度調整含む</span></td>
+                                    <td class="price-col">¥3,520〜</td>
+                                </tr>
+                                <tr>
+                                    <td>ヘッドパーツ交換・圧入・ガタ調整<span class="table-note">フレームからのフェイシング等が必要な場合は別途見積</span></td>
+                                    <td class="price-col">¥12,100〜</td>
+                                </tr>
+                                <tr>
+                                    <td>フロントフォーク交換・コラムカット<span class="table-note">スターファングルナット圧入・下玉押しセッティング等含む</span>
+                                    </td>
+                                    <td class="price-col">¥12,100〜</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 一般自転車向け -->
+                <div id="city" class="price-section">
+                    <h2
+                        style="margin-bottom: 30px; color: var(--primary-color); border-left: 4px solid var(--secondary-color); padding-left: 15px;">
+                        一般自転車・軽快車・E-Bike向け</h2>
+
+                    <div class="price-category">
+                        <h3><i class="fas fa-dot-circle"></i> 足回り・タイヤ</h3>
+                        <table class="detailed-price-table">
+                            <thead>
+                                <tr>
+                                    <th>作業項目</th>
+                                    <th style="text-align: right;">作業工賃 (税込)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>パンク修理・水調べ<span class="table-note">1穴追加ごとに+550円、虫ゴム交換は+330円</span></td>
+                                    <td class="price-col">¥1,430〜</td>
+                                </tr>
+                                <tr>
+                                    <td>タイヤ・チューブ交換（前輪 / 後輪）<span class="table-note">後輪は変速・ブレーキの脱着があるため割増</span></td>
+                                    <td class="price-col">¥2,640〜</td>
+                                </tr>
+                                <tr>
+                                    <td>E-Bike/電動車 タイヤ・チューブ交換（前輪 / 後輪）<span class="table-note">モーター内蔵等のため割増</span></td>
+                                    <td class="price-col">¥3,960〜</td>
+                                </tr>
+                                <tr>
+                                    <td>スポーク・ニップル・車輪交換<span class="table-note">脱着の有無・後輪ギア有無によって変動</span></td>
+                                    <td class="price-col">¥2,530〜</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="price-category">
+                        <h3><i class="fas fa-cogs"></i> ブレーキ・変速・駆動・その他</h3>
+                        <table class="detailed-price-table">
+                            <thead>
+                                <tr>
+                                    <th>作業項目</th>
+                                    <th style="text-align: right;">作業工賃 (税込)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ブレーキゴム・ワイヤー・レバー交換<span class="table-note">ブレーキの鳴き解消、効きの調整など</span></td>
+                                    <td class="price-col">¥990〜</td>
+                                </tr>
+                                <tr>
+                                    <td>後ブレーキ本体交換（ローラー・バンド・サーボ）<span class="table-note">キーキー音がひどい場合の交換</span></td>
+                                    <td class="price-col">¥3,960〜</td>
+                                </tr>
+                                <tr>
+                                    <td>チェーン交換・調整（一般 / 電動アシスト）<span class="table-note">電動用の強化チェーン等は別途部品代</span></td>
+                                    <td class="price-col">¥3,960〜</td>
+                                </tr>
+                                <tr>
+                                    <td>変速ワイヤー・シフター・ベルクランク等交換<span class="table-note">内装3段などの変速不調修理</span></td>
+                                    <td class="price-col">¥1,650〜</td>
+                                </tr>
+                                <tr>
+                                    <td>各種パーツ取付（カゴ・スタンド・泥除け・鍵・ライト）<span class="table-note">部品のお持ち込みや特殊加工が必要な場合は別途</span>
+                                    </td>
+                                    <td class="price-col">¥660〜</td>
+                                </tr>
+                                <tr>
+                                    <td>同乗器（チャイルドシート）・手押し棒・補助輪取付<span class="table-note">安全性を確認しての確実な施工</span></td>
+                                    <td class="price-col">¥1,100〜</td>
+                                </tr>
+                                <tr>
+                                    <td>電動アシスト関連（手元スイッチ・センサー類交換）<span class="table-note">メーカー・車種に合わせて対応いたします</span></td>
+                                    <td class="price-col">¥2,420〜</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mt-50 text-center" style="margin-top: 50px;">
+                    <a href="service-repair.html" class="btn btn-outline"><i class="fas fa-chevron-left"
+                            style="margin-right: 10px;"></i>Repair & Customメニューに戻る</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container" style="margin-bottom: 20px;">
+            <a href="brand.html"
+                style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Brand
+                List</a> |
+            <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank"
+                style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a>
+        </div>
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // タブ切り替え制御
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.category-tab');
+            const sections = document.querySelectorAll('.price-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // タブのアクティブ状態をリセット
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // セクションの表示切り替え
+                    const targetId = tab.getAttribute('data-target');
+                    sections.forEach(section => {
+                        if (section.id === targetId) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
