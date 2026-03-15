@@ -74,8 +74,10 @@ function updateCartUI() {
     }
 }
 
-document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-    button.addEventListener('click', () => {
+// Use event delegation so dynamically loaded products also trigger the cart
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('add-to-cart-btn')) {
+        const button = e.target;
         const id = button.getAttribute('data-id');
         const name = button.getAttribute('data-name');
         const price = parseInt(button.getAttribute('data-price'));
@@ -90,7 +92,7 @@ document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartUI();
         alert(`${name} をカートに追加しました。`);
-    });
+    }
 });
 
 // Initialize UI
@@ -200,3 +202,109 @@ window.addEventListener('scroll', () => {
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
+
+/* --- microCMS Shop Integration --- */
+async function fetchShopProducts() {
+    const productGrid = document.querySelector('.product-grid');
+    if (!productGrid || !document.querySelector('.shop-filters')) return;
+
+    if (typeof MICROCMS_SERVICE_DOMAIN === 'undefined' || typeof MICROCMS_API_KEY === 'undefined') {
+        productGrid.innerHTML = '<p style="text-align: center; width: 100%; padding: 40px; color: red;">APIキーが設定されていません。config.jsを確認してください。</p>';
+        return;
+    }
+
+    productGrid.innerHTML = '<p style="text-align: center; width: 100%; padding: 40px; color: #666;">商品を読み込み中...</p>';
+
+    try {
+        const response = await fetch(`https://${MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/products`, {
+            headers: {
+                'X-MICROCMS-API-KEY': MICROCMS_API_KEY
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        if (!data.contents || data.contents.length === 0) {
+            productGrid.innerHTML = '<p style="text-align: center; width: 100%; padding: 40px; color: #666;">現在、販売中の商品はございません。</p>';
+            return;
+        }
+
+        let html = '';
+        data.contents.forEach(item => {
+            const title = item.title || '商品名なし';
+            const price = item.price ? `¥${item.price.toLocaleString()}` : '価格未定';
+            const imageUrl = item.image && item.image.url ? item.image.url : 'images/placeholder-product.jpg';
+            let category = 'all';
+            if (item.category) {
+                // Determine category format (microCMS array of objects vs string)
+                if (Array.isArray(item.category)) {
+                    category = item.category.length > 0 ? item.category[0] : 'all';
+                } else {
+                    category = item.category;
+                }
+            }
+
+            html += `
+                <div class="product-card" data-category="${category}">
+                    <div class="product-img">
+                        <img src="${imageUrl}" alt="${title}">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">${String(category).toUpperCase()}</span>
+                        <h3 class="product-title">${title}</h3>
+                        <p class="product-price">${price}</p>
+                        <button class="add-to-cart-btn btn" data-id="${item.id}" data-name="${title}" data-price="${item.price || 0}">カートに入れる</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        productGrid.innerHTML = html;
+
+        // Re-apply filters if already selected
+        const activeFilterBtn = document.querySelector('.shop-filters .filter-btn.active');
+        if (activeFilterBtn) {
+            const filterValue = activeFilterBtn.getAttribute('data-category');
+            applyShopFilter(filterValue);
+        }
+
+    } catch (error) {
+        console.error('Error fetching products from microCMS:', error);
+        productGrid.innerHTML = '<p style="text-align: center; width: 100%; padding: 40px; color: red;">商品の読み込みに失敗しました。</p>';
+    }
+}
+
+// category UI filtering logic
+function applyShopFilter(filterValue) {
+    const productCards = document.querySelectorAll('.product-grid .product-card');
+    productCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filterValue === 'all' || category === filterValue || (category && category.includes(filterValue))) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+const shopFilterBtns = document.querySelectorAll('.shop-filters .filter-btn');
+if (shopFilterBtns.length > 0) {
+    shopFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            shopFilterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filterValue = btn.getAttribute('data-category');
+            applyShopFilter(filterValue);
+        });
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fetchShopProducts);
+} else {
+    fetchShopProducts();
+}
