@@ -1,0 +1,8 @@
+{
+  "name": "highlander-bicycle",
+  "version": "1.0.0",
+  "description": "Highlander Bicycle Shop",
+  "scripts": {
+    "build": "echo \"const MICROCMS_SERVICE_DOMAIN = '${MICROCMS_SERVICE_DOMAIN}';\nconst MICROCMS_API_KEY = '${MICROCMS_API_KEY}';\" > config.js"
+  }
+}
