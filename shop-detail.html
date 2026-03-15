@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品詳細 | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .shop-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .shop-detail-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .shop-detail-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .shop-detail-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .shop-detail-category {
+            font-family: 'Outfit', sans-serif;
+            color: #d35400;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .shop-detail-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-family: 'Zen Old Mincho', serif;
+        }
+        .shop-detail-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        .shop-detail-desc {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 40px;
+            /* In case rich editor has html */
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #666;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: #d35400;
+        }
+        .shop-detail-loading, .shop-detail-error {
+            text-align: center;
+            padding: 80px 20px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="brand.html">Brand</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="https://xs001364.xsrv.jp" target="_blank" style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="active nav-btn">オンラインショップ</a></li>
+                    <li class="cart-header-icon">
+                        <a href="checkout.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-content" style="padding-top: 100px;">
+        <section class="section">
+            <div class="container">
+                <a href="shop.html" class="back-link"><i class="fas fa-arrow-left"></i> ショップ一覧へ戻る</a>
+                
+                <div id="shop-detail-content">
+                    <div class="shop-detail-loading">商品データを読み込み中...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer"><div class="container" style="margin-bottom: 20px;"><a href="brand.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Brand List</a> | <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a></div>
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        async function fetchProductDetail() {
+            const container = document.getElementById('shop-detail-content');
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (!productId) {
+                container.innerHTML = '<div class="shop-detail-error">商品が見つかりません。</div>';
+                return;
+            }
+
+            if (typeof MICROCMS_SERVICE_DOMAIN === 'undefined' || typeof MICROCMS_API_KEY === 'undefined') {
+                container.innerHTML = '<div class="shop-detail-error">APIキーが設定されていません。</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://${MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/products/${productId}`, {
+                    headers: {
+                        'X-MICROCMS-API-KEY': MICROCMS_API_KEY
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const item = await response.json();
+                
+                const title = item.title || '商品名なし';
+                document.title = `${title} | Highlander`;
+                
+                const priceNum = item.price || 0;
+                const priceStr = item.price ? `¥${item.price.toLocaleString()}` : '価格未定';
+                const imageUrl = item.image && item.image.url ? item.image.url : 'logo.png';
+                const description = item.description || '説明がありません。';
+
+                let category = 'all';
+                if (item.category) {
+                    if (Array.isArray(item.category)) {
+                        category = item.category.length > 0 ? item.category[0] : 'all';
+                    } else {
+                        category = item.category;
+                    }
+                }
+
+                container.innerHTML = `
+                    <div class="shop-detail-container">
+                        <div class="shop-detail-img">
+                            <img src="${imageUrl}" alt="${title}">
+                        </div>
+                        <div class="shop-detail-info">
+                            <div class="shop-detail-category">${String(category).toUpperCase()}</div>
+                            <h1 class="shop-detail-title">${title}</h1>
+                            <div class="shop-detail-price">${priceStr}</div>
+                            <div class="shop-detail-desc">${description}</div>
+                            <button class="add-to-cart-btn btn" data-id="${item.id}" data-name="${title}" data-price="${priceNum}">カートに入れる</button>
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('Error fetching product detail:', error);
+                container.innerHTML = '<div class="shop-detail-error">商品の読み込みに失敗しました。URLが正しいか確認してください。</div>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchProductDetail);
+    </script>
+    
+    <div class="sticky-footer" id="stickyFooter">
+        <div class="sticky-footer-container">
+            <div class="footer-btn-wrapper">
+                <span class="footer-btn-label">お電話</span>
+                <a href="tel:0795982334" class="footer-btn btn-contact">
+                    <i class="fas fa-phone-alt"></i>電話
+                </a>
+            </div>
+            <div class="footer-btn-wrapper">
+                <span class="footer-btn-label">チャット</span>
+                <a href="https://lin.ee/iUseF0W" target="_blank" class="footer-btn btn-line">
+                    <i class="fab fa-line"></i>LINE
+                </a>
+            </div>
+            <div class="footer-btn-wrapper">
+                <span class="footer-btn-label">ご相談</span>
+                <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank" class="footer-btn btn-reserve">
+                    <i class="far fa-calendar-alt"></i>来店予約
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

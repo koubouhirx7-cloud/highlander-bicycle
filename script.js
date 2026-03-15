@@ -237,7 +237,7 @@ async function fetchShopProducts() {
         data.contents.forEach(item => {
             const title = item.title || '商品名なし';
             const price = item.price ? `¥${item.price.toLocaleString()}` : '価格未定';
-            const imageUrl = item.image && item.image.url ? item.image.url : 'images/placeholder-product.jpg';
+            const imageUrl = item.image && item.image.url ? item.image.url : 'logo.png';
             let category = 'all';
             if (item.category) {
                 // Determine category format (microCMS array of objects vs string)
@@ -250,14 +250,18 @@ async function fetchShopProducts() {
 
             html += `
                 <div class="product-card" data-category="${category}">
-                    <div class="product-img">
-                        <img src="${imageUrl}" alt="${title}">
-                    </div>
-                    <div class="product-info">
-                        <span class="product-category">${String(category).toUpperCase()}</span>
-                        <h3 class="product-title">${title}</h3>
-                        <p class="product-price">${price}</p>
-                        <button class="add-to-cart-btn btn" data-id="${item.id}" data-name="${title}" data-price="${item.price || 0}">カートに入れる</button>
+                    <a href="shop-detail.html?id=${item.id}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                        <div class="product-img">
+                            <img src="${imageUrl}" alt="${title}">
+                        </div>
+                        <div class="product-info" style="padding-bottom: 0;">
+                            <span class="product-category">${String(category).toUpperCase()}</span>
+                            <h3 class="product-title">${title}</h3>
+                            <p class="product-price">${price}</p>
+                        </div>
+                    </a>
+                    <div style="padding: 0 1rem 1rem;">
+                        <button class="add-to-cart-btn btn" style="width: 100%; margin-top: 10px;" data-id="${item.id}" data-name="${title}" data-price="${item.price || 0}">カートに入れる</button>
                     </div>
                 </div>
             `;
