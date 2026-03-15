@@ -91,9 +91,34 @@ document.addEventListener('click', (e) => {
 
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartUI();
-        alert(`${name} をカートに追加しました。`);
+        showCartToast(name);
     }
 });
+
+function showCartToast(name) {
+    let toast = document.getElementById('cart-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'cart-toast';
+        toast.className = 'cart-toast';
+        document.body.appendChild(toast);
+    }
+    
+    toast.innerHTML = `
+        <span class="cart-toast-text">${name} をカートに追加しました。</span>
+        <a href="checkout.html" class="cart-toast-btn">カートを見る</a>
+    `;
+    
+    // Reset animation
+    toast.classList.remove('show');
+    void toast.offsetWidth; // force reflow
+    toast.classList.add('show');
+    
+    // Auto hide
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 4000);
+}
 
 // Initialize UI
 updateCartUI();
