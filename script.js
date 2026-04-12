@@ -198,6 +198,11 @@ if (checkoutForm) {
         const paymentMethod = paymentMethodForm.value;
         const totalElement = document.getElementById('cart-total');
         const amount = totalElement ? totalElement.textContent.replace(/[^0-9]/g, '') : 0;
+        const addressInput = document.getElementById('address');
+
+        if (window.currentUserUid && addressInput && addressInput.value) {
+            localStorage.setItem('user_address_' + window.currentUserUid, addressInput.value);
+        }
 
         if (paymentMethod === 'bank') {
             cart = [];
