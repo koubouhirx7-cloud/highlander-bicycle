@@ -192,10 +192,22 @@ const checkoutForm = document.getElementById('checkout-form');
 if (checkoutForm) {
     checkoutForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('ご注文ありがとうございます！(デモ実装のため、実際には注文されません)');
-        cart = [];
-        localStorage.removeItem('cart');
-        window.location.href = 'index.html';
+        const paymentMethodForm = document.querySelector('input[name="payment_method"]:checked');
+        if (!paymentMethodForm) return;
+        
+        const paymentMethod = paymentMethodForm.value;
+        const totalElement = document.getElementById('cart-total');
+        const amount = totalElement ? totalElement.textContent.replace(/[^0-9]/g, '') : 0;
+
+        if (paymentMethod === 'bank') {
+            cart = [];
+            localStorage.removeItem('cart');
+            window.location.href = 'order-success-bank.html';
+        } else if (paymentMethod === 'stripe') {
+            window.location.href = `mock-stripe-checkout.html?amount=${amount}`;
+        } else if (paymentMethod === 'paypay') {
+            window.location.href = `mock-paypay-checkout.html?amount=${amount}`;
+        }
     });
 }
 

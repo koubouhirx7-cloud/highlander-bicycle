@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe決済（デモ） | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Noto Sans JP', sans-serif; background-color: #f7f9fc; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .checkout-box { background: #fff; width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 15px 35px rgba(50,50,93,0.1), 0 5px 15px rgba(0,0,0,0.07); padding: 30px; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h2 { margin: 0; font-size: 1.2rem; color: #32325d; }
+        .amount { font-size: 2rem; font-weight: 700; color: #32325d; text-align: center; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 0.8rem; font-weight: 500; color: #8898aa; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-wrapper { display: flex; align-items: center; background: #fff; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px 15px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1); }
+        .input-wrapper input { border: none; outline: none; width: 100%; font-size: 1rem; color: #32325d; }
+        .input-wrapper input::placeholder { color: #aab7c4; }
+        .btn-pay { width: 100%; background: #6772e5; color: #fff; border: none; padding: 14px; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; margin-top: 10px; }
+        .btn-pay:hover { background: #5469d4; box-shadow: 0 4px 6px rgba(50,50,93,0.11), 0 1px 3px rgba(0,0,0,0.08); transform: translateY(-1px); }
+        .alert { background: #fff3cd; color: #856404; padding: 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 20px; text-align: center; border: 1px solid #ffeeba; }
+    </style>
+</head>
+
+<body>
+    <div class="checkout-box">
+        <div class="header">
+            <h2>Highlander Bicycle Shop</h2>
+        </div>
+        <div class="alert">これはStripe決済のモックアップ画面です。<br>実際の決済は行われません。</div>
+        <div class="amount" id="display-amount">¥0</div>
+
+        <div class="input-group">
+            <label>カード番号</label>
+            <div class="input-wrapper">
+                <input type="text" placeholder="4242 4242 4242 4242" value="4242 4242 4242 4242">
+            </div>
+        </div>
+        <div style="display: flex; gap: 15px;">
+            <div class="input-group" style="flex: 1;">
+                <label>有効期限</label>
+                <div class="input-wrapper">
+                    <input type="text" placeholder="MM / YY" value="12 / 28">
+                </div>
+            </div>
+            <div class="input-group" style="flex: 1;">
+                <label>CVC</label>
+                <div class="input-wrapper">
+                    <input type="text" placeholder="123" value="123">
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-pay" onclick="processPayment()">支払いを確定する</button>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.75rem; color: #aab7c4;">
+            <p>Powered by <strong>Stripe</strong> (Simulation)</p>
+            <a href="checkout.html" style="color: #6772e5; text-decoration: none;">キャンセルして戻る</a>
+        </div>
+    </div>
+
+    <script>
+        // Get amount from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const amount = urlParams.get('amount') || 0;
+        document.getElementById('display-amount').textContent = `¥${parseInt(amount).toLocaleString()}`;
+
+        function processPayment() {
+            const btn = document.querySelector('.btn-pay');
+            btn.innerHTML = '処理中...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                // Clear cart via localStorage before redirecting
+                localStorage.removeItem('cart');
+                window.location.href = 'order-success.html';
+            }, 1500);
+        }
+    </script>
+</body>
+
+</html>

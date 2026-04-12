@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPay決済（デモ） | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Noto Sans JP', sans-serif; background-color: #f2f2f2; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .paypay-box { background: #fff; width: 100%; max-width: 375px; border-radius: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        @media (min-width: 400px) {
+            .paypay-box { height: auto; border-radius: 12px; margin: 20px; }
+        }
+        .header { background: #FF0033; color: white; text-align: center; padding: 15px; font-weight: 700; font-size: 1.1rem; }
+        .content { padding: 30px 20px; flex: 1; text-align: center; }
+        .store-name { font-size: 1rem; color: #333; margin-bottom: 20px; }
+        .amount-display { font-size: 3rem; font-weight: 700; color: #333; margin-bottom: 30px; letter-spacing: -1px; }
+        .amount-display span { font-size: 1.2rem; margin-right: 5px; }
+        .btn-pay { width: 100%; background: #FF0033; color: white; border: none; padding: 16px; border-radius: 30px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+        .btn-pay:hover { opacity: 0.9; }
+        .btn-cancel { display: block; margin-top: 20px; color: #666; text-decoration: none; font-size: 0.9rem; }
+        .alert { background: #fff3cd; color: #856404; padding: 10px; font-size: 0.8rem; text-align: center; }
+        .scanner-placeholder { width: 200px; height: 200px; border: 2px dashed #ccc; border-radius: 10px; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #999; }
+    </style>
+    <!-- Use FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="paypay-box">
+        <div class="header">
+            支払い
+        </div>
+        <div class="alert">※これはPayPay決済のUIモックアップです。実際の決済は行われません。</div>
+        
+        <div class="content">
+            <div class="store-name">Highlander Bicycle Shop</div>
+            <div class="amount-display">
+                <span>¥</span><span id="display-amount">0</span>
+            </div>
+
+            <div class="scanner-placeholder">
+                <i class="fas fa-qrcode" style="font-size: 3rem; margin-bottom: 10px; color: #FF0033;"></i>
+                <span style="font-size: 0.8rem;">シミュレーション用</span>
+            </div>
+
+            <button class="btn-pay" onclick="processPayment()">支払う</button>
+            <a href="checkout.html" class="btn-cancel">支払いを取り消して戻る</a>
+        </div>
+    </div>
+
+    <script>
+        // Get amount from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const amount = urlParams.get('amount') || 0;
+        document.getElementById('display-amount').textContent = parseInt(amount).toLocaleString();
+
+        function processPayment() {
+            const btn = document.querySelector('.btn-pay');
+            btn.innerHTML = '決済中...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                // Clear cart via localStorage before redirecting
+                localStorage.removeItem('cart');
+                window.location.href = 'order-success.html';
+            }, 1500);
+        }
+    </script>
+</body>
+
+</html>
