@@ -118,66 +118,85 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-        const firebaseConfig = {
-            apiKey: FIREBASE_API_KEY,
-            authDomain: FIREBASE_AUTH_DOMAIN,
-            projectId: FIREBASE_PROJECT_ID,
-            storageBucket: FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-            appId: FIREBASE_APP_ID
-        };
+        // Check if Firebase variables are actually set in config.js (prevents crashes before Vercel envs are added)
+        if (typeof FIREBASE_API_KEY === 'undefined' || !FIREBASE_API_KEY || FIREBASE_API_KEY === '${FIREBASE_API_KEY}') {
+            console.log("Firebase API Keys missing. Running in mock mode.");
+            window.signInWithGoogle = () => {
+                const btn = document.getElementById('google-login-btn');
+                if(btn) { btn.innerHTML = '認証しています...'; btn.style.opacity = '0.7'; }
+                setTimeout(() => {
+                    document.getElementById('name').value = 'テスト 太郎';
+                    document.getElementById('email').value = 'test@example.com';
+                    if(btn) {
+                        btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> テスト 太郎 さんとしてログイン中`;
+                        btn.style.background = '#e8f0fe';
+                        btn.style.opacity = '1';
+                    }
+                    alert('【テスト環境通知】\nFirebaseの環境変数が設定されていないため、Googleログインはモックアップ動作として機能しました。');
+                }, 800);
+            };
+        } else {
+            const firebaseConfig = {
+                apiKey: FIREBASE_API_KEY,
+                authDomain: FIREBASE_AUTH_DOMAIN,
+                projectId: FIREBASE_PROJECT_ID,
+                storageBucket: FIREBASE_STORAGE_BUCKET,
+                messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+                appId: FIREBASE_APP_ID
+            };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const provider = new GoogleAuthProvider();
 
-        window.firebaseAuth = auth;
-        window.signInWithGoogle = () => {
-            const btn = document.getElementById('google-login-btn');
-            if(btn) { btn.innerHTML = '認証しています...'; btn.style.opacity = '0.7'; }
-            
-            signInWithPopup(auth, provider).then((result) => {
-                const user = result.user;
-                document.getElementById('name').value = user.displayName || '';
-                document.getElementById('email').value = user.email || '';
+            window.firebaseAuth = auth;
+            window.signInWithGoogle = () => {
+                const btn = document.getElementById('google-login-btn');
+                if(btn) { btn.innerHTML = '認証しています...'; btn.style.opacity = '0.7'; }
                 
-                const savedAddress = localStorage.getItem('user_address_' + user.uid);
-                if (savedAddress) document.getElementById('address').value = savedAddress;
-                
-                if(btn) {
-                    btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> ${user.displayName} さんとしてログイン中`;
-                    btn.style.background = '#e8f0fe';
-                    btn.style.opacity = '1';
-                }
-            }).catch((error) => {
-                console.error("Google Sign In Error", error);
-                if(btn) {
-                    btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> Googleでログイン・自動入力`;
-                    btn.style.opacity = '1';
+                signInWithPopup(auth, provider).then((result) => {
+                    const user = result.user;
+                    document.getElementById('name').value = user.displayName || '';
+                    document.getElementById('email').value = user.email || '';
+                    
+                    const savedAddress = localStorage.getItem('user_address_' + user.uid);
+                    if (savedAddress) document.getElementById('address').value = savedAddress;
+                    
+                    if(btn) {
+                        btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> ${user.displayName} さんとしてログイン中`;
+                        btn.style.background = '#e8f0fe';
+                        btn.style.opacity = '1';
+                    }
+                }).catch((error) => {
+                    console.error("Google Sign In Error", error);
+                    if(btn) {
+                        btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> Googleでログイン・自動入力`;
+                        btn.style.opacity = '1';
+                    }
+                });
+            };
+
+            onAuthStateChanged(auth, (user) => {
+                const loginBtn = document.getElementById('google-login-btn');
+                if (user) {
+                    if(loginBtn) {
+                        loginBtn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> ${user.displayName} さんとしてログイン中`;
+                        loginBtn.style.background = '#e8f0fe';
+                    }
+                    const nameEl = document.getElementById('name');
+                    const emailEl = document.getElementById('email');
+                    if (nameEl && !nameEl.value) nameEl.value = user.displayName || '';
+                    if (emailEl && !emailEl.value) emailEl.value = user.email || '';
+                    
+                    const savedAddress = localStorage.getItem('user_address_' + user.uid);
+                    const addressEl = document.getElementById('address');
+                    if(savedAddress && addressEl && !addressEl.value) {
+                        addressEl.value = savedAddress;
+                    }
+                    window.currentUserUid = user.uid;
                 }
             });
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            const loginBtn = document.getElementById('google-login-btn');
-            if (user) {
-                if(loginBtn) {
-                    loginBtn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> ${user.displayName} さんとしてログイン中`;
-                    loginBtn.style.background = '#e8f0fe';
-                }
-                const nameEl = document.getElementById('name');
-                const emailEl = document.getElementById('email');
-                if (nameEl && !nameEl.value) nameEl.value = user.displayName || '';
-                if (emailEl && !emailEl.value) emailEl.value = user.email || '';
-                
-                const savedAddress = localStorage.getItem('user_address_' + user.uid);
-                const addressEl = document.getElementById('address');
-                if(savedAddress && addressEl && !addressEl.value) {
-                    addressEl.value = savedAddress;
-                }
-                window.currentUserUid = user.uid;
-            }
-        });
+        }
     </script>
     <script src="script.js"></script>
     <div class="sticky-footer" id="stickyFooter">
