@@ -1,0 +1,31 @@
+# ====================================================================
+# Highlander Bicycle Shop Apache Configuration (.htaccess)
+# ====================================================================
+
+# Enable URL rewriting
+RewriteEngine On
+
+# Route /api/create-checkout-session to /api/create-checkout-session.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/create-checkout-session$ api/create-checkout-session.php [L,QSA]
+
+# Prevent directory listings
+Options -Indexes
+
+# Security: Block public web access to sensitive files (.env, git, logs)
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Security: Prevent viewing of logs and scripts
+<FilesMatch "\.(log|json|sh)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会員登録・ログイン | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .auth-container {
+            max-width: 500px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 30px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #888;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .auth-panel {
+            display: none;
+        }
+
+        .auth-panel.active {
+            display: block;
+        }
+
+        .form-message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .form-message.success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+            display: block;
+        }
+
+        .form-message.error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+            display: block;
+        }
+
+        .social-login-area {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .social-btn {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 700;
+            color: #444;
+            width: 100%;
+            transition: 0.3s;
+            box-shadow: var(--shadow-light);
+        }
+
+        .social-btn:hover {
+            background: #fdfaf6;
+            border-color: var(--secondary-color);
+        }
+
+        .btn-submit {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background: var(--secondary-color);
+        }
+
+        .my-page-container {
+            max-width: 800px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .profile-header h2 {
+            margin: 0;
+            left: 0;
+            transform: none;
+            text-align: left;
+            font-family: 'Zen Old Mincho', serif;
+        }
+
+        .profile-header h2::after, .profile-header h2::before {
+            display: none;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #c62828;
+            color: #c62828;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ffebee;
+        }
+
+        .loading-overlay {
+            text-align: center;
+            padding: 80px 20px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="brand.html">Brand</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="https://xs001364.xsrv.jp" target="_blank" style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">オンラインショップ</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
+        </div>
+    </header>
+
+    <main class="page-content" style="padding-top: 100px; background: var(--bg-light); min-height: 80vh;">
+        <div class="container">
+
+            <!-- Loading View -->
+            <div id="view-loading" class="loading-overlay">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+                <p>読み込み中...</p>
+            </div>
+
+            <!-- Authenticate View (Logged Out) -->
+            <div id="view-auth" class="auth-container" style="display: none;">
+                <div class="auth-tabs">
+                    <div id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">ログイン</div>
+                    <div id="tab-register" class="auth-tab" onclick="switchAuthTab('register')">新規会員登録</div>
+                </div>
+
+                <!-- Shared Google Login -->
+                <div class="social-login-area">
+                    <button type="button" class="social-btn" onclick="window.signInWithGoogle()">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;">
+                        Googleアカウントでサインイン
+                    </button>
+                    <div style="margin-top: 15px; font-size: 0.8rem; color: #888; text-align: center;">— またはメールアドレスで —</div>
+                </div>
+
+                <div id="auth-message" class="form-message"></div>
+
+                <!-- Login Panel -->
+                <div id="panel-login" class="auth-panel active">
+                    <form id="form-login">
+                        <div class="form-group">
+                            <label for="login-email">メールアドレス</label>
+                            <input type="email" id="login-email" required placeholder="example@mail.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">パスワード</label>
+                            <input type="password" id="login-password" required placeholder="••••••••" minlength="6">
+                        </div>
+                        <button type="submit" class="btn-submit">ログイン</button>
+                    </form>
+                </div>
+
+                <!-- Register Panel -->
+                <div id="panel-register" class="auth-panel">
+                    <form id="form-register">
+                        <div class="form-group">
+                            <label for="reg-name">お名前（フルネーム）</label>
+                            <input type="text" id="reg-name" required placeholder="山田 太郎">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-email">メールアドレス</label>
+                            <input type="email" id="reg-email" required placeholder="example@mail.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-password">パスワード（6文字以上）</label>
+                            <input type="password" id="reg-password" required placeholder="••••••••" minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-phone">電話番号</label>
+                            <input type="tel" id="reg-phone" required placeholder="090-1234-5678">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-address">配送先住所</label>
+                            <textarea id="reg-address" rows="3" required placeholder="兵庫県丹波篠山市..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">会員登録する</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Profile / My Page View (Logged In) -->
+            <div id="view-profile" class="my-page-container" style="display: none;">
+                <div class="profile-header">
+                    <h2>マイページ</h2>
+                    <button class="logout-btn" onclick="window.handleLogout()">ログアウト</button>
+                </div>
+
+                <div id="profile-message" class="form-message"></div>
+
+                <form id="form-profile">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>メールアドレス (ログイン用)</label>
+                            <input type="email" id="prof-email" disabled style="background: #f5f5f5; cursor: not-allowed;">
+                        </div>
+                        <div class="form-group">
+                            <label for="prof-name">お名前</label>
+                            <input type="text" id="prof-name" required placeholder="山田 太郎">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="prof-phone">電話番号</label>
+                        <input type="tel" id="prof-phone" required placeholder="090-1234-5678">
+                    </div>
+                    <div class="form-group">
+                        <label for="prof-address">配送先住所</label>
+                        <textarea id="prof-address" rows="3" required placeholder="兵庫県丹波篠山市..."></textarea>
+                    </div>
+
+                    <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
+                        <button type="submit" class="add-to-cart-btn btn" style="border: none; border-radius: 4px;">会員情報を保存する</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container" style="margin-bottom: 20px;">
+            <a href="brand.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Brand List</a> |
+            <a href="https://hub-link.jp/booking.html?tenant_id=1" target="_blank" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a>
+        </div>
+        <p>&copy; 2026 Highlander Bicycle Shop</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // Global instances
+        let auth = null;
+        let db = null;
+        let currentUser = null;
+
+        // Initialize Firebase
+        if (typeof FIREBASE_API_KEY !== 'undefined' && FIREBASE_API_KEY && FIREBASE_API_KEY !== '${FIREBASE_API_KEY}') {
+            const firebaseConfig = {
+                apiKey: FIREBASE_API_KEY,
+                authDomain: FIREBASE_AUTH_DOMAIN,
+                projectId: FIREBASE_PROJECT_ID,
+                storageBucket: FIREBASE_STORAGE_BUCKET,
+                messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+                appId: FIREBASE_APP_ID
+            };
+
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            try {
+                db = getFirestore(app);
+            } catch (e) {
+                console.warn("Firestore could not be initialized:", e);
+            }
+        }
+
+        // Mock mode helpers (if Firebase Config is missing)
+        const isMockMode = !auth;
+
+        window.signInWithGoogle = async () => {
+            clearMessages();
+            if (isMockMode) {
+                simulateMockLogin('Google 太郎', 'google-test@example.com', '080-9999-8888', '兵庫県丹波篠山市味間南558-3');
+                alert('【テスト環境通知】\nFirebaseの設定が見つからないため、デモ用アカウントでログインしました。');
+                return;
+            }
+
+            const provider = new GoogleAuthProvider();
+            try {
+                const result = await signInWithPopup(auth, provider);
+                // Load additional profile details (phone/address)
+                await loadAndDisplayProfile(result.user);
+            } catch (error) {
+                showMsg('auth-message', 'error', 'Googleログインに失敗しました: ' + error.message);
+            }
+        };
+
+        window.handleLogout = async () => {
+            clearMessages();
+            // Clear local storage login status markers
+            localStorage.removeItem('auth_user_name');
+            localStorage.removeItem('auth_user_uid');
+            localStorage.removeItem('auth_user_email');
+            localStorage.setItem('isLoggedIn', 'false');
+
+            if (isMockMode) {
+                showAuthView();
+                return;
+            }
+
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Logout Error", error);
+            }
+        };
+
+        // Tab Switching
+        window.switchAuthTab = (tab) => {
+            clearMessages();
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+
+            if (tab === 'login') {
+                document.getElementById('tab-login').classList.add('active');
+                document.getElementById('panel-login').classList.add('active');
+            } else {
+                document.getElementById('tab-register').classList.add('active');
+                document.getElementById('panel-register').classList.add('active');
+            }
+        };
+
+        // Form Submissions
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearMessages();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (isMockMode) {
+                if (email === 'demo@highlander.com' && password === 'password') {
+                    simulateMockLogin('デモ会員', email, '079-598-2334', '兵庫県丹波篠山市味間南558-3');
+                } else {
+                    simulateMockLogin('テスト会員', email, '', '');
+                }
+                alert('【テスト環境通知】\nFirebase設定なしのデモログインに成功しました。\n(実在するメールを使う場合はFirebaseをセットアップしてください)');
+                return;
+            }
+
+            try {
+                const result = await signInWithEmailAndPassword(auth, email, password);
+                await loadAndDisplayProfile(result.user);
+            } catch (error) {
+                showMsg('auth-message', 'error', 'ログインに失敗しました: パスワードまたはメールアドレスが異なります。');
+            }
+        });
+
+        document.getElementById('form-register').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearMessages();
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const phone = document.getElementById('reg-phone').value;
+            const address = document.getElementById('reg-address').value;
+
+            if (isMockMode) {
+                simulateMockLogin(name, email, phone, address);
+                alert('【テスト環境通知】\nFirebase設定なしのため、デモ用アカウントとしてローカルで会員登録しました。');
+                return;
+            }
+
+            try {
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                const user = result.user;
+
+                // Update auth profile display name
+                await updateProfile(user, { displayName: name });
+
+                // Save profile details (address and phone)
+                await saveProfileData(user.uid, { name, email, phone, address });
+                await loadAndDisplayProfile(user);
+            } catch (error) {
+                showMsg('auth-message', 'error', '会員登録に失敗しました: ' + error.message);
+            }
+        });
+
+        document.getElementById('form-profile').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearMessages();
+            if (!currentUser && !isMockMode) return;
+
+            const uid = isMockMode ? 'mock_uid_123' : currentUser.uid;
+            const name = document.getElementById('prof-name').value;
+            const email = document.getElementById('prof-email').value;
+            const phone = document.getElementById('prof-phone').value;
+            const address = document.getElementById('prof-address').value;
+
+            try {
+                if (!isMockMode) {
+                    await updateProfile(currentUser, { displayName: name });
+                }
+                await saveProfileData(uid, { name, email, phone, address });
+                
+                // Update local storage markers
+                localStorage.setItem('auth_user_name', name);
+                
+                showMsg('profile-message', 'success', '会員情報を保存しました。');
+                
+                // Redirect if redirect URL is specified
+                checkRedirect();
+            } catch (error) {
+                showMsg('profile-message', 'error', '情報の保存に失敗しました: ' + error.message);
+            }
+        });
+
+        // Initialize view based on Login state
+        if (isMockMode) {
+            console.log("Running member page in Mock Mode (Firebase variables missing).");
+            const wasLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (wasLoggedIn) {
+                const mockUid = 'mock_uid_123';
+                const name = localStorage.getItem('auth_user_name') || 'デモ会員';
+                const email = localStorage.getItem('auth_user_email') || 'demo@highlander.com';
+                const phone = localStorage.getItem('user_phone_' + mockUid) || '';
+                const address = localStorage.getItem('user_address_' + mockUid) || '';
+                showProfileView(name, email, phone, address);
+            } else {
+                showAuthView();
+            }
+        } else {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadAndDisplayProfile(user);
+                    checkRedirect();
+                } else {
+                    currentUser = null;
+                    showAuthView();
+                }
+            });
+        }
+
+        // Profile Helpers
+        async function loadAndDisplayProfile(user) {
+            const uid = user.uid;
+            const email = user.email;
+            let name = user.displayName || '';
+            let phone = '';
+            let address = '';
+
+            // 1. Try to load from local storage first (instant)
+            const localData = localStorage.getItem('user_profile_' + uid);
+            if (localData) {
+                try {
+                    const parsed = JSON.parse(localData);
+                    phone = parsed.phone || '';
+                    address = parsed.address || '';
+                    if (parsed.name) name = parsed.name;
+                } catch(e) {}
+            }
+
+            // 2. Try to load from Firestore (optional)
+            if (db) {
+                try {
+                    const docSnap = await getDoc(doc(db, "users", uid));
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        phone = data.phone || phone;
+                        address = data.address || address;
+                        if (data.name) name = data.name;
+                    }
+                } catch (e) {
+                    console.warn("Could not fetch profile from Firestore, using local fallback.", e);
+                }
+            }
+
+            // Write back local backups if needed
+            localStorage.setItem('user_address_' + uid, address);
+            localStorage.setItem('user_phone_' + uid, phone);
+            localStorage.setItem('user_name_' + uid, name);
+            localStorage.setItem('auth_user_name', name);
+            localStorage.setItem('auth_user_uid', uid);
+            localStorage.setItem('auth_user_email', email);
+            localStorage.setItem('isLoggedIn', 'true');
+
+            showProfileView(name, email, phone, address);
+        }
+
+        async function saveProfileData(uid, profileData) {
+            // 1. Save to Local Storage (Always)
+            localStorage.setItem('user_profile_' + uid, JSON.stringify(profileData));
+            localStorage.setItem('user_address_' + uid, profileData.address);
+            localStorage.setItem('user_phone_' + uid, profileData.phone);
+            localStorage.setItem('user_name_' + uid, profileData.name);
+
+            // 2. Try to save to Firestore
+            if (db) {
+                try {
+                    await setDoc(doc(db, "users", uid), {
+                        name: profileData.name,
+                        email: profileData.email,
+                        phone: profileData.phone,
+                        address: profileData.address,
+                        updatedAt: new Date().toISOString()
+                    }, { merge: true });
+                } catch (e) {
+                    console.warn("Could not save profile to Firestore, falling back to LocalStorage.", e);
+                }
+            }
+        }
+
+        function simulateMockLogin(name, email, phone, address) {
+            const mockUid = 'mock_uid_123';
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('auth_user_name', name);
+            localStorage.setItem('auth_user_uid', mockUid);
+            localStorage.setItem('auth_user_email', email);
+            
+            const profileData = { name, email, phone, address };
+            localStorage.setItem('user_profile_' + mockUid, JSON.stringify(profileData));
+            localStorage.setItem('user_address_' + mockUid, address);
+            localStorage.setItem('user_phone_' + mockUid, phone);
+            localStorage.setItem('user_name_' + mockUid, name);
+
+            showProfileView(name, email, phone, address);
+            checkRedirect();
+        }
+
+        // UI toggling helpers
+        function showAuthView() {
+            document.getElementById('view-loading').style.display = 'none';
+            document.getElementById('view-profile').style.display = 'none';
+            document.getElementById('view-auth').style.display = 'block';
+        }
+
+        function showProfileView(name, email, phone, address) {
+            document.getElementById('view-loading').style.display = 'none';
+            document.getElementById('view-auth').style.display = 'none';
+            document.getElementById('view-profile').style.display = 'block';
+
+            document.getElementById('prof-email').value = email;
+            document.getElementById('prof-name').value = name;
+            document.getElementById('prof-phone').value = phone;
+            document.getElementById('prof-address').value = address;
+        }
+
+        function showMsg(containerId, type, text) {
+            const container = document.getElementById(containerId);
+            container.className = `form-message ${type}`;
+            container.textContent = text;
+        }
+
+        function clearMessages() {
+            document.getElementById('auth-message').className = 'form-message';
+            document.getElementById('auth-message').textContent = '';
+            document.getElementById('profile-message').className = 'form-message';
+            document.getElementById('profile-message').textContent = '';
+        }
+
+        function checkRedirect() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirect = urlParams.get('redirect');
+            if (redirect) {
+                // Wait briefly so the user sees success state, then redirect
+                setTimeout(() => {
+                    window.location.href = redirect;
+                }, 1000);
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

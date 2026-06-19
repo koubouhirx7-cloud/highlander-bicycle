@@ -163,8 +163,10 @@ function renderCheckout() {
 
     if (itemsList && totalElement) {
         if (cart.length === 0) {
-            itemsList.innerHTML = '<p>カートに商品が入っていません。</p>';
+            itemsList.innerHTML = '<p style="padding: 20px 0; color: #888;">カートに商品が入っていません。</p>';
             totalElement.textContent = '¥0';
+            const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
             return;
         }
 
@@ -174,16 +176,79 @@ function renderCheckout() {
             const itemTotal = item.price * item.quantity;
             total += itemTotal;
             html += `
-                <div class="summary-item">
-                    <div>
-                        <strong>${item.name}</strong> x ${item.quantity}
+                <div class="summary-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee;">
+                    <div style="flex: 1;">
+                        <strong style="display: block; font-size: 1rem; color: #333;">${item.name}</strong>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+                            <button type="button" onclick="changeQuantity('${item.id}', -1)" style="width: 26px; height: 26px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">-</button>
+                            <span style="font-weight: 500; min-width: 20px; text-align: center;">${item.quantity}</span>
+                            <button type="button" onclick="changeQuantity('${item.id}', 1)" style="width: 26px; height: 26px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">+</button>
+                            <button type="button" onclick="removeFromCart('${item.id}')" style="margin-left: 15px; border: none; background: none; color: #c62828; cursor: pointer; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px; font-weight: bold;"><i class="fas fa-trash-alt"></i> 削除</button>
+                        </div>
                     </div>
-                    <div>¥${itemTotal.toLocaleString()}</div>
+                    <div style="font-weight: bold; font-size: 1.1rem; color: var(--primary-color);">¥${itemTotal.toLocaleString()}</div>
                 </div>
             `;
         });
         itemsList.innerHTML = html;
         totalElement.textContent = `¥${total.toLocaleString()}`;
+        
+        const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = false;
+    }
+}
+
+window.changeQuantity = function(id, amount) {
+    const item = cart.find(item => item.id === id);
+    if (item) {
+        item.quantity += amount;
+        if (item.quantity <= 0) {
+            cart = cart.filter(i => i.id !== id);
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+        renderCheckout();
+    }
+};
+
+window.removeFromCart = function(id) {
+    cart = cart.filter(i => i.id !== id);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartUI();
+    renderCheckout();
+};
+
+async function handleStripeCheckout(cart) {
+    const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.textContent : '注文を確定する';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '決済画面へ遷移中...';
+    }
+
+    try {
+        const response = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ cart: cart })
+        });
+
+        if (!response.ok) {
+            throw new Error('Stripe session creation failed');
+        }
+
+        const data = await response.json();
+        // Redirect directly to Stripe Checkout URL (or mock URL if fallback)
+        window.location.href = data.url;
+    } catch (error) {
+        console.error('Stripe Checkout Error:', error);
+        alert('決済処理の開始に失敗しました。');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
     }
 }
 
@@ -199,9 +264,19 @@ if (checkoutForm) {
         const totalElement = document.getElementById('cart-total');
         const amount = totalElement ? totalElement.textContent.replace(/[^0-9]/g, '') : 0;
         const addressInput = document.getElementById('address');
+        const phoneInput = document.getElementById('phone');
 
-        if (window.currentUserUid && addressInput && addressInput.value) {
-            localStorage.setItem('user_address_' + window.currentUserUid, addressInput.value);
+        if (window.currentUserUid) {
+            if (addressInput && addressInput.value) {
+                localStorage.setItem('user_address_' + window.currentUserUid, addressInput.value);
+            }
+            if (phoneInput && phoneInput.value) {
+                localStorage.setItem('user_phone_' + window.currentUserUid, phoneInput.value);
+            }
+            const nameInput = document.getElementById('name');
+            if (nameInput && nameInput.value) {
+                localStorage.setItem('user_name_' + window.currentUserUid, nameInput.value);
+            }
         }
 
         if (paymentMethod === 'bank') {
@@ -209,7 +284,7 @@ if (checkoutForm) {
             localStorage.removeItem('cart');
             window.location.href = 'order-success-bank.html';
         } else if (paymentMethod === 'stripe') {
-            window.location.href = `mock-stripe-checkout.html?amount=${amount}`;
+            handleStripeCheckout(cart);
         } else if (paymentMethod === 'paypay') {
             window.location.href = `mock-paypay-checkout.html?amount=${amount}`;
         }
@@ -349,8 +424,37 @@ if (shopFilterBtns.length > 0) {
     });
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fetchShopProducts);
-} else {
+// Dynamic Navigation Authentication Status Link
+function updateNavAuthLink() {
+    const navUls = document.querySelectorAll('.main-nav ul');
+    if (navUls.length === 0) return;
+
+    navUls.forEach(navUl => {
+        let authLi = navUl.querySelector('.nav-auth-item');
+        if (!authLi) {
+            authLi = document.createElement('li');
+            authLi.className = 'nav-auth-item';
+            // Find the Shop button if exists
+            const shopLi = navUl.querySelector('.nav-btn')?.parentNode || navUl.lastElementChild;
+            navUl.insertBefore(authLi, shopLi);
+        }
+
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        if (isLoggedIn) {
+            authLi.innerHTML = `<a href="member.html" style="font-weight: bold; color: var(--secondary-color); text-transform: none;"><i class="far fa-user"></i> マイページ</a>`;
+        } else {
+            authLi.innerHTML = `<a href="member.html" style="text-transform: none;"><i class="far fa-user"></i> ログイン</a>`;
+        }
+    });
+}
+
+function initializeAppScripts() {
     fetchShopProducts();
+    updateNavAuthLink();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAppScripts);
+} else {
+    initializeAppScripts();
 }

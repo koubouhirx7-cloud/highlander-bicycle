@@ -55,12 +55,17 @@
                 <div class="checkout-form-area">
                     <h2>お客様情報</h2>
 
-                    <div style="background: #f4f5f7; padding: 20px; border-radius: 8px; margin-bottom: 25px; text-align: center;">
-                        <p style="font-size: 0.9rem; color: #555; margin-bottom: 10px;">すでにアカウントをお持ちの方、またはGoogleの情報を利用して簡単に入力したい方はこちら</p>
-                        <button type="button" id="google-login-btn" onclick="window.signInWithGoogle()" style="background: #fff; border: 1px solid #ddd; padding: 10px 20px; border-radius: 5px; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; font-weight: bold; color: #444; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;">
-                            Googleでログイン・自動入力
-                        </button>
+                    <div id="login-notice-box" style="background: #f4f5f7; padding: 20px; border-radius: 8px; margin-bottom: 25px; text-align: center;">
+                        <p id="login-notice-text" style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">会員登録をすると、住所や電話番号を保存して次回から自動入力できます。</p>
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <a href="member.html?redirect=checkout.html" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: bold; border-color: #ddd; background: #fff;">
+                                <i class="fas fa-user"></i> ログイン・会員登録
+                            </a>
+                            <button type="button" id="google-login-btn" onclick="window.signInWithGoogle()" style="background: #fff; border: 1px solid #ddd; padding: 8px 20px; border-radius: 4px; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; font-weight: bold; color: #444; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 16px;">
+                                Googleでログイン
+                            </button>
+                        </div>
                     </div>
 
                     <form class="checkout-form" id="checkout-form">
@@ -71,6 +76,10 @@
                         <div class="form-group">
                             <label for="email">メールアドレス</label>
                             <input type="email" id="email" required placeholder="taro@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">電話番号</label>
+                            <input type="tel" id="phone" required placeholder="090-1234-5678">
                         </div>
                         <div class="form-group">
                             <label for="address">配送先住所</label>
@@ -103,7 +112,7 @@
         <footer class="site-footer">
         <div class="container" style="margin-bottom: 20px;">
             <a href="brand.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Brand List</a> |
-            <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a>
+            <a href="https://hub-link.jp/booking.html?tenant_id=1" target="_blank" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.9rem;">Booking</a>
         </div>
         <div class="container" style="margin-bottom: 20px;">
             <a href="terms.html" style="color: rgba(255,255,255,0.7); text-decoration: none; margin: 0 10px; font-size: 0.8rem;">利用規約</a> |
@@ -116,7 +125,37 @@
     <script src="config.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // Pre-fill synchronously if local markers exist (reduces visual layout shift)
+        const checkLocalMarkers = () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                const uid = localStorage.getItem('auth_user_uid');
+                const name = localStorage.getItem('auth_user_name');
+                const email = localStorage.getItem('auth_user_email');
+                const phone = localStorage.getItem('user_phone_' + uid);
+                const address = localStorage.getItem('user_address_' + uid);
+
+                if (name && !document.getElementById('name').value) document.getElementById('name').value = name;
+                if (email && !document.getElementById('email').value) document.getElementById('email').value = email;
+                if (phone && !document.getElementById('phone').value) document.getElementById('phone').value = phone;
+                if (address && !document.getElementById('address').value) document.getElementById('address').value = address;
+                
+                const noticeBox = document.getElementById('login-notice-box');
+                if (noticeBox) {
+                    noticeBox.innerHTML = `
+                        <div style="font-size: 0.9rem; color: #333; display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                            <span><i class="fas fa-check-circle" style="color: #2e7d32;"></i> <strong>${name || email}</strong> さんとしてログイン中</span>
+                            <a href="member.html?redirect=checkout.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; text-decoration: none; border-color: #ccc; background: #fff;">マイページ</a>
+                            <button type="button" onclick="window.handleSignOut()" class="logout-btn" style="padding: 6px 12px; font-size: 0.8rem; border: 1px solid #c62828; color: #c62828; background: transparent; cursor: pointer; border-radius: 4px;">ログアウト</button>
+                        </div>
+                    `;
+                }
+                window.currentUserUid = uid;
+            }
+        };
+        setTimeout(checkLocalMarkers, 50);
 
         // Check if Firebase variables are actually set in config.js (prevents crashes before Vercel envs are added)
         if (typeof FIREBASE_API_KEY === 'undefined' || !FIREBASE_API_KEY || FIREBASE_API_KEY === '${FIREBASE_API_KEY}') {
@@ -125,15 +164,29 @@
                 const btn = document.getElementById('google-login-btn');
                 if(btn) { btn.innerHTML = '認証しています...'; btn.style.opacity = '0.7'; }
                 setTimeout(() => {
+                    const mockUid = 'mock_uid_123';
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('auth_user_name', 'テスト 太郎');
+                    localStorage.setItem('auth_user_uid', mockUid);
+                    localStorage.setItem('auth_user_email', 'test@example.com');
+                    localStorage.setItem('user_phone_' + mockUid, '090-9999-8888');
+                    localStorage.setItem('user_address_' + mockUid, '兵庫県丹波篠山市味間南558-3');
+
                     document.getElementById('name').value = 'テスト 太郎';
                     document.getElementById('email').value = 'test@example.com';
-                    if(btn) {
-                        btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> テスト 太郎 さんとしてログイン中`;
-                        btn.style.background = '#e8f0fe';
-                        btn.style.opacity = '1';
-                    }
+                    document.getElementById('phone').value = '090-9999-8888';
+                    document.getElementById('address').value = '兵庫県丹波篠山市味間南558-3';
+
+                    checkLocalMarkers();
                     alert('【テスト環境通知】\nFirebaseの環境変数が設定されていないため、Googleログインはモックアップ動作として機能しました。');
                 }, 800);
+            };
+            window.handleSignOut = () => {
+                localStorage.setItem('isLoggedIn', 'false');
+                localStorage.removeItem('auth_user_name');
+                localStorage.removeItem('auth_user_uid');
+                localStorage.removeItem('auth_user_email');
+                window.location.reload();
             };
         } else {
             const firebaseConfig = {
@@ -162,38 +215,57 @@
                     const savedAddress = localStorage.getItem('user_address_' + user.uid);
                     if (savedAddress) document.getElementById('address').value = savedAddress;
                     
-                    if(btn) {
-                        btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> ${user.displayName} さんとしてログイン中`;
-                        btn.style.background = '#e8f0fe';
-                        btn.style.opacity = '1';
-                    }
+                    const savedPhone = localStorage.getItem('user_phone_' + user.uid);
+                    if (savedPhone) document.getElementById('phone').value = savedPhone;
+
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('auth_user_name', user.displayName || user.email);
+                    localStorage.setItem('auth_user_uid', user.uid);
+                    localStorage.setItem('auth_user_email', user.email);
+
+                    checkLocalMarkers();
                 }).catch((error) => {
                     console.error("Google Sign In Error", error);
                     if(btn) {
-                        btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> Googleでログイン・自動入力`;
+                        btn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 16px;"> Googleでログイン`;
                         btn.style.opacity = '1';
                     }
                 });
             };
 
+            window.handleSignOut = () => {
+                signOut(auth).then(() => {
+                    localStorage.setItem('isLoggedIn', 'false');
+                    localStorage.removeItem('auth_user_name');
+                    localStorage.removeItem('auth_user_uid');
+                    localStorage.removeItem('auth_user_email');
+                    window.location.reload();
+                });
+            };
+
             onAuthStateChanged(auth, (user) => {
-                const loginBtn = document.getElementById('google-login-btn');
                 if (user) {
-                    if(loginBtn) {
-                        loginBtn.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;"> ${user.displayName} さんとしてログイン中`;
-                        loginBtn.style.background = '#e8f0fe';
-                    }
                     const nameEl = document.getElementById('name');
                     const emailEl = document.getElementById('email');
+                    const phoneEl = document.getElementById('phone');
+                    const addressEl = document.getElementById('address');
+
                     if (nameEl && !nameEl.value) nameEl.value = user.displayName || '';
                     if (emailEl && !emailEl.value) emailEl.value = user.email || '';
                     
                     const savedAddress = localStorage.getItem('user_address_' + user.uid);
-                    const addressEl = document.getElementById('address');
-                    if(savedAddress && addressEl && !addressEl.value) {
-                        addressEl.value = savedAddress;
-                    }
+                    if(savedAddress && addressEl && !addressEl.value) addressEl.value = savedAddress;
+                    
+                    const savedPhone = localStorage.getItem('user_phone_' + user.uid);
+                    if(savedPhone && phoneEl && !phoneEl.value) phoneEl.value = savedPhone;
+
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('auth_user_name', user.displayName || user.email);
+                    localStorage.setItem('auth_user_uid', user.uid);
+                    localStorage.setItem('auth_user_email', user.email);
+
                     window.currentUserUid = user.uid;
+                    checkLocalMarkers();
                 }
             });
         }
@@ -215,7 +287,7 @@
             </div>
             <div class="footer-btn-wrapper">
                 <span class="footer-btn-label">ご相談</span>
-                <a href="https://kokyaku-kanri.pages.dev/booking" target="_blank" class="footer-btn btn-reserve">
+                <a href="https://hub-link.jp/booking.html?tenant_id=1" target="_blank" class="footer-btn btn-reserve">
                     <i class="far fa-calendar-alt"></i>来店予約
                 </a>
             </div>

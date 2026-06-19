@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ダッシュボード | Highlander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-login-box {
+            max-width: 400px;
+            margin: 80px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-dashboard {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-header h1 {
+            margin: 0;
+            left: 0;
+            transform: none;
+            text-align: left;
+            font-family: 'Zen Old Mincho', serif;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .admin-header h1::after, .admin-header h1::before {
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .stat-card-title {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .stat-card-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-csv {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-csv:hover {
+            background: var(--primary-color);
+        }
+
+        .customer-table-wrapper {
+            overflow-x: auto;
+            border: 1px solid #eee;
+            border-radius: 6px;
+        }
+
+        .customer-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .customer-table th {
+            background: var(--bg-light);
+            color: #333;
+            font-weight: 700;
+            padding: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .customer-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            color: #555;
+            vertical-align: top;
+        }
+
+        .customer-table tr:hover td {
+            background: #fafafa;
+        }
+
+        .badge-mode {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .form-message {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .form-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .form-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header scrolled">
+        <div class="header-container">
+            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="brand.html">Brand</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="custom.html">Custom</a></li>
+                    <li><a href="rental.html">Rental & Tour</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="access.html">Access</a></li>
+                    <li><a href="shop.html" class="nav-btn">オンラインショップ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-content" style="padding-top: 100px; background: var(--bg-light); min-height: 85vh;">
+        <div class="container">
+
+            <!-- Loading View -->
+            <div id="view-loading" style="text-align: center; padding: 100px 0;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+                <p>管理者認証を読み込み中...</p>
+            </div>
+
+            <!-- Login View -->
+            <div id="view-login" class="admin-login-box" style="display: none;">
+                <h2 style="text-align: center; margin-bottom: 25px; font-family: 'Zen Old Mincho', serif; color: var(--primary-color);">管理者ログイン</h2>
+                <div id="login-message" class="form-message"></div>
+                <form id="form-login">
+                    <div class="form-group">
+                        <label for="login-email">管理者メールアドレス</label>
+                        <input type="email" id="login-email" required placeholder="info@high-lander2.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">パスワード</label>
+                        <input type="password" id="login-password" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn-submit" style="margin-top: 15px;">ログイン</button>
+                </form>
+            </div>
+
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="admin-dashboard" style="display: none;">
+                <div class="admin-header">
+                    <div style="display: flex; flex-direction: column;">
+                        <h1>顧客情報管理ダッシュボード</h1>
+                        <span id="badge-environment"></span>
+                    </div>
+                    <button class="logout-btn" onclick="window.handleLogout()">ログアウト</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-title">登録顧客数</div>
+                        <div class="stat-card-value" id="stats-total-users">0 名</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-title">管理者アカウント</div>
+                        <div style="font-weight: 500; font-size: 1rem; color: #444; margin-top: 5px;" id="admin-user-display">-</div>
+                    </div>
+                </div>
+
+                <div class="controls-row">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="search-box" class="search-input" placeholder="お名前、メール、住所、電話番号で検索...">
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-action btn-csv" onclick="window.downloadCSV()">
+                            <i class="fas fa-file-csv"></i> CSV出力 (Excel対応)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="customer-table-wrapper">
+                    <table class="customer-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 150px;">登録日時</th>
+                                <th style="width: 150px;">お名前</th>
+                                <th style="width: 200px;">メールアドレス</th>
+                                <th style="width: 130px;">電話番号</th>
+                                <th>配送先住所</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-list-body">
+                            <!-- Customers row will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Highlander Bicycle Shop (Admin Console)</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // Admin Email restriction configuration
+        const ADMIN_EMAIL = 'info@high-lander2.com';
+
+        let auth = null;
+        let db = null;
+        let customerData = []; // Store fetched customer list for filtering and CSV exports
+
+        // Initialize Firebase
+        const isMockMode = (typeof FIREBASE_API_KEY === 'undefined' || !FIREBASE_API_KEY || FIREBASE_API_KEY === '${FIREBASE_API_KEY}');
+        
+        if (!isMockMode) {
+            const firebaseConfig = {
+                apiKey: FIREBASE_API_KEY,
+                authDomain: FIREBASE_AUTH_DOMAIN,
+                projectId: FIREBASE_PROJECT_ID,
+                storageBucket: FIREBASE_STORAGE_BUCKET,
+                messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+                appId: FIREBASE_APP_ID
+            };
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            try {
+                db = getFirestore(app);
+            } catch(e) {
+                console.error("Firestore Init Error", e);
+            }
+        }
+
+        window.handleLogout = async () => {
+            if (isMockMode) {
+                localStorage.setItem('adminLoggedIn', 'false');
+                showLoginView();
+                return;
+            }
+            try {
+                await signOut(auth);
+            } catch (e) {
+                console.error("Logout Error", e);
+            }
+        };
+
+        // Form Login Submit
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            document.getElementById('login-message').style.display = 'none';
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (isMockMode) {
+                if (email === ADMIN_EMAIL && password === 'admin123') {
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    alert('【テスト環境通知】\nFirebase設定なしのため、デモ管理者ログインに成功しました。\n(ID: info@high-lander2.com / Pass: admin123)');
+                    loadDashboard();
+                } else {
+                    showError('ログインに失敗しました。テストID: info@high-lander2.com / パスワード: admin123 です。');
+                }
+                return;
+            }
+
+            if (email !== ADMIN_EMAIL) {
+                showError('管理者アカウントではないため、アクセス権限がありません。');
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // Dashboard will load automatically in AuthStateChanged
+            } catch (error) {
+                showError('ログインに失敗しました: IDまたはパスワードが正しくありません。');
+            }
+        });
+
+        // Initialize View State
+        if (isMockMode) {
+            console.log("Running Admin Portal in Mock Mode (Firebase configurations missing).");
+            const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+            if (isLoggedIn) {
+                loadDashboard();
+            } else {
+                showLoginView();
+            }
+        } else {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    if (user.email === ADMIN_EMAIL) {
+                        document.getElementById('admin-user-display').textContent = user.email;
+                        await loadDashboard();
+                    } else {
+                        showError('このアカウントには管理者権限がありません。アクセスを拒否しました。');
+                        await signOut(auth);
+                        showLoginView();
+                    }
+                } else {
+                    showLoginView();
+                }
+            });
+        }
+
+        // Dashboard Data Loading
+        async function loadDashboard() {
+            document.getElementById('view-loading').style.display = 'block';
+            document.getElementById('view-login').style.display = 'none';
+            document.getElementById('view-dashboard').style.display = 'none';
+
+            // Set Admin Email Display
+            document.getElementById('admin-user-display').textContent = ADMIN_EMAIL;
+
+            if (isMockMode) {
+                document.getElementById('badge-environment').innerHTML = '<span class="badge-mode"><i class="fas fa-exclamation-triangle"></i> デモ環境（ダミーデータ表示中）</span>';
+                // Load Dummy Data
+                customerData = getDummyCustomers();
+            } else {
+                document.getElementById('badge-environment').innerHTML = '<span class="badge-mode" style="background:#e8f5e9; color:#2e7d32; border-color:#c8e6c9;"><i class="fas fa-shield-alt"></i> 本番環境（Firestore連携中）</span>';
+                try {
+                    customerData = await fetchFirestoreCustomers();
+                } catch (e) {
+                    console.error("Firestore Fetch Failed", e);
+                    alert("Firestoreからの顧客情報取得に失敗しました。権限・ルールを確認してください。\nダミーデータを表示します。");
+                    customerData = getDummyCustomers();
+                }
+            }
+
+            renderCustomers(customerData);
+            
+            document.getElementById('view-loading').style.display = 'none';
+            document.getElementById('view-dashboard').style.display = 'block';
+        }
+
+        // Firestore Fetching
+        async function fetchFirestoreCustomers() {
+            if (!db) throw new Error("Firestore is not initialized.");
+            const querySnapshot = await getDocs(collection(db, "users"));
+            const list = [];
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                list.push({
+                    date: data.updatedAt ? formatDate(data.updatedAt) : '不明',
+                    name: data.name || '名前なし',
+                    email: data.email || 'メールなし',
+                    phone: data.phone || '電話番号なし',
+                    address: data.address || '住所登録なし'
+                });
+            });
+            // Sort by Date descending
+            return list.sort((a, b) => b.date.localeCompare(a.date));
+        }
+
+        // Render Table Rows
+        function renderCustomers(list) {
+            const tableBody = document.getElementById('customer-list-body');
+            document.getElementById('stats-total-users').textContent = `${list.length} 名`;
+
+            if (list.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 40px; color:#888;">該当する登録顧客がいません。</td></tr>';
+                return;
+            }
+
+            tableBody.innerHTML = list.map(user => `
+                <tr>
+                    <td><strong>${user.date}</strong></td>
+                    <td><span style="font-weight: 700; color:#333;">${user.name}</span></td>
+                    <td><a href="mailto:${user.email}" style="color:var(--secondary-color);">${user.email}</a></td>
+                    <td><span style="font-family:\'Outfit\',sans-serif;">${user.phone}</span></td>
+                    <td style="line-height:1.6; max-width: 350px; white-space: pre-wrap;">${user.address}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Search Filter
+        document.getElementById('search-box').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                renderCustomers(customerData);
+                return;
+            }
+            const filtered = customerData.filter(user => 
+                user.name.toLowerCase().includes(query) ||
+                user.email.toLowerCase().includes(query) ||
+                user.phone.toLowerCase().includes(query) ||
+                user.address.toLowerCase().includes(query)
+            );
+            renderCustomers(filtered);
+        });
+
+        // CSV Downloader
+        window.downloadCSV = () => {
+            if (customerData.length === 0) {
+                alert("エクスポートするデータがありません。");
+                return;
+            }
+
+            // CSV Header
+            let csvContent = "\uFEFF"; // Add BOM for Excel UTF-8 support
+            csvContent += "登録日時,お名前,メールアドレス,電話番号,配送先住所\r\n";
+
+            // Add rows
+            customerData.forEach(user => {
+                // Escape double quotes and wrap in quotes for CSV security
+                const name = `"${user.name.replace(/"/g, '""')}"`;
+                const email = `"${user.email.replace(/"/g, '""')}"`;
+                const phone = `"${user.phone.replace(/"/g, '""')}"`;
+                const address = `"${user.address.replace(/"/g, '""')}"`;
+                const date = `"${user.date.replace(/"/g, '""')}"`;
+
+                csvContent += `${date},${name},${email},${phone},${address}\r\n`;
+            });
+
+            // Trigger download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            
+            const now = new Date();
+            const dateString = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+            link.setAttribute("download", `highlander_customers_${dateString}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
+        // UI View Toggling helper
+        function showLoginView() {
+            document.getElementById('view-loading').style.display = 'none';
+            document.getElementById('view-dashboard').style.display = 'none';
+            document.getElementById('view-login').style.display = 'block';
+        }
+
+        function showError(text) {
+            const container = document.getElementById('login-message');
+            container.className = 'form-message error';
+            container.textContent = text;
+        }
+
+        // Date formatter
+        function formatDate(isoString) {
+            try {
+                const d = new Date(isoString);
+                return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+            } catch(e) {
+                return isoString;
+            }
+        }
+
+        // Mock Dummy Database
+        function getDummyCustomers() {
+            return [
+                {
+                    date: "2026.06.09 14:23",
+                    name: "山田 太郎",
+                    email: "yamada.taro@example.com",
+                    phone: "090-1234-5678",
+                    address: "兵庫県丹波篠山市味間南558-3"
+                },
+                {
+                    date: "2026.06.08 19:45",
+                    name: "佐藤 恵美",
+                    email: "sato.emi@example.net",
+                    phone: "080-9876-5432",
+                    address: "大阪府大阪市中央区大手前1-1-1"
+                },
+                {
+                    date: "2026.06.05 10:12",
+                    name: "田中 健一",
+                    email: "tanaka.k@example.org",
+                    phone: "090-5555-4444",
+                    address: "京都府京都市中京区烏丸通二条下ル秋野々町518"
+                },
+                {
+                    date: "2026.06.02 08:30",
+                    name: "鈴木 一郎",
+                    email: "suzuki.ichiro@example.com",
+                    phone: "070-1111-2222",
+                    address: "東京都新宿区西新宿2-8-1"
+                }
+            ];
+        }
+    </script>
+</body>
+
+</html>
