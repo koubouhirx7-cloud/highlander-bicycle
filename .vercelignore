@@ -1,0 +1,6 @@
+# Apache/Xserver 専用ファイル — Vercel では使わない（PHPランタイムが無く、/api のビルドを壊すため除外）
+*.php
+.htaccess
+
+# ローカル開発用Expressサーバー（Vercelでは api/*.js がサーバーレス関数になる）
+server.js
