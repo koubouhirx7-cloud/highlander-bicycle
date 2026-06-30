@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlander | 里山にあるプロフェッショナル自転車店</title>
+    <meta name="description" content="兵庫県丹波篠山の予約制自転車店Highlander。販売、修理、カスタム、専門相談、地域事業者向けWEB部の取り組みまで、現場に根ざしたサービスを行っています。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -101,10 +102,10 @@
                 <div class="service-grid">
                     <div class="service-card">
                         <div class="service-icon"><i class="fas fa-laptop-code" style="color: #d35400;"></i></div>
-                        <h3 style="color: #d35400; font-weight: 700;">HighLander WEB部</h3>
-                        <p style="font-weight: 500;">里山ライド × AI爆速開発</p>
+                        <h3 style="color: #d35400; font-weight: 700;">自転車店の現場から生まれたWEB部</h3>
+                        <p style="font-weight: 500;">Web制作・業務改善</p>
                         <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-                            里山で思考を整え、AIと共に1日でWebサイトをローンチ。あなたの独立を加速させる新基準のサービス。</p>
+                            予約管理、顧客対応、整備受付、情報発信の課題を、WebとAIで解決してきた小さな開発部門。HubLink Cycleのような店舗向け業務ツールづくりにも取り組んでいます。</p>
                         <a href="https://xs001364.xsrv.jp" target="_blank" class="btn-text"
                             style="color: #d35400;">詳しく見る →</a>
                     </div>
@@ -167,13 +168,13 @@
                         style="width: 100%; height: auto; display: block; aspect-ratio: 16/9; object-fit: cover;">
                     <div style="position: absolute; bottom: 30px; left: 30px; z-index: 2; color: white;">
                         <span
-                            style="background: #d35400; color: white; padding: 5px 12px; font-size: 0.8rem; border-radius: 4px; margin-bottom: 12px; display: inline-block; letter-spacing: 0.1em;">RIDE
-                            & TALK</span>
+                            style="background: #d35400; color: white; padding: 5px 12px; font-size: 0.8rem; border-radius: 4px; margin-bottom: 12px; display: inline-block; letter-spacing: 0.1em;">WEB
+                            SUPPORT</span>
                         <h3
                             style="font-size: 2rem; margin-bottom: 8px; color: white; text-align: left; transform: none; left: auto; font-family: 'Outfit', sans-serif;">
-                            HighLander WEB部</h3>
+                            自転車店の現場から生まれたWEB部</h3>
                         <p style="font-size: 1rem; opacity: 0.9; font-weight: 300; letter-spacing: 0.05em;">
-                            里山ライド × AI爆速開発。あなたの独立を加速させる、新基準のサービス。<br>
+                            個人店や地域事業者のために、実際に使えるWebサイトと業務導線を整えます。<br>
                             Click to View Details <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
                         </p>
                     </div>
@@ -246,17 +247,11 @@
                     <!-- News items will be loaded here -->
                 </div>
                 <script>
-                    const API_ENDPOINT = 'https://pnjcsnhgx7.microcms.io/api/v1/blogs';
-                    const API_KEY = 'izujN0WKzG78ahuntkOZ6JrmA1hje1DL6HTF';
-
                     async function loadNews() {
                         const container = document.getElementById('index-blog-list');
                         try {
-                            const response = await fetch(`${API_ENDPOINT}?limit=3`, {
-                                headers: {
-                                    'X-MICROCMS-API-KEY': API_KEY
-                                }
-                            });
+                            const response = await fetch('/api/microcms-posts?limit=3');
+                            if (!response.ok) throw new Error(`API Error: ${response.status}`);
                             const data = await response.json();
                             const posts = data.contents;
 
@@ -268,13 +263,22 @@
                                         <div class="blog-date" style="color:#888; font-size:0.8rem;">
                                             ${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}
                                         </div>
-                                        <div class="blog-title" style="flex:1; font-weight:500;">${post.title}</div>
+                                        <div class="blog-title" style="flex:1; font-weight:500;">${escapeNewsHtml(post.title || '記事タイトルなし')}</div>
                                     </a>
                                 `;
                             }).join('');
                         } catch (e) {
                             console.error('Error loading news:', e);
                         }
+                    }
+                    function escapeNewsHtml(value) {
+                        return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                            '&': '&amp;',
+                            '<': '&lt;',
+                            '>': '&gt;',
+                            '"': '&quot;',
+                            "'": '&#039;'
+                        }[char]));
                     }
                     loadNews();
                 </script>
