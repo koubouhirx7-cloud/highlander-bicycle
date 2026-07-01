@@ -1,31 +1,76 @@
 # ====================================================================
-# Highlander Bicycle Shop Apache Configuration (.htaccess)
+# Highlander Bicycle Shop Apache Configuration for Xserver
+# Static HTML + PHP API
 # ====================================================================
 
-# Enable URL rewriting
+DirectoryIndex index.html index.php
+Options -Indexes
+AddType application/manifest+json .webmanifest
+AddType image/svg+xml .svg
+
 RewriteEngine On
 
-# Route /api/create-checkout-session to /api/create-checkout-session.php
+# Canonical host: use the primary Highlander domain.
+RewriteCond %{HTTP_HOST} ^www\.high-lander2\.com$ [NC]
+RewriteRule ^(.*)$ https://high-lander2.com/$1 [R=301,L]
+
+# Canonicalize the WEB department location.
+RedirectMatch 301 ^/codex-preview/?$ /web/
+RedirectMatch 301 ^/codex-preview/(.*)$ /web/$1
+RedirectMatch 301 ^/ride-and-talk\.html$ /web/
+RedirectMatch 301 ^/web-pricing\.html$ /web/web-pricing.html
+RedirectMatch 301 ^/ride-talk-detail\.html$ /web/ride-talk-detail.html
+
+# PHP API routes for Xserver. These replace the Vercel Node API routes.
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^api/create-checkout-session$ api/create-checkout-session.php [L,QSA]
 
-# Prevent directory listings
-Options -Indexes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/confirm-checkout-session$ api/confirm-checkout-session.php [L,QSA]
 
-# Security: Block public web access to sensitive files (.env, git, logs)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/stripe-webhook$ api/stripe-webhook.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/order-to-hublink$ api/order-to-hublink.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/microcms-posts$ api/microcms-posts.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/microcms-products$ api/microcms-products.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/microcms-logs$ api/microcms-logs.php [L,QSA]
+
+# Security: block public web access to server-side helpers and secrets.
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^(\.git|node_modules|scripts|docs|content|tmp|output|storage)/ - [F,L]
+
 <Files .env>
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Files>
 
 <FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </FilesMatch>
 
-# Security: Prevent viewing of logs and scripts
-<FilesMatch "\.(log|json|sh)$">
-    Order allow,deny
-    Deny from all
+<FilesMatch "\.(log|json|sh|lock)$">
+    Require all denied
+</FilesMatch>
+
+# SEO: keep operational/demo pages out of search results.
+<FilesMatch "^(admin|checkout|member|mock-paypay-checkout|mock-stripe-checkout|order-success|order-success-bank)\.html$">
+    Header set X-Robots-Tag "noindex, nofollow, noarchive"
+</FilesMatch>
+
+<FilesMatch "^shop-detail\.html$">
+    Header set X-Robots-Tag "noindex, follow, noarchive"
 </FilesMatch>

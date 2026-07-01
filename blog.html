@@ -4,13 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | Highlander</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="/favicon.ico?v=20260701" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260701">
+    <link rel="manifest" href="/site.webmanifest?v=20260701">
+    <meta name="theme-color" content="#1B3022">
+    <title>ブログ | 自転車・整備・里山・WEB部の記録 | Highlander</title>
+    <meta name="description" content="Highlanderのブログ。自転車、整備、カスタム、丹波篠山の里山、WEB部の取り組みなど、店舗の現場から生まれた情報を発信します。">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://high-lander2.com/blog.html">
+    <link rel="alternate" hreflang="ja-JP" href="https://high-lander2.com/blog.html">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Highlander Bicycle Shop">
+    <meta property="og:title" content="ブログ | 自転車・整備・里山・WEB部の記録 | Highlander">
+    <meta property="og:description" content="Highlanderのブログ。自転車、整備、カスタム、丹波篠山の里山、WEB部の取り組みなど、店舗の現場から生まれた情報を発信します。">
+    <meta property="og:url" content="https://high-lander2.com/blog.html">
+    <meta property="og:image" content="https://high-lander2.com/images/hero_1.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ブログ | 自転車・整備・里山・WEB部の記録 | Highlander">
+    <meta name="twitter:description" content="Highlanderのブログ。自転車、整備、カスタム、丹波篠山の里山、WEB部の取り組みなど、店舗の現場から生まれた情報を発信します。">
+    <meta name="twitter:image" content="https://high-lander2.com/images/hero_1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260702-googleprofile1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -26,8 +46,7 @@
                     <li><a href="service.html">Service</a></li>
                     <li><a href="custom.html">Custom</a></li>
                     <li><a href="rental.html">Rental & Tour</a></li>
-                    <li><a href="https://xs001364.xsrv.jp" target="_blank"
-                            style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="web/">WEB部</a></li>
                     <li><a href="blog.html" class="active">Blog</a></li>
                     <li><a href="access.html">Access</a></li>
                     <li><a href="shop.html" class="nav-btn">Shop</a></li>
@@ -69,8 +88,6 @@
         </section>
 
         <script>
-            const API_ENDPOINT = 'https://pnjcsnhgx7.microcms.io/api/v1/blogs';
-            const API_KEY = 'izujN0WKzG78ahuntkOZ6JrmA1hje1DL6HTF';
             let allPosts = []; // Store all fetched posts
 
             async function loadBlog() {
@@ -79,11 +96,7 @@
 
                 try {
                     // Fetch more posts to ensure filtering works effectively (limit=100)
-                    const response = await fetch(`${API_ENDPOINT}?limit=100`, {
-                        headers: {
-                            'X-MICROCMS-API-KEY': API_KEY
-                        }
-                    });
+                    const response = await fetch('/api/microcms-posts?limit=100');
 
                     if (!response.ok) {
                         throw new Error(`API Error: ${response.status}`);
@@ -127,12 +140,12 @@
                     return `
                         <div class="blog-card-wrapper" id="card-${postId}">
                             <div class="blog-card" onclick="toggleExpand('${postId}')">
-                                <img src="${displayImage}" alt="${post.title}" class="blog-card-img">
+                                <img src="${escapeBlogHtml(displayImage)}" alt="${escapeBlogHtml(post.title || '記事タイトルなし')}" class="blog-card-img">
                                 <div class="blog-card-content">
-                                    <div class="blog-card-title">${post.title}</div>
+                                    <div class="blog-card-title">${escapeBlogHtml(post.title || '記事タイトルなし')}</div>
                                     <div class="blog-card-meta">
                                         <span><i class="far fa-clock"></i> ${dateStr}</span>
-                                        <span class="blog-card-tag">${categoryName}</span>
+                                        <span class="blog-card-tag">${escapeBlogHtml(categoryName)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -143,6 +156,16 @@
                         </div>
                     `;
                 }).join('');
+            }
+
+            function escapeBlogHtml(value) {
+                return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[char]));
             }
 
             // Filter Logic
@@ -274,7 +297,7 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js?v=20260702-googleprofile1"></script>
 </body>
 
 </html>

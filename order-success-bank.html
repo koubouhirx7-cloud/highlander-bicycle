@@ -4,12 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico?v=20260701" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260701">
+    <link rel="manifest" href="/site.webmanifest?v=20260701">
+    <meta name="theme-color" content="#1B3022">
     <title>ご注文完了（銀行振込） | Highlander</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="description" content="Highlanderオンラインショップの銀行振込注文完了ページです。">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <link rel="canonical" href="https://high-lander2.com/order-success-bank.html">
+    <link rel="alternate" hreflang="ja-JP" href="https://high-lander2.com/order-success-bank.html">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Highlander Bicycle Shop">
+    <meta property="og:title" content="ご注文完了（銀行振込） | Highlander">
+    <meta property="og:description" content="Highlanderオンラインショップの銀行振込注文完了ページです。">
+    <meta property="og:url" content="https://high-lander2.com/order-success-bank.html">
+    <meta property="og:image" content="https://high-lander2.com/images/hero_1.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ご注文完了（銀行振込） | Highlander">
+    <meta name="twitter:description" content="Highlanderオンラインショップの銀行振込注文完了ページです。">
+    <meta name="twitter:image" content="https://high-lander2.com/images/hero_1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260702-googleprofile1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -40,6 +60,10 @@
                     ご登録いただいたメールアドレス宛に、確認メールを送信しております。
                 </p>
 
+                <div id="bank-order-status" style="background: #f4f5f7; padding: 18px; border-radius: 8px; text-align: left; margin-bottom: 25px; color: #555; line-height: 1.7;">
+                    注文内容を確認中です...
+                </div>
+
                 <div style="background: #f4f5f7; padding: 25px; border-radius: 8px; text-align: left; margin-bottom: 30px;">
                     <h3 style="font-size: 1.1rem; margin-bottom: 15px; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px;">お振込先情報</h3>
                     <p style="margin-bottom: 10px;"><strong>金融機関：</strong> 〇〇銀行</p>
@@ -54,7 +78,10 @@
                     ご入金が確認でき次第、発送の手配を進めさせていただきます。
                 </p>
 
-                <a href="index.html" class="add-to-cart-btn btn" style="text-decoration: none; display: inline-block;">トップページへ戻る</a>
+                <div id="bank-order-actions" style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                    <a href="member.html" class="btn btn-outline" style="text-decoration: none;">マイページで注文控えを見る</a>
+                    <a href="shop.html" class="add-to-cart-btn btn" style="text-decoration: none; display: inline-block; width: auto; min-width: 180px;">ショップへ戻る</a>
+                </div>
             </div>
         </section>
     </main>
@@ -66,7 +93,47 @@
         </div>
         <p>&copy; 2026 Highlander Bicycle Shop</p>
     </footer>
+    <script src="script.js?v=20260702-googleprofile1"></script>
     <script>
+        function readOrderJson(key, fallback = null) {
+            try {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : fallback;
+            } catch (error) {
+                return fallback;
+            }
+        }
+
+        function saveOrderHistory(order) {
+            if (!order || !order.order_id) return;
+            if (window.HighlanderShop?.appendOrderHistory) {
+                window.HighlanderShop.appendOrderHistory(order);
+                return;
+            }
+            const history = readOrderJson('shopOrderHistory', []);
+            const list = Array.isArray(history) ? history.filter(item => item.order_id !== order.order_id) : [];
+            list.unshift({ ...order, saved_at: new Date().toISOString() });
+            localStorage.setItem('shopOrderHistory', JSON.stringify(list.slice(0, 12)));
+        }
+
+        const latestOrder = readOrderJson('lastShopOrder', {});
+        const statusBox = document.getElementById('bank-order-status');
+        if (latestOrder && latestOrder.order_id) {
+            latestOrder.status_label = latestOrder.status_label || '銀行振込待ち';
+            latestOrder.payment_status = latestOrder.payment_status || 'bank_transfer_pending';
+            latestOrder.member_uid = latestOrder.member_uid || localStorage.getItem('auth_user_uid') || '';
+            latestOrder.customer_email = latestOrder.customer_email || latestOrder.customer?.email || localStorage.getItem('auth_user_email') || '';
+            saveOrderHistory(latestOrder);
+            const amount = latestOrder.amount_total ? `¥${Number(latestOrder.amount_total).toLocaleString()}` : '';
+            statusBox.innerHTML = `
+                <strong style="color: var(--primary-color);">注文番号：${latestOrder.order_id}</strong><br>
+                ${amount ? `お支払い予定金額：${amount}<br>` : ''}
+                ご入金確認後に、発送または受け渡しについてご連絡します。
+            `;
+            localStorage.removeItem('lastShopOrder');
+        } else if (statusBox) {
+            statusBox.innerHTML = '注文番号をこの画面で確認できませんでした。ご注文直後にこの画面が表示された場合は、店舗からの連絡をお待ちください。';
+        }
         localStorage.removeItem('cart');
     </script>
 </body>

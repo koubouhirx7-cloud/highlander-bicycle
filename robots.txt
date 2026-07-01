@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /api/
+Disallow: /includes/
+Disallow: /storage/
+Disallow: /node_modules/
+Disallow: /scripts/
+Disallow: /tmp/
+Disallow: /output/
+
+Sitemap: https://high-lander2.com/sitemap.xml

@@ -1,5 +1,14 @@
 config.js
 .env
+.env.local
+.env.*.local
+
+# Local secrets / SSH keys
+*.pem
+*.ppk
+*.key
+ssh-keys/
+private-keys/
 
 # macOS
 .DS_Store
@@ -10,3 +19,10 @@ config.js
 
 # Dependencies
 node_modules/
+
+# Runtime order records
+storage/
+
+# Generated local artifacts
+tmp/
+output/

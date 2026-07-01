@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Highlander Bicycle Shop",
   "scripts": {
-    "build": "echo \"const MICROCMS_SERVICE_DOMAIN = '${MICROCMS_SERVICE_DOMAIN}';\nconst MICROCMS_API_KEY = '${MICROCMS_API_KEY}';\nconst FIREBASE_API_KEY = '${FIREBASE_API_KEY}';\nconst FIREBASE_AUTH_DOMAIN = '${FIREBASE_AUTH_DOMAIN}';\nconst FIREBASE_PROJECT_ID = '${FIREBASE_PROJECT_ID}';\nconst FIREBASE_STORAGE_BUCKET = '${FIREBASE_STORAGE_BUCKET}';\nconst FIREBASE_MESSAGING_SENDER_ID = '${FIREBASE_MESSAGING_SENDER_ID}';\nconst FIREBASE_APP_ID = '${FIREBASE_APP_ID}';\" > config.js",
-    "dev": "node server.js"
+    "build": "echo \"const FIREBASE_API_KEY = '${FIREBASE_API_KEY}';\nconst FIREBASE_AUTH_DOMAIN = '${FIREBASE_AUTH_DOMAIN}';\nconst FIREBASE_PROJECT_ID = '${FIREBASE_PROJECT_ID}';\nconst FIREBASE_STORAGE_BUCKET = '${FIREBASE_STORAGE_BUCKET}';\nconst FIREBASE_MESSAGING_SENDER_ID = '${FIREBASE_MESSAGING_SENDER_ID}';\nconst FIREBASE_APP_ID = '${FIREBASE_APP_ID}';\" > app-config.js",
+    "dev": "node server.js",
+    "dev:php": "php -S localhost:8000 dev-router.php"
   },
   "dependencies": {
     "express": "^4.19.2",

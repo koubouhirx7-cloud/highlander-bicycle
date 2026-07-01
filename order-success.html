@@ -4,12 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico?v=20260701" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260701">
+    <link rel="manifest" href="/site.webmanifest?v=20260701">
+    <meta name="theme-color" content="#1B3022">
     <title>決済完了 | Highlander</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="description" content="Highlanderオンラインショップの決済完了ページです。">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <link rel="canonical" href="https://high-lander2.com/order-success.html">
+    <link rel="alternate" hreflang="ja-JP" href="https://high-lander2.com/order-success.html">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Highlander Bicycle Shop">
+    <meta property="og:title" content="決済完了 | Highlander">
+    <meta property="og:description" content="Highlanderオンラインショップの決済完了ページです。">
+    <meta property="og:url" content="https://high-lander2.com/order-success.html">
+    <meta property="og:image" content="https://high-lander2.com/images/hero_1.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="決済完了 | Highlander">
+    <meta name="twitter:description" content="Highlanderオンラインショップの決済完了ページです。">
+    <meta name="twitter:image" content="https://high-lander2.com/images/hero_1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260702-googleprofile1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -37,15 +57,21 @@
                 <h1 style="font-size: 1.8rem; margin-bottom: 20px;">お支払いが完了しました</h1>
                 <p style="color: #666; line-height: 1.6; margin-bottom: 30px;">
                     ご注文ありがとうございます。<br>
-                    ご登録いただいたメールアドレス宛に、ご注文の確認メールを送信しております。
+                    お支払い情報を確認しています。
                 </p>
+
+                <div id="order-confirmation-status" style="background: #f4f5f7; padding: 20px; border-radius: 8px; margin-bottom: 30px; color: #555; line-height: 1.7;">
+                    決済情報を確認中です...
+                </div>
+
+                <div id="order-complete-actions" class="order-complete-actions" style="display: none;"></div>
 
                 <p style="color: #666; margin-bottom: 40px;">
                     商品の発送手配が完了いたしましたら、改めてご連絡いたします。<br>
                     到着まで今しばらくお待ちください。
                 </p>
 
-                <a href="index.html" class="add-to-cart-btn btn" style="text-decoration: none; display: inline-block;">トップページへ戻る</a>
+                <a href="shop.html" class="add-to-cart-btn btn" style="text-decoration: none; display: inline-block;">ショップへ戻る</a>
             </div>
         </section>
     </main>
@@ -57,8 +83,139 @@
         </div>
         <p>&copy; 2026 Highlander Bicycle Shop</p>
     </footer>
+    <script src="script.js?v=20260702-googleprofile1"></script>
     <script>
-        localStorage.removeItem('cart');
+        function readOrderJson(key, fallback = null) {
+            try {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : fallback;
+            } catch (error) {
+                return fallback;
+            }
+        }
+
+        function buildHistoryRecord(order, fallback, statusLabel) {
+            const items = Array.isArray(order.items) && order.items.length ? order.items : (fallback?.items || []);
+            const customer = order.customer || fallback?.customer || {};
+            const amount = order.amount_total || fallback?.amount_total || items.reduce((sum, item) => {
+                return sum + (Number(item.price || 0) * Number(item.quantity || 0));
+            }, 0);
+            return {
+                order_id: order.order_id || fallback?.order_id || '',
+                customer,
+                items,
+                amount_total: amount,
+                currency: order.currency || fallback?.currency || 'jpy',
+                payment_method: order.payment_method || fallback?.payment_method || 'stripe',
+                payment_status: order.payment_status || fallback?.payment_status || '',
+                status_label: statusLabel,
+                member_uid: customer.uid || fallback?.member_uid || localStorage.getItem('auth_user_uid') || '',
+                customer_email: customer.email || fallback?.customer_email || localStorage.getItem('auth_user_email') || '',
+                completed_at: new Date().toISOString(),
+            };
+        }
+
+        function saveOrderHistory(record) {
+            if (!record.order_id) return;
+            if (window.HighlanderShop?.appendOrderHistory) {
+                window.HighlanderShop.appendOrderHistory(record);
+                return;
+            }
+            const history = readOrderJson('shopOrderHistory', []);
+            const list = Array.isArray(history) ? history.filter(item => item.order_id !== record.order_id) : [];
+            list.unshift({ ...record, saved_at: new Date().toISOString() });
+            localStorage.setItem('shopOrderHistory', JSON.stringify(list.slice(0, 12)));
+        }
+
+        function renderCompleteActions(orderId) {
+            const actions = document.getElementById('order-complete-actions');
+            if (!actions) return;
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            actions.style.display = 'flex';
+            actions.style.justifyContent = 'center';
+            actions.style.gap = '10px';
+            actions.style.flexWrap = 'wrap';
+            actions.style.margin = '-10px 0 30px';
+            actions.innerHTML = `
+                ${isLoggedIn ? '<a href="member.html" class="btn btn-outline" style="text-decoration: none;">マイページで注文控えを見る</a>' : ''}
+                <a href="shop.html" class="btn btn-outline" style="text-decoration: none;">ショップへ戻る</a>
+            `;
+        }
+
+        function completeLocalPayment(params, statusBox) {
+            const orderId = params.get('order_id') || '';
+            const pending = readOrderJson('pendingLocalOrder', {});
+            const record = buildHistoryRecord({ order_id: orderId }, pending, 'PayPayデモ決済受付');
+            saveOrderHistory(record);
+            localStorage.removeItem('cart');
+            localStorage.removeItem('pendingLocalOrder');
+            statusBox.innerHTML = `
+                <strong style="color: #2e7d32;">PayPayデモ決済として受付しました</strong><br>
+                注文番号：${record.order_id || '確認中'}<br>
+                ご注文内容を店舗側で確認し、発送または受け渡しについてご連絡します。
+            `;
+            renderCompleteActions(record.order_id);
+        }
+
+        async function confirmStripeOrder() {
+            const params = new URLSearchParams(window.location.search);
+            const sessionId = params.get('session_id') || '';
+            const orderId = params.get('order_id') || '';
+            const isMock = params.get('mock') === '1';
+            const isLocalPayPay = params.get('local') === 'paypay';
+            const statusBox = document.getElementById('order-confirmation-status');
+
+            if (isLocalPayPay) {
+                completeLocalPayment(params, statusBox);
+                return;
+            }
+
+            if (!sessionId && !isMock) {
+                statusBox.innerHTML = 'ご注文ページへ戻らずにこの画面を開いた場合、決済確認ができません。決済後にこの画面が表示された場合は、店舗までお問い合わせください。';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/confirm-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        order_id: orderId,
+                        mock: isMock,
+                    }),
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'confirm failed');
+                }
+
+                const order = data.order || {};
+                const amount = order.amount_total ? `¥${Number(order.amount_total).toLocaleString()}` : '';
+                const paidLabel = data.mock ? 'デモ決済として受付しました' : 'カード決済を確認しました';
+                const pendingOrder = readOrderJson('pendingStripeOrder', {});
+                const record = buildHistoryRecord(order, pendingOrder, paidLabel);
+                saveOrderHistory(record);
+                statusBox.innerHTML = `
+                    <strong style="color: #2e7d32;">${paidLabel}</strong><br>
+                    注文番号：${order.order_id || orderId || '確認中'}<br>
+                    ${amount ? `お支払い金額：${amount}<br>` : ''}
+                    ご注文内容を店舗側で確認し、発送または受け渡しについてご連絡します。
+                `;
+                localStorage.removeItem('cart');
+                localStorage.removeItem('pendingStripeOrder');
+                renderCompleteActions(order.order_id || orderId);
+            } catch (error) {
+                console.error('Order confirmation failed:', error);
+                statusBox.innerHTML = `
+                    <strong style="color: #c62828;">決済確認に時間がかかっています。</strong><br>
+                    Stripe側で決済が完了している場合でも、店舗側の確認に少し時間がかかる場合があります。<br>
+                    注文番号：${orderId || '未取得'}
+                `;
+                renderCompleteActions(orderId);
+            }
+        }
+        confirmStripeOrder();
     </script>
 </body>
 

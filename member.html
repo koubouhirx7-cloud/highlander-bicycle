@@ -4,12 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>会員登録・ログイン | Highlander</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="/favicon.ico?v=20260701" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260701">
+    <link rel="manifest" href="/site.webmanifest?v=20260701">
+    <meta name="theme-color" content="#1B3022">
+    <title>ネットショップ マイページ | Highlander</title>
+    <meta name="description" content="Highlanderオンラインショップの注文控えと配送先情報を確認するマイページです。">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <link rel="canonical" href="https://high-lander2.com/member.html">
+    <link rel="alternate" hreflang="ja-JP" href="https://high-lander2.com/member.html">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Highlander Bicycle Shop">
+    <meta property="og:title" content="ネットショップ マイページ | Highlander">
+    <meta property="og:description" content="Highlanderオンラインショップの注文控えと配送先情報を確認するマイページです。">
+    <meta property="og:url" content="https://high-lander2.com/member.html">
+    <meta property="og:image" content="https://high-lander2.com/images/hero_1.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ネットショップ マイページ | Highlander">
+    <meta name="twitter:description" content="Highlanderオンラインショップの注文控えと配送先情報を確認するマイページです。">
+    <meta name="twitter:image" content="https://high-lander2.com/images/hero_1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260702-googleprofile1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .auth-container {
@@ -22,36 +42,46 @@
             border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .auth-tabs {
-            display: flex;
-            border-bottom: 2px solid #eee;
-            margin-bottom: 30px;
+        .auth-intro {
+            display: grid;
+            gap: 16px;
+            text-align: left;
+            margin-bottom: 24px;
         }
 
-        .auth-tab {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #888;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: 0.3s;
-        }
-
-        .auth-tab.active {
+        .auth-intro h1 {
+            margin: 0;
+            font-size: clamp(1.4rem, 4vw, 2rem);
             color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
+            font-family: 'Zen Old Mincho', serif;
+            line-height: 1.35;
         }
 
-        .auth-panel {
-            display: none;
+        .auth-intro p {
+            margin: 0;
+            color: #555;
+            line-height: 1.8;
         }
 
-        .auth-panel.active {
-            display: block;
+        .auth-note-list {
+            display: grid;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .auth-note-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .auth-note-list i {
+            color: var(--secondary-color);
+            margin-top: 5px;
         }
 
         .form-message {
@@ -79,8 +109,6 @@
         .social-login-area {
             text-align: center;
             margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
         }
 
         .social-btn {
@@ -177,6 +205,100 @@
             font-size: 1.2rem;
             color: #666;
         }
+
+        .checkout-return-notice {
+            display: none;
+            margin-bottom: 24px;
+            padding: 16px 18px;
+            border-radius: 10px;
+            background: #f7f3ea;
+            border: 1px solid rgba(140, 112, 81, 0.18);
+            color: var(--primary-color);
+            line-height: 1.7;
+        }
+
+        .checkout-return-notice strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .member-order-section {
+            margin-top: 36px;
+            padding-top: 28px;
+            border-top: 1px solid #eee;
+        }
+
+        .member-order-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+            color: var(--primary-color);
+        }
+
+        .member-order-empty {
+            padding: 18px;
+            border-radius: 8px;
+            background: #f7f7f7;
+            color: #666;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .member-order-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            padding: 18px;
+            border: 1px solid #e4e0d8;
+            border-radius: 10px;
+            background: #fffdf8;
+            margin-top: 12px;
+        }
+
+        .member-order-card strong {
+            color: var(--primary-color);
+        }
+
+        .member-order-meta {
+            color: #666;
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .member-order-price {
+            color: var(--primary-color);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .member-order-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .member-order-copy-btn {
+            appearance: none;
+            border: 1px solid rgba(27, 48, 34, 0.18);
+            background: #fbfaf6;
+            color: var(--primary-color);
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .member-order-copy-btn:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        @media (max-width: 640px) {
+            .member-order-card {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
@@ -192,7 +314,7 @@
                     <li><a href="service.html">Service</a></li>
                     <li><a href="custom.html">Custom</a></li>
                     <li><a href="rental.html">Rental & Tour</a></li>
-                    <li><a href="https://xs001364.xsrv.jp" target="_blank" style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="web/">WEB部</a></li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="access.html">Access</a></li>
                     <li><a href="shop.html" class="nav-btn">オンラインショップ</a></li>
@@ -213,69 +335,38 @@
 
             <!-- Authenticate View (Logged Out) -->
             <div id="view-auth" class="auth-container" style="display: none;">
-                <div class="auth-tabs">
-                    <div id="tab-login" class="auth-tab active" onclick="switchAuthTab('login')">ログイン</div>
-                    <div id="tab-register" class="auth-tab" onclick="switchAuthTab('register')">新規会員登録</div>
+                <div id="checkout-return-notice" class="checkout-return-notice">
+                    <strong>購入手続きの途中です。</strong>
+                    Googleログインが完了すると、カートと入力内容を保持したまま購入手続きへ戻ります。
                 </div>
 
-                <!-- Shared Google Login -->
+                <div class="auth-intro">
+                    <h1>Googleアカウントで注文控えを確認できます。</h1>
+                    <p>
+                        Googleログインは、ご本人確認と注文履歴の紐づけに使います。配送先住所や電話番号はGoogleから自動取得せず、
+                        ご注文時またはマイページでHighlander用の配送先として入力・保存できます。
+                    </p>
+                    <ul class="auth-note-list">
+                        <li><i class="fas fa-check-circle"></i><span>メールアドレスはGoogleアカウントで確認します。</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>配送先は初回購入時に入力し、次回以降の入力を少なくできます。</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>注文履歴は、あとから顧客管理側へAI読み取りしやすい形で残します。</span></li>
+                    </ul>
+                </div>
+
                 <div class="social-login-area">
                     <button type="button" class="social-btn" onclick="window.signInWithGoogle()">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 20px;">
-                        Googleアカウントでサインイン
+                        Googleでログイン
                     </button>
-                    <div style="margin-top: 15px; font-size: 0.8rem; color: #888; text-align: center;">— またはメールアドレスで —</div>
                 </div>
 
                 <div id="auth-message" class="form-message"></div>
-
-                <!-- Login Panel -->
-                <div id="panel-login" class="auth-panel active">
-                    <form id="form-login">
-                        <div class="form-group">
-                            <label for="login-email">メールアドレス</label>
-                            <input type="email" id="login-email" required placeholder="example@mail.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password">パスワード</label>
-                            <input type="password" id="login-password" required placeholder="••••••••" minlength="6">
-                        </div>
-                        <button type="submit" class="btn-submit">ログイン</button>
-                    </form>
-                </div>
-
-                <!-- Register Panel -->
-                <div id="panel-register" class="auth-panel">
-                    <form id="form-register">
-                        <div class="form-group">
-                            <label for="reg-name">お名前（フルネーム）</label>
-                            <input type="text" id="reg-name" required placeholder="山田 太郎">
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-email">メールアドレス</label>
-                            <input type="email" id="reg-email" required placeholder="example@mail.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-password">パスワード（6文字以上）</label>
-                            <input type="password" id="reg-password" required placeholder="••••••••" minlength="6">
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-phone">電話番号</label>
-                            <input type="tel" id="reg-phone" required placeholder="090-1234-5678">
-                        </div>
-                        <div class="form-group">
-                            <label for="reg-address">配送先住所</label>
-                            <textarea id="reg-address" rows="3" required placeholder="兵庫県丹波篠山市..."></textarea>
-                        </div>
-                        <button type="submit" class="btn-submit">会員登録する</button>
-                    </form>
-                </div>
             </div>
 
             <!-- Profile / My Page View (Logged In) -->
             <div id="view-profile" class="my-page-container" style="display: none;">
                 <div class="profile-header">
-                    <h2>マイページ</h2>
+                    <h2>注文控え・配送先情報</h2>
                     <button class="logout-btn" onclick="window.handleLogout()">ログアウト</button>
                 </div>
 
@@ -284,7 +375,7 @@
                 <form id="form-profile">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div class="form-group">
-                            <label>メールアドレス (ログイン用)</label>
+                            <label>Googleメールアドレス</label>
                             <input type="email" id="prof-email" disabled style="background: #f5f5f5; cursor: not-allowed;">
                         </div>
                         <div class="form-group">
@@ -302,9 +393,14 @@
                     </div>
 
                     <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
-                        <button type="submit" class="add-to-cart-btn btn" style="border: none; border-radius: 4px;">会員情報を保存する</button>
+                        <button type="submit" class="add-to-cart-btn btn" style="border: none; border-radius: 4px;">配送先情報を保存する</button>
                     </div>
                 </form>
+
+                <div class="member-order-section">
+                    <h3>最近のご注文</h3>
+                    <div id="member-order-history" class="member-order-empty">まだ表示できる注文控えはありません。</div>
+                </div>
             </div>
 
         </div>
@@ -318,16 +414,24 @@
         <p>&copy; 2026 Highlander Bicycle Shop</p>
     </footer>
 
-    <script src="config.js"></script>
+    <script src="app-config.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getAuth, updateProfile, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         // Global instances
         let auth = null;
         let db = null;
         let currentUser = null;
+        const pageParams = new URLSearchParams(window.location.search);
+        const redirectTarget = getSafeRedirectTarget(pageParams.get('redirect'));
+        const isCheckoutFlow = redirectTarget.includes('checkout.html') || pageParams.get('flow') === 'checkout';
+
+        if (isCheckoutFlow) {
+            const notice = document.getElementById('checkout-return-notice');
+            if (notice) notice.style.display = 'block';
+        }
 
         // Initialize Firebase
         if (typeof FIREBASE_API_KEY !== 'undefined' && FIREBASE_API_KEY && FIREBASE_API_KEY !== '${FIREBASE_API_KEY}') {
@@ -355,7 +459,7 @@
         window.signInWithGoogle = async () => {
             clearMessages();
             if (isMockMode) {
-                simulateMockLogin('Google 太郎', 'google-test@example.com', '080-9999-8888', '兵庫県丹波篠山市味間南558-3');
+                simulateMockLogin('Google 太郎', 'google-test@example.com', '', '');
                 alert('【テスト環境通知】\nFirebaseの設定が見つからないため、デモ用アカウントでログインしました。');
                 return;
             }
@@ -376,6 +480,7 @@
             localStorage.removeItem('auth_user_name');
             localStorage.removeItem('auth_user_uid');
             localStorage.removeItem('auth_user_email');
+            localStorage.removeItem('shopMemberProfile');
             localStorage.setItem('isLoggedIn', 'false');
 
             if (isMockMode) {
@@ -389,76 +494,6 @@
                 console.error("Logout Error", error);
             }
         };
-
-        // Tab Switching
-        window.switchAuthTab = (tab) => {
-            clearMessages();
-            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
-
-            if (tab === 'login') {
-                document.getElementById('tab-login').classList.add('active');
-                document.getElementById('panel-login').classList.add('active');
-            } else {
-                document.getElementById('tab-register').classList.add('active');
-                document.getElementById('panel-register').classList.add('active');
-            }
-        };
-
-        // Form Submissions
-        document.getElementById('form-login').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            clearMessages();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-
-            if (isMockMode) {
-                if (email === 'demo@highlander.com' && password === 'password') {
-                    simulateMockLogin('デモ会員', email, '079-598-2334', '兵庫県丹波篠山市味間南558-3');
-                } else {
-                    simulateMockLogin('テスト会員', email, '', '');
-                }
-                alert('【テスト環境通知】\nFirebase設定なしのデモログインに成功しました。\n(実在するメールを使う場合はFirebaseをセットアップしてください)');
-                return;
-            }
-
-            try {
-                const result = await signInWithEmailAndPassword(auth, email, password);
-                await loadAndDisplayProfile(result.user);
-            } catch (error) {
-                showMsg('auth-message', 'error', 'ログインに失敗しました: パスワードまたはメールアドレスが異なります。');
-            }
-        });
-
-        document.getElementById('form-register').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            clearMessages();
-            const name = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
-            const phone = document.getElementById('reg-phone').value;
-            const address = document.getElementById('reg-address').value;
-
-            if (isMockMode) {
-                simulateMockLogin(name, email, phone, address);
-                alert('【テスト環境通知】\nFirebase設定なしのため、デモ用アカウントとしてローカルで会員登録しました。');
-                return;
-            }
-
-            try {
-                const result = await createUserWithEmailAndPassword(auth, email, password);
-                const user = result.user;
-
-                // Update auth profile display name
-                await updateProfile(user, { displayName: name });
-
-                // Save profile details (address and phone)
-                await saveProfileData(user.uid, { name, email, phone, address });
-                await loadAndDisplayProfile(user);
-            } catch (error) {
-                showMsg('auth-message', 'error', '会員登録に失敗しました: ' + error.message);
-            }
-        });
 
         document.getElementById('form-profile').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -480,7 +515,7 @@
                 // Update local storage markers
                 localStorage.setItem('auth_user_name', name);
                 
-                showMsg('profile-message', 'success', '会員情報を保存しました。');
+                showMsg('profile-message', 'success', '配送先情報を保存しました。');
                 
                 // Redirect if redirect URL is specified
                 checkRedirect();
@@ -558,6 +593,7 @@
             localStorage.setItem('auth_user_uid', uid);
             localStorage.setItem('auth_user_email', email);
             localStorage.setItem('isLoggedIn', 'true');
+            saveShopMemberSnapshot({ uid, name, email, phone, address });
 
             showProfileView(name, email, phone, address);
         }
@@ -568,6 +604,13 @@
             localStorage.setItem('user_address_' + uid, profileData.address);
             localStorage.setItem('user_phone_' + uid, profileData.phone);
             localStorage.setItem('user_name_' + uid, profileData.name);
+            saveShopMemberSnapshot({
+                uid,
+                name: profileData.name,
+                email: profileData.email,
+                phone: profileData.phone,
+                address: profileData.address
+            });
 
             // 2. Try to save to Firestore
             if (db) {
@@ -597,6 +640,7 @@
             localStorage.setItem('user_address_' + mockUid, address);
             localStorage.setItem('user_phone_' + mockUid, phone);
             localStorage.setItem('user_name_' + mockUid, name);
+            saveShopMemberSnapshot({ uid: mockUid, name, email, phone, address });
 
             showProfileView(name, email, phone, address);
             checkRedirect();
@@ -618,6 +662,7 @@
             document.getElementById('prof-name').value = name;
             document.getElementById('prof-phone').value = phone;
             document.getElementById('prof-address').value = address;
+            renderOrderHistory();
         }
 
         function showMsg(containerId, type, text) {
@@ -627,24 +672,155 @@
         }
 
         function clearMessages() {
-            document.getElementById('auth-message').className = 'form-message';
-            document.getElementById('auth-message').textContent = '';
-            document.getElementById('profile-message').className = 'form-message';
-            document.getElementById('profile-message').textContent = '';
+            const authMessage = document.getElementById('auth-message');
+            const profileMessage = document.getElementById('profile-message');
+            if (authMessage) {
+                authMessage.className = 'form-message';
+                authMessage.textContent = '';
+            }
+            if (profileMessage) {
+                profileMessage.className = 'form-message';
+                profileMessage.textContent = '';
+            }
         }
 
         function checkRedirect() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirect = urlParams.get('redirect');
-            if (redirect) {
+            if (redirectTarget) {
                 // Wait briefly so the user sees success state, then redirect
                 setTimeout(() => {
-                    window.location.href = redirect;
+                    const separator = redirectTarget.includes('?') ? '&' : '?';
+                    window.location.href = redirectTarget + separator + 'member=1';
                 }, 1000);
             }
         }
+
+        function getSafeRedirectTarget(value) {
+            if (!value) return '';
+            const trimmed = String(value).trim();
+            if (!trimmed || trimmed.startsWith('http') || trimmed.startsWith('//')) return '';
+            if (!/^[A-Za-z0-9_./?#=&-]+$/.test(trimmed)) return '';
+            if (trimmed.includes('..')) return '';
+            return trimmed;
+        }
+
+        function saveShopMemberSnapshot(profile) {
+            if (!profile || (!profile.uid && !profile.email)) return;
+            localStorage.setItem('shopMemberProfile', JSON.stringify({
+                uid: profile.uid || '',
+                name: profile.name || '',
+                email: profile.email || '',
+                phone: profile.phone || '',
+                address: profile.address || '',
+                updatedAt: new Date().toISOString()
+            }));
+        }
+
+        function getOrderHistory() {
+            try {
+                const history = JSON.parse(localStorage.getItem('shopOrderHistory') || '[]');
+                return Array.isArray(history) ? history : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function renderOrderHistory() {
+            const container = document.getElementById('member-order-history');
+            if (!container) return;
+
+            const uid = localStorage.getItem('auth_user_uid') || '';
+            const email = localStorage.getItem('auth_user_email') || '';
+            const orders = getOrderHistory()
+                .filter(order => {
+                    if (!uid && !email) return true;
+                    return order.member_uid === uid || order.customer_email === email || order.customer?.email === email;
+                })
+                .slice(0, 5);
+
+            if (orders.length === 0) {
+                container.className = 'member-order-empty';
+                container.innerHTML = 'まだ表示できる注文控えはありません。オンラインショップで購入すると、ここに最近の注文が表示されます。';
+                return;
+            }
+
+            window.memberVisibleOrders = orders;
+            container.className = '';
+            container.innerHTML = orders.map((order, index) => {
+                const amount = order.amount_total ? `¥${Number(order.amount_total).toLocaleString()}` : '';
+                const date = order.saved_at || order.completed_at || order.created_at || '';
+                const dateText = date ? new Date(date).toLocaleDateString('ja-JP') : '';
+                const status = order.status_label || order.payment_status || '受付済み';
+                const itemNames = Array.isArray(order.items) && order.items.length
+                    ? order.items.map(item => `${escapeMemberHtml(item.name || '商品')} × ${item.quantity || 1}`).join(' / ')
+                    : '注文内容を確認中';
+                return `
+                    <div class="member-order-card">
+                        <div>
+                            <strong>注文番号：${escapeMemberHtml(order.order_id)}</strong>
+                            <div class="member-order-meta">${escapeMemberHtml(status)}${dateText ? ` / ${escapeMemberHtml(dateText)}` : ''}</div>
+                            <div class="member-order-meta">${itemNames}</div>
+                        </div>
+                        <div class="member-order-price">${escapeMemberHtml(amount)}</div>
+                        <div class="member-order-actions">
+                            <button type="button" class="member-order-copy-btn" onclick="window.copyMemberOrderForCrm(${index})">AI取り込み用テキストをコピー</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.copyMemberOrderForCrm = async (index) => {
+            const order = Array.isArray(window.memberVisibleOrders) ? window.memberVisibleOrders[index] : null;
+            if (!order) return;
+            const text = formatOrderForCrm(order);
+            try {
+                await navigator.clipboard.writeText(text);
+                showMsg('profile-message', 'success', '顧客管理AIに貼り付けやすい注文テキストをコピーしました。');
+            } catch (error) {
+                showMsg('profile-message', 'error', 'コピーできませんでした。注文履歴を選択して手動でコピーしてください。');
+            }
+        };
+
+        function formatOrderForCrm(order) {
+            const customer = order.customer || {};
+            const items = Array.isArray(order.items) ? order.items : [];
+            const amount = Number(order.amount_total || items.reduce((sum, item) => {
+                return sum + (Number(item.price || 0) * Number(item.quantity || 0));
+            }, 0));
+            const date = order.saved_at || order.completed_at || order.created_at || '';
+            const itemLines = items.map((item) => {
+                const price = Number(item.price || 0);
+                return `- ${item.name || '商品'} / 数量: ${item.quantity || 1} / 単価: ${price.toLocaleString()}円`;
+            });
+
+            return [
+                'Highlanderネットショップ注文',
+                `注文番号: ${order.order_id || ''}`,
+                `注文日時: ${date}`,
+                `GoogleログインUID: ${order.member_uid || customer.uid || ''}`,
+                `Googleメール: ${order.customer_email || customer.email || ''}`,
+                `氏名: ${customer.name || ''}`,
+                `電話番号: ${customer.phone || ''}`,
+                `配送先住所: ${customer.address || ''}`,
+                `決済方法: ${order.payment_method || ''}`,
+                `決済状況: ${order.status_label || order.payment_status || ''}`,
+                `合計金額: ${amount ? `${amount.toLocaleString()}円` : ''}`,
+                '商品:',
+                itemLines.length ? itemLines.join('\n') : '- 注文内容なし',
+            ].join('\n');
+        }
+
+        function escapeMemberHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[char]));
+        }
     </script>
-    <script src="script.js"></script>
+    <script src="script.js?v=20260702-googleprofile1"></script>
 </body>
 
 </html>

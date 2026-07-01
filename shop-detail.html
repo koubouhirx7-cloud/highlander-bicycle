@@ -4,13 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico?v=20260701" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260701">
+    <link rel="manifest" href="/site.webmanifest?v=20260701">
+    <meta name="theme-color" content="#1B3022">
     <title>商品詳細 | Highlander</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="description" content="Highlanderオンラインショップの商品詳細ページです。">
+    <meta name="robots" content="noindex, follow, noarchive">
+    <link rel="canonical" href="https://high-lander2.com/shop-detail.html">
+    <link rel="alternate" hreflang="ja-JP" href="https://high-lander2.com/shop-detail.html">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Highlander Bicycle Shop">
+    <meta property="og:title" content="商品詳細 | Highlander">
+    <meta property="og:description" content="Highlanderオンラインショップの商品詳細ページです。">
+    <meta property="og:url" content="https://high-lander2.com/shop-detail.html">
+    <meta property="og:image" content="https://high-lander2.com/images/hero_1.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="商品詳細 | Highlander">
+    <meta name="twitter:description" content="Highlanderオンラインショップの商品詳細ページです。">
+    <meta name="twitter:image" content="https://high-lander2.com/images/hero_1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260702-googleprofile1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .shop-detail-container {
@@ -89,7 +109,7 @@
                     <li><a href="service.html">Service</a></li>
                     <li><a href="custom.html">Custom</a></li>
                     <li><a href="rental.html">Rental & Tour</a></li>
-                    <li><a href="https://xs001364.xsrv.jp" target="_blank" style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="web/">WEB部</a></li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="access.html">Access</a></li>
                     <li><a href="shop.html" class="active nav-btn">オンラインショップ</a></li>
@@ -134,8 +154,7 @@
         <p>&copy; 2026 Highlander Bicycle Shop</p>
     </footer>
 
-    <script src="config.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=20260702-googleprofile1"></script>
     <script>
         async function fetchProductDetail() {
             const container = document.getElementById('shop-detail-content');
@@ -147,17 +166,8 @@
                 return;
             }
 
-            if (typeof MICROCMS_SERVICE_DOMAIN === 'undefined' || typeof MICROCMS_API_KEY === 'undefined') {
-                container.innerHTML = '<div class="shop-detail-error">APIキーが設定されていません。</div>';
-                return;
-            }
-
             try {
-                const response = await fetch(`https://${MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/products/${productId}`, {
-                    headers: {
-                        'X-MICROCMS-API-KEY': MICROCMS_API_KEY
-                    }
-                });
+                const response = await fetch(`/api/microcms-products?id=${encodeURIComponent(productId)}`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -185,14 +195,14 @@
                 container.innerHTML = `
                     <div class="shop-detail-container">
                         <div class="shop-detail-img">
-                            <img src="${imageUrl}" alt="${title}">
+                            <img src="${escapeProductHtml(imageUrl)}" alt="${escapeProductHtml(title)}">
                         </div>
                         <div class="shop-detail-info">
-                            <div class="shop-detail-category">${String(category).toUpperCase()}</div>
-                            <h1 class="shop-detail-title">${title}</h1>
+                            <div class="shop-detail-category">${escapeProductHtml(String(category).toUpperCase())}</div>
+                            <h1 class="shop-detail-title">${escapeProductHtml(title)}</h1>
                             <div class="shop-detail-price">${priceStr}</div>
                             <div class="shop-detail-desc">${description}</div>
-                            <button class="add-to-cart-btn btn" data-id="${item.id}" data-name="${title}" data-price="${priceNum}">カートに入れる</button>
+                            <button class="add-to-cart-btn btn" data-id="${escapeProductHtml(item.id)}" data-name="${escapeProductHtml(title)}" data-price="${priceNum}">カートに入れる</button>
                         </div>
                     </div>
                 `;
@@ -201,6 +211,16 @@
                 console.error('Error fetching product detail:', error);
                 container.innerHTML = '<div class="shop-detail-error">商品の読み込みに失敗しました。URLが正しいか確認してください。</div>';
             }
+        }
+
+        function escapeProductHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[char]));
         }
 
         document.addEventListener('DOMContentLoaded', fetchProductDetail);

@@ -4,12 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico?v=20260701" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260701">
+    <link rel="manifest" href="/site.webmanifest?v=20260701">
+    <meta name="theme-color" content="#1B3022">
     <title>ご注文手続き | Highlander</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="description" content="Highlanderオンラインショップのご注文手続きページです。">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <link rel="canonical" href="https://high-lander2.com/checkout.html">
+    <link rel="alternate" hreflang="ja-JP" href="https://high-lander2.com/checkout.html">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Highlander Bicycle Shop">
+    <meta property="og:title" content="ご注文手続き | Highlander">
+    <meta property="og:description" content="Highlanderオンラインショップのご注文手続きページです。">
+    <meta property="og:url" content="https://high-lander2.com/checkout.html">
+    <meta property="og:image" content="https://high-lander2.com/images/hero_1.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ご注文手続き | Highlander">
+    <meta name="twitter:description" content="Highlanderオンラインショップのご注文手続きページです。">
+    <meta name="twitter:image" content="https://high-lander2.com/images/hero_1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260702-googleprofile1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -25,7 +45,7 @@
                     <li><a href="service.html">Service</a></li>
                     <li><a href="custom.html">Custom</a></li>
                     <li><a href="rental.html">Rental & Tour</a></li>
-                    <li><a href="https://xs001364.xsrv.jp" target="_blank" style="font-weight: 700; color: #d35400;">WEB部</a></li>
+                    <li><a href="web/">WEB部</a></li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="access.html">Access</a></li>
                     <li><a href="shop.html" class="nav-btn">オンラインショップ</a></li>
@@ -55,12 +75,12 @@
                 <div class="checkout-form-area">
                     <h2>お客様情報</h2>
 
-                    <div id="login-notice-box" style="background: #f4f5f7; padding: 20px; border-radius: 8px; margin-bottom: 25px; text-align: center;">
-                        <p id="login-notice-text" style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">会員登録をすると、住所や電話番号を保存して次回から自動入力できます。</p>
-                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                            <a href="member.html?redirect=checkout.html" class="btn btn-outline" style="padding: 8px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: bold; border-color: #ddd; background: #fff;">
-                                <i class="fas fa-user"></i> ログイン・会員登録
-                            </a>
+                    <div id="login-notice-box" class="checkout-member-box">
+                        <div class="checkout-member-copy">
+                            <strong>Googleログインで、注文控えを後から確認できます。</strong>
+                            <span>Googleアカウントは本人確認とメールアドレスの紐づけに使います。配送先住所・電話番号はHighlander用にこの画面で入力してください。</span>
+                        </div>
+                        <div class="checkout-member-actions">
                             <button type="button" id="google-login-btn" onclick="window.signInWithGoogle()" style="background: #fff; border: 1px solid #ddd; padding: 8px 20px; border-radius: 4px; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; font-weight: bold; color: #444; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="width: 16px;">
                                 Googleでログイン
@@ -85,6 +105,13 @@
                             <label for="address">配送先住所</label>
                             <textarea id="address" rows="3" required placeholder="兵庫県丹波篠山市..."></textarea>
                         </div>
+                        <label class="checkout-profile-save">
+                            <input type="checkbox" id="save-delivery-profile" checked>
+                            <span>
+                                <strong>この配送先を次回の購入にも使う</strong>
+                                Googleログイン中のみ、Highlander用の配送先として保存します。Google側の住所情報は使用しません。
+                            </span>
+                        </label>
                         <div class="form-group" style="margin-top: 30px;">
                             <label>お支払い方法</label>
                             <div class="payment-options" style="margin-top: 10px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
@@ -122,10 +149,30 @@
         <p>&copy; 2026 Highlander Bicycle Shop</p>
     </footer>
 
-    <script src="config.js"></script>
+    <script src="app-config.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        const escapeMemberHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        }[char]));
+
+        const saveShopMemberSnapshot = ({ uid, name, email, phone, address }) => {
+            if (!uid && !email) return;
+            localStorage.setItem('shopMemberProfile', JSON.stringify({
+                uid: uid || '',
+                name: name || '',
+                email: email || '',
+                phone: phone || '',
+                address: address || '',
+                updatedAt: new Date().toISOString()
+            }));
+        };
 
         // Pre-fill synchronously if local markers exist (reduces visual layout shift)
         const checkLocalMarkers = () => {
@@ -134,20 +181,32 @@
                 const uid = localStorage.getItem('auth_user_uid');
                 const name = localStorage.getItem('auth_user_name');
                 const email = localStorage.getItem('auth_user_email');
-                const phone = localStorage.getItem('user_phone_' + uid);
-                const address = localStorage.getItem('user_address_' + uid);
+                    const savedProfile = (() => {
+                        try {
+                            return JSON.parse(localStorage.getItem('user_profile_' + uid) || '{}');
+                        } catch (error) {
+                            return {};
+                        }
+                    })();
+                    const phone = savedProfile.phone || localStorage.getItem('user_phone_' + uid);
+                    const address = savedProfile.address || localStorage.getItem('user_address_' + uid);
 
                 if (name && !document.getElementById('name').value) document.getElementById('name').value = name;
                 if (email && !document.getElementById('email').value) document.getElementById('email').value = email;
                 if (phone && !document.getElementById('phone').value) document.getElementById('phone').value = phone;
                 if (address && !document.getElementById('address').value) document.getElementById('address').value = address;
+                saveShopMemberSnapshot({ uid, name, email, phone, address });
                 
                 const noticeBox = document.getElementById('login-notice-box');
                 if (noticeBox) {
+                    const safeName = escapeMemberHtml(name || email || '会員');
                     noticeBox.innerHTML = `
-                        <div style="font-size: 0.9rem; color: #333; display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
-                            <span><i class="fas fa-check-circle" style="color: #2e7d32;"></i> <strong>${name || email}</strong> さんとしてログイン中</span>
-                            <a href="member.html?redirect=checkout.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; text-decoration: none; border-color: #ccc; background: #fff;">マイページ</a>
+                        <div class="checkout-member-copy checkout-member-copy-loggedin">
+                            <strong><i class="fas fa-check-circle" style="color: #2e7d32;"></i> ${safeName} さんとして購入手続き中です。</strong>
+                            <span>配送先はこの画面で入力します。チェックを入れたまま注文すると、次回用として保存されます。</span>
+                        </div>
+                        <div class="checkout-member-actions">
+                            <a href="member.html?redirect=checkout.html&flow=checkout" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; text-decoration: none; border-color: #ccc; background: #fff;">マイページ</a>
                             <button type="button" onclick="window.handleSignOut()" class="logout-btn" style="padding: 6px 12px; font-size: 0.8rem; border: 1px solid #c62828; color: #c62828; background: transparent; cursor: pointer; border-radius: 4px;">ログアウト</button>
                         </div>
                     `;
@@ -157,7 +216,7 @@
         };
         setTimeout(checkLocalMarkers, 50);
 
-        // Check if Firebase variables are actually set in config.js (prevents crashes before Vercel envs are added)
+        // Check if Firebase variables are actually set in app-config.js (prevents crashes before deploy envs are added)
         if (typeof FIREBASE_API_KEY === 'undefined' || !FIREBASE_API_KEY || FIREBASE_API_KEY === '${FIREBASE_API_KEY}') {
             console.log("Firebase API Keys missing. Running in mock mode.");
             window.signInWithGoogle = () => {
@@ -169,13 +228,15 @@
                     localStorage.setItem('auth_user_name', 'テスト 太郎');
                     localStorage.setItem('auth_user_uid', mockUid);
                     localStorage.setItem('auth_user_email', 'test@example.com');
-                    localStorage.setItem('user_phone_' + mockUid, '090-9999-8888');
-                    localStorage.setItem('user_address_' + mockUid, '兵庫県丹波篠山市味間南558-3');
+                    localStorage.setItem('user_profile_' + mockUid, JSON.stringify({
+                        name: 'テスト 太郎',
+                        email: 'test@example.com',
+                        phone: '',
+                        address: ''
+                    }));
 
                     document.getElementById('name').value = 'テスト 太郎';
                     document.getElementById('email').value = 'test@example.com';
-                    document.getElementById('phone').value = '090-9999-8888';
-                    document.getElementById('address').value = '兵庫県丹波篠山市味間南558-3';
 
                     checkLocalMarkers();
                     alert('【テスト環境通知】\nFirebaseの環境変数が設定されていないため、Googleログインはモックアップ動作として機能しました。');
@@ -186,6 +247,7 @@
                 localStorage.removeItem('auth_user_name');
                 localStorage.removeItem('auth_user_uid');
                 localStorage.removeItem('auth_user_email');
+                localStorage.removeItem('shopMemberProfile');
                 window.location.reload();
             };
         } else {
@@ -222,6 +284,13 @@
                     localStorage.setItem('auth_user_name', user.displayName || user.email);
                     localStorage.setItem('auth_user_uid', user.uid);
                     localStorage.setItem('auth_user_email', user.email);
+                    saveShopMemberSnapshot({
+                        uid: user.uid,
+                        name: user.displayName || user.email,
+                        email: user.email,
+                        phone: savedPhone || '',
+                        address: savedAddress || ''
+                    });
 
                     checkLocalMarkers();
                 }).catch((error) => {
@@ -239,6 +308,7 @@
                     localStorage.removeItem('auth_user_name');
                     localStorage.removeItem('auth_user_uid');
                     localStorage.removeItem('auth_user_email');
+                    localStorage.removeItem('shopMemberProfile');
                     window.location.reload();
                 });
             };
@@ -263,6 +333,13 @@
                     localStorage.setItem('auth_user_name', user.displayName || user.email);
                     localStorage.setItem('auth_user_uid', user.uid);
                     localStorage.setItem('auth_user_email', user.email);
+                    saveShopMemberSnapshot({
+                        uid: user.uid,
+                        name: user.displayName || user.email,
+                        email: user.email,
+                        phone: savedPhone || '',
+                        address: savedAddress || ''
+                    });
 
                     window.currentUserUid = user.uid;
                     checkLocalMarkers();
@@ -270,7 +347,7 @@
             });
         }
     </script>
-    <script src="script.js"></script>
+    <script src="script.js?v=20260702-googleprofile1"></script>
     <div class="sticky-footer" id="stickyFooter">
         <div class="sticky-footer-container">
             <div class="footer-btn-wrapper">
