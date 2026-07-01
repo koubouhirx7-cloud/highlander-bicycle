@@ -40,6 +40,10 @@ RewriteRule ^api/order-to-hublink$ api/order-to-hublink.php [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/admin-shop$ api/admin-shop.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^api/microcms-posts$ api/microcms-posts.php [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f

@@ -8,12 +8,17 @@ CREATE TABLE IF NOT EXISTS shop_customers (
   name VARCHAR(255) NOT NULL DEFAULT '',
   phone VARCHAR(64) NOT NULL DEFAULT '',
   shipping_address TEXT NULL,
+  admin_note TEXT NULL,
+  crm_link_status VARCHAR(40) NOT NULL DEFAULT 'unlinked',
+  hublink_customer_id VARCHAR(128) NULL,
+  crm_linked_at DATETIME NULL,
   last_order_at DATETIME NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY uq_shop_customers_google_uid (google_uid),
   KEY idx_shop_customers_email (email),
+  KEY idx_shop_customers_crm_link_status (crm_link_status),
   KEY idx_shop_customers_updated_at (updated_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

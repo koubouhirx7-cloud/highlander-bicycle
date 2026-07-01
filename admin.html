@@ -1,629 +1,926 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.ico?v=20260701" sizes="any">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260701">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260701">
-    <link rel="manifest" href="/site.webmanifest?v=20260701">
-    <meta name="theme-color" content="#1B3022">
-    <title>管理者ダッシュボード | Highlander</title>
-    <meta name="description" content="Highlander管理者向けページです。">
     <meta name="robots" content="noindex, nofollow, noarchive">
+    <title>管理画面 | Highlander Bicycle Shop</title>
     <link rel="canonical" href="https://high-lander2.com/admin.html">
-    <link rel="alternate" hreflang="ja-JP" href="https://high-lander2.com/admin.html">
-    <meta property="og:locale" content="ja_JP">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Highlander Bicycle Shop">
-    <meta property="og:title" content="管理者ダッシュボード | Highlander">
-    <meta property="og:description" content="Highlander管理者向けページです。">
-    <meta property="og:url" content="https://high-lander2.com/admin.html">
-    <meta property="og:image" content="https://high-lander2.com/images/hero_1.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="管理者ダッシュボード | Highlander">
-    <meta name="twitter:description" content="Highlander管理者向けページです。">
-    <meta name="twitter:image" content="https://high-lander2.com/images/hero_1.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260702-googleprofile1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css?v=20260702-admin1">
     <style>
-        .admin-login-box {
-            max-width: 400px;
-            margin: 80px auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: var(--shadow-medium);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+        :root {
+            --admin-green: #143824;
+            --admin-ink: #223027;
+            --admin-muted: #657168;
+            --admin-line: #dfe5de;
+            --admin-cream: #f8f6ef;
+            --admin-gold: #a8865d;
+            --admin-warn: #fff7df;
         }
 
-        .admin-dashboard {
-            max-width: 1200px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: var(--shadow-medium);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+        body {
+            background: #f6f5f0;
+            color: var(--admin-ink);
         }
 
-        .admin-header {
+        .admin-page {
+            min-height: 100vh;
+            padding: 32px 20px 56px;
+        }
+
+        .admin-shell {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+        }
+
+        .admin-top {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .admin-header h1 {
-            margin: 0;
-            left: 0;
-            transform: none;
-            text-align: left;
-            font-family: 'Zen Old Mincho', serif;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .admin-header h1::after, .admin-header h1::before {
-            display: none;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            justify-content: space-between;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
 
-        .stat-card {
-            background: var(--bg-light);
-            padding: 20px;
-            border-radius: 6px;
-            border-left: 4px solid var(--secondary-color);
+        .admin-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--admin-green);
+            text-decoration: none;
         }
 
-        .stat-card-title {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 5px;
+        .admin-brand img {
+            width: 96px;
+            height: auto;
+        }
+
+        .admin-brand-text {
+            display: grid;
+            gap: 2px;
+            font-weight: 800;
+            line-height: 1.25;
+        }
+
+        .admin-brand-text small {
+            color: var(--admin-muted);
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
         }
 
-        .stat-card-value {
-            font-size: 1.8rem;
+        .admin-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--admin-line);
+            border-radius: 18px;
+            box-shadow: 0 18px 44px rgba(20, 56, 36, 0.08);
+        }
+
+        .admin-login {
+            width: min(560px, 100%);
+            margin: 72px auto;
+            padding: 36px;
+        }
+
+        .admin-login h1,
+        .admin-dashboard h1 {
+            color: var(--admin-green);
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            line-height: 1.25;
+            margin: 0 0 14px;
+        }
+
+        .admin-lead {
+            color: var(--admin-muted);
             font-weight: 700;
-            color: var(--primary-color);
-            font-family: 'Outfit', sans-serif;
+            line-height: 1.9;
+            margin: 0 0 26px;
         }
 
-        .controls-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 20px;
-            flex-wrap: wrap;
+        .admin-form {
+            display: grid;
+            gap: 16px;
         }
 
-        .search-wrapper {
-            position: relative;
-            flex: 1;
-            max-width: 400px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 15px 10px 40px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .search-input:focus {
-            border-color: var(--primary-color);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-action {
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: 0.3s;
-            border: none;
-            display: inline-flex;
-            align-items: center;
+        .admin-field {
+            display: grid;
             gap: 8px;
         }
 
-        .btn-csv {
-            background: var(--secondary-color);
-            color: white;
-        }
-
-        .btn-csv:hover {
-            background: var(--primary-color);
-        }
-
-        .customer-table-wrapper {
-            overflow-x: auto;
-            border: 1px solid #eee;
-            border-radius: 6px;
-        }
-
-        .customer-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
+        .admin-field label {
+            color: var(--admin-green);
             font-size: 0.9rem;
+            font-weight: 800;
         }
 
-        .customer-table th {
-            background: var(--bg-light);
-            color: #333;
+        .admin-field input,
+        .admin-field textarea,
+        .admin-field select {
+            width: 100%;
+            border: 1px solid var(--admin-line);
+            border-radius: 10px;
+            background: #fff;
+            color: var(--admin-ink);
+            font: inherit;
             font-weight: 700;
-            padding: 15px;
-            border-bottom: 2px solid #eee;
+            padding: 13px 14px;
         }
 
-        .customer-table td {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            color: #555;
-            vertical-align: top;
+        .admin-field textarea {
+            min-height: 112px;
+            resize: vertical;
+            line-height: 1.75;
         }
 
-        .customer-table tr:hover td {
-            background: #fafafa;
+        .admin-button {
+            appearance: none;
+            border: 1px solid var(--admin-green);
+            border-radius: 999px;
+            background: var(--admin-green);
+            color: #fff;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 900;
+            padding: 13px 22px;
+            text-decoration: none;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
         }
 
-        .badge-mode {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 15px;
+        .admin-button:hover {
+            box-shadow: 0 12px 24px rgba(20, 56, 36, 0.16);
+            transform: translateY(-1px);
         }
 
-        .form-message {
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-size: 0.85rem;
+        .admin-button.secondary {
+            background: #fff;
+            color: var(--admin-green);
+        }
+
+        .admin-button.subtle {
+            border-color: var(--admin-line);
+            background: #fff;
+            color: var(--admin-ink);
+            box-shadow: none;
+        }
+
+        .admin-button:disabled {
+            cursor: wait;
+            opacity: 0.65;
+            transform: none;
+        }
+
+        .admin-message {
+            display: none;
+            border-radius: 12px;
+            background: var(--admin-warn);
+            color: #5a4930;
+            font-weight: 800;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            padding: 14px 16px;
+        }
+
+        .admin-message.is-error {
+            background: #fff0ee;
+            color: #8a2c20;
+        }
+
+        .admin-message.is-success {
+            background: #eef9f1;
+            color: #1f6535;
+        }
+
+        .admin-dashboard {
             display: none;
         }
 
-        .form-message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
+        .admin-dashboard-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 22px;
         }
 
-        .form-message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        .admin-dashboard-head p {
+            margin: 0;
+        }
+
+        .admin-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .summary-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            padding: 20px;
+        }
+
+        .summary-card span {
+            color: var(--admin-muted);
             display: block;
+            font-size: 0.84rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .summary-card strong {
+            color: var(--admin-green);
+            display: block;
+            font-size: clamp(1.7rem, 3vw, 2.5rem);
+            line-height: 1;
+        }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+            gap: 18px;
+            align-items: start;
+        }
+
+        .admin-panel {
+            padding: 22px;
+        }
+
+        .admin-panel-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .admin-panel h2 {
+            color: var(--admin-green);
+            font-size: 1.35rem;
+            margin: 0;
+        }
+
+        .admin-search {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .admin-search input {
+            border: 1px solid var(--admin-line);
+            border-radius: 999px;
+            font: inherit;
+            font-weight: 700;
+            padding: 12px 16px;
+        }
+
+        .admin-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            border-bottom: 1px solid var(--admin-line);
+            padding: 13px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .admin-table th {
+            color: var(--admin-muted);
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .admin-table td {
+            color: var(--admin-ink);
+            font-size: 0.93rem;
+            font-weight: 700;
+            line-height: 1.55;
+        }
+
+        .customer-name {
+            color: var(--admin-green);
+            font-weight: 900;
+        }
+
+        .admin-pill {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            background: #eef3ed;
+            color: var(--admin-green);
+            font-size: 0.78rem;
+            font-weight: 900;
+            padding: 5px 10px;
+        }
+
+        .admin-pill.warn {
+            background: #fff4d8;
+            color: #7c5b1f;
+        }
+
+        .admin-pill.ok {
+            background: #e8f6ec;
+            color: #1e6b36;
+        }
+
+        .customer-detail {
+            position: sticky;
+            top: 20px;
+        }
+
+        .detail-empty {
+            color: var(--admin-muted);
+            font-weight: 800;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .detail-meta {
+            display: grid;
+            gap: 8px;
+            margin: 0 0 18px;
+        }
+
+        .detail-meta div {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            border-bottom: 1px solid var(--admin-line);
+            padding: 8px 0;
+            font-weight: 800;
+        }
+
+        .detail-meta dt,
+        .detail-meta dd {
+            margin: 0;
+        }
+
+        .detail-meta dt {
+            color: var(--admin-muted);
+        }
+
+        .detail-meta dd {
+            color: var(--admin-green);
+            text-align: right;
+        }
+
+        .order-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .order-mini {
+            border: 1px solid var(--admin-line);
+            border-radius: 12px;
+            background: #fff;
+            padding: 12px;
+        }
+
+        .order-mini strong {
+            color: var(--admin-green);
+            display: block;
+            font-size: 0.92rem;
+            margin-bottom: 4px;
+        }
+
+        .order-mini span {
+            color: var(--admin-muted);
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 800;
+            line-height: 1.6;
+        }
+
+        .admin-footnote {
+            color: var(--admin-muted);
+            font-size: 0.86rem;
+            font-weight: 800;
+            line-height: 1.8;
+            margin: 18px 0 0;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 980px) {
+            .summary-grid,
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .customer-detail {
+                position: static;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .admin-page {
+                padding: 20px 14px 40px;
+            }
+
+            .admin-top,
+            .admin-dashboard-head,
+            .admin-panel-head {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .admin-login,
+            .admin-panel {
+                padding: 22px;
+            }
+
+            .admin-search {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-brand img {
+                width: 78px;
+            }
         }
     </style>
 </head>
-
 <body>
+    <main class="admin-page">
+        <div class="admin-shell">
+            <header class="admin-top">
+                <a class="admin-brand" href="index.html" aria-label="Highlander トップへ">
+                    <img src="logo.png" alt="High Lander">
+                    <span class="admin-brand-text">
+                        <span>管理画面</span>
+                        <small>Net Shop / Customers</small>
+                    </span>
+                </a>
+                <button class="admin-button subtle" id="logout-button" type="button" hidden>ログアウト</button>
+            </header>
 
-    <header class="site-header scrolled">
-        <div class="header-container">
-            <div class="logo"><a href="index.html"><img src="logo.png" alt="Highlander Logo"></a></div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="brand.html">Brand</a></li>
-                    <li><a href="service.html">Service</a></li>
-                    <li><a href="custom.html">Custom</a></li>
-                    <li><a href="rental.html">Rental & Tour</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="access.html">Access</a></li>
-                    <li><a href="shop.html" class="nav-btn">オンラインショップ</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main class="page-content" style="padding-top: 100px; background: var(--bg-light); min-height: 85vh;">
-        <div class="container">
-
-            <!-- Loading View -->
-            <div id="view-loading" style="text-align: center; padding: 100px 0;">
-                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 15px;"></i>
-                <p>管理者認証を読み込み中...</p>
-            </div>
-
-            <!-- Login View -->
-            <div id="view-login" class="admin-login-box" style="display: none;">
-                <h2 style="text-align: center; margin-bottom: 25px; font-family: 'Zen Old Mincho', serif; color: var(--primary-color);">管理者ログイン</h2>
-                <div id="login-message" class="form-message"></div>
-                <form id="form-login">
-                    <div class="form-group">
-                        <label for="login-email">管理者メールアドレス</label>
-                        <input type="email" id="login-email" required placeholder="info@high-lander2.com">
+            <section class="admin-card admin-login" id="login-view">
+                <h1>管理者ログイン</h1>
+                <p class="admin-lead">
+                    ネットショップの注文履歴と顧客情報を確認するための管理者専用ページです。
+                    Google会員ログインとは別の入口です。
+                </p>
+                <div class="admin-message" id="login-message"></div>
+                <form class="admin-form" id="login-form">
+                    <div class="admin-field">
+                        <label for="admin-password">管理者パスワード</label>
+                        <input id="admin-password" name="password" type="password" autocomplete="current-password" required>
                     </div>
-                    <div class="form-group">
-                        <label for="login-password">パスワード</label>
-                        <input type="password" id="login-password" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn-submit" style="margin-top: 15px;">ログイン</button>
+                    <button class="admin-button" type="submit">管理画面に入る</button>
                 </form>
-            </div>
+                <p class="admin-footnote">
+                    顧客情報はサーバー側の管理者セッションが確認できた場合だけ読み込みます。
+                </p>
+            </section>
 
-            <!-- Dashboard View -->
-            <div id="view-dashboard" class="admin-dashboard" style="display: none;">
-                <div class="admin-header">
-                    <div style="display: flex; flex-direction: column;">
-                        <h1>顧客情報管理ダッシュボード</h1>
-                        <span id="badge-environment"></span>
+            <section class="admin-dashboard" id="dashboard-view" aria-live="polite">
+                <div class="admin-dashboard-head">
+                    <div>
+                        <h1>顧客・注文管理</h1>
+                        <p class="admin-lead">
+                            Googleログインで購入したお客様の注文履歴、配送先、顧客管理v2への紐づけ状況を確認します。
+                        </p>
                     </div>
-                    <button class="logout-btn" onclick="window.handleLogout()">ログアウト</button>
+                    <button class="admin-button secondary" type="button" id="refresh-button">更新する</button>
                 </div>
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-card-title">登録顧客数</div>
-                        <div class="stat-card-value" id="stats-total-users">0 名</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-title">管理者アカウント</div>
-                        <div style="font-weight: 500; font-size: 1rem; color: #444; margin-top: 5px;" id="admin-user-display">-</div>
-                    </div>
+                <div class="admin-message" id="dashboard-message"></div>
+
+                <div class="admin-grid summary-grid" id="summary-grid">
+                    <article class="admin-card summary-card">
+                        <span>顧客数</span>
+                        <strong id="summary-customers">-</strong>
+                    </article>
+                    <article class="admin-card summary-card">
+                        <span>注文数</span>
+                        <strong id="summary-orders">-</strong>
+                    </article>
+                    <article class="admin-card summary-card">
+                        <span>支払い済み目安</span>
+                        <strong id="summary-paid">-</strong>
+                    </article>
+                    <article class="admin-card summary-card">
+                        <span>売上目安</span>
+                        <strong id="summary-sales">-</strong>
+                    </article>
                 </div>
 
-                <div class="controls-row">
-                    <div class="search-wrapper">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="search-box" class="search-input" placeholder="お名前、メール、住所、電話番号で検索...">
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn-action btn-csv" onclick="window.downloadCSV()">
-                            <i class="fas fa-file-csv"></i> CSV出力 (Excel対応)
-                        </button>
-                    </div>
-                </div>
+                <div class="admin-layout">
+                    <section class="admin-card admin-panel">
+                        <div class="admin-panel-head">
+                            <h2>顧客一覧</h2>
+                            <span class="admin-pill" id="customer-count">読み込み中</span>
+                        </div>
+                        <form class="admin-search" id="customer-search-form">
+                            <input id="customer-search" type="search" placeholder="名前・メール・電話番号で検索">
+                            <button class="admin-button secondary" type="submit">検索</button>
+                        </form>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>お客様</th>
+                                        <th>連絡先</th>
+                                        <th>注文</th>
+                                        <th>顧客管理</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customers-body">
+                                    <tr><td colspan="5">読み込み中です。</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                <div class="customer-table-wrapper">
-                    <table class="customer-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 150px;">登録日時</th>
-                                <th style="width: 150px;">お名前</th>
-                                <th style="width: 200px;">メールアドレス</th>
-                                <th style="width: 130px;">電話番号</th>
-                                <th>配送先住所</th>
-                            </tr>
-                        </thead>
-                        <tbody id="customer-list-body">
-                            <!-- Customers row will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        <div class="admin-panel-head" style="margin-top: 26px;">
+                            <h2>最近の注文</h2>
+                            <span class="admin-pill" id="order-count">読み込み中</span>
+                        </div>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>注文ID</th>
+                                        <th>お客様</th>
+                                        <th>金額</th>
+                                        <th>支払い</th>
+                                        <th>日時</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orders-body">
+                                    <tr><td colspan="5">読み込み中です。</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
 
+                    <aside class="admin-card admin-panel customer-detail">
+                        <div class="admin-panel-head">
+                            <h2>顧客詳細</h2>
+                            <span class="admin-pill warn" id="detail-status">未選択</span>
+                        </div>
+
+                        <p class="detail-empty" id="detail-empty">
+                            顧客一覧から「管理」を押すと、配送先・電話番号・顧客管理v2への紐づけメモを編集できます。
+                        </p>
+
+                        <div id="detail-content" hidden>
+                            <dl class="detail-meta">
+                                <div>
+                                    <dt>Google UID</dt>
+                                    <dd id="detail-uid">-</dd>
+                                </div>
+                                <div>
+                                    <dt>最終注文</dt>
+                                    <dd id="detail-last-order">-</dd>
+                                </div>
+                                <div>
+                                    <dt>注文合計</dt>
+                                    <dd id="detail-total">-</dd>
+                                </div>
+                            </dl>
+
+                            <form class="admin-form" id="customer-form">
+                                <input type="hidden" id="customer-id">
+                                <div class="admin-field">
+                                    <label for="customer-name">お名前</label>
+                                    <input id="customer-name" type="text" autocomplete="off">
+                                </div>
+                                <div class="admin-field">
+                                    <label for="customer-email">メールアドレス</label>
+                                    <input id="customer-email" type="email" disabled>
+                                </div>
+                                <div class="admin-field">
+                                    <label for="customer-phone">電話番号</label>
+                                    <input id="customer-phone" type="tel" autocomplete="off">
+                                </div>
+                                <div class="admin-field">
+                                    <label for="customer-address">配送先住所</label>
+                                    <textarea id="customer-address"></textarea>
+                                </div>
+                                <div class="admin-field">
+                                    <label for="crm-status">顧客管理v2 連携状態</label>
+                                    <select id="crm-status">
+                                        <option value="unlinked">未連携</option>
+                                        <option value="reviewing">確認中</option>
+                                        <option value="linked">連携済み</option>
+                                        <option value="hold">保留</option>
+                                    </select>
+                                </div>
+                                <div class="admin-field">
+                                    <label for="hublink-id">顧客管理ID / HubLink ID</label>
+                                    <input id="hublink-id" type="text" autocomplete="off" placeholder="手動で紐づけたIDがあれば入力">
+                                </div>
+                                <div class="admin-field">
+                                    <label for="admin-note">管理メモ</label>
+                                    <textarea id="admin-note" placeholder="注文履歴スクショからAI取り込みした内容、確認事項など"></textarea>
+                                </div>
+                                <button class="admin-button" type="submit">顧客情報を保存</button>
+                            </form>
+
+                            <div class="order-list" id="detail-orders"></div>
+                        </div>
+                    </aside>
+                </div>
+            </section>
         </div>
     </main>
 
-    <footer class="site-footer">
-        <p>&copy; 2026 Highlander Bicycle Shop (Admin Console)</p>
-    </footer>
-
-    <script src="app-config.js"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-        // Admin Email restriction configuration
-        const ADMIN_EMAIL = 'info@high-lander2.com';
-
-        let auth = null;
-        let db = null;
-        let customerData = []; // Store fetched customer list for filtering and CSV exports
-
-        // Initialize Firebase
-        const isMockMode = (typeof FIREBASE_API_KEY === 'undefined' || !FIREBASE_API_KEY || FIREBASE_API_KEY === '${FIREBASE_API_KEY}');
-        
-        if (!isMockMode) {
-            const firebaseConfig = {
-                apiKey: FIREBASE_API_KEY,
-                authDomain: FIREBASE_AUTH_DOMAIN,
-                projectId: FIREBASE_PROJECT_ID,
-                storageBucket: FIREBASE_STORAGE_BUCKET,
-                messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-                appId: FIREBASE_APP_ID
-            };
-            const app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            try {
-                db = getFirestore(app);
-            } catch(e) {
-                console.error("Firestore Init Error", e);
-            }
-        }
-
-        window.handleLogout = async () => {
-            if (isMockMode) {
-                localStorage.setItem('adminLoggedIn', 'false');
-                showLoginView();
-                return;
-            }
-            try {
-                await signOut(auth);
-            } catch (e) {
-                console.error("Logout Error", e);
-            }
+    <script>
+        const API_URL = 'api/admin-shop.php';
+        const state = {
+            customers: [],
+            selectedCustomerId: null
         };
 
-        // Form Login Submit
-        document.getElementById('form-login').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            document.getElementById('login-message').style.display = 'none';
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+        const $ = (id) => document.getElementById(id);
 
-            if (isMockMode) {
-                if (email === ADMIN_EMAIL && password === 'admin123') {
-                    localStorage.setItem('adminLoggedIn', 'true');
-                    alert('【テスト環境通知】\nFirebase設定なしのため、デモ管理者ログインに成功しました。\n(ID: info@high-lander2.com / Pass: admin123)');
-                    loadDashboard();
-                } else {
-                    showError('ログインに失敗しました。テストID: info@high-lander2.com / パスワード: admin123 です。');
-                }
-                return;
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function formatYen(value) {
+            const number = Number(value || 0);
+            return '¥' + number.toLocaleString('ja-JP');
+        }
+
+        function formatDate(value) {
+            if (!value) return '-';
+            const date = new Date(String(value).replace(' ', 'T'));
+            if (Number.isNaN(date.getTime())) return value;
+            return date.toLocaleString('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function statusLabel(value) {
+            const labels = {
+                unlinked: '未連携',
+                reviewing: '確認中',
+                linked: '連携済み',
+                hold: '保留'
+            };
+            return labels[value] || '未連携';
+        }
+
+        function showMessage(targetId, text, type = '') {
+            const target = $(targetId);
+            target.textContent = text;
+            target.className = 'admin-message' + (type ? ` is-${type}` : '');
+            target.style.display = text ? 'block' : 'none';
+        }
+
+        async function requestAdmin(action, options = {}) {
+            const actionParts = String(action).split('&');
+            const actionName = actionParts.shift();
+            const query = actionParts.length ? '&' + actionParts.join('&') : '';
+            const response = await fetch(`${API_URL}?action=${encodeURIComponent(actionName)}${query}`, {
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(options.headers || {})
+                },
+                ...options
+            });
+
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.ok === false) {
+                const message = data.message || data.error || '処理に失敗しました。';
+                throw new Error(message);
             }
+            return data;
+        }
 
-            if (email !== ADMIN_EMAIL) {
-                showError('管理者アカウントではないため、アクセス権限がありません。');
-                return;
-            }
+        function setAuthenticated(authenticated) {
+            $('login-view').style.display = authenticated ? 'none' : 'block';
+            $('dashboard-view').style.display = authenticated ? 'block' : 'none';
+            $('logout-button').hidden = !authenticated;
+        }
 
+        async function checkSession() {
             try {
-                await signInWithEmailAndPassword(auth, email, password);
-                // Dashboard will load automatically in AuthStateChanged
+                const data = await requestAdmin('session');
+                setAuthenticated(Boolean(data.authenticated));
+                if (data.authenticated) await loadDashboard();
             } catch (error) {
-                showError('ログインに失敗しました: IDまたはパスワードが正しくありません。');
+                setAuthenticated(false);
             }
-        });
-
-        // Initialize View State
-        if (isMockMode) {
-            console.log("Running Admin Portal in Mock Mode (Firebase configurations missing).");
-            const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
-            if (isLoggedIn) {
-                loadDashboard();
-            } else {
-                showLoginView();
-            }
-        } else {
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    if (user.email === ADMIN_EMAIL) {
-                        document.getElementById('admin-user-display').textContent = user.email;
-                        await loadDashboard();
-                    } else {
-                        showError('このアカウントには管理者権限がありません。アクセスを拒否しました。');
-                        await signOut(auth);
-                        showLoginView();
-                    }
-                } else {
-                    showLoginView();
-                }
-            });
         }
 
-        // Dashboard Data Loading
         async function loadDashboard() {
-            document.getElementById('view-loading').style.display = 'block';
-            document.getElementById('view-login').style.display = 'none';
-            document.getElementById('view-dashboard').style.display = 'none';
+            showMessage('dashboard-message', '');
+            try {
+                const [summary, customers, orders] = await Promise.all([
+                    requestAdmin('summary'),
+                    requestAdmin('customers'),
+                    requestAdmin('orders')
+                ]);
 
-            // Set Admin Email Display
-            document.getElementById('admin-user-display').textContent = ADMIN_EMAIL;
-
-            if (isMockMode) {
-                document.getElementById('badge-environment').innerHTML = '<span class="badge-mode"><i class="fas fa-exclamation-triangle"></i> デモ環境（ダミーデータ表示中）</span>';
-                // Load Dummy Data
-                customerData = getDummyCustomers();
-            } else {
-                document.getElementById('badge-environment').innerHTML = '<span class="badge-mode" style="background:#e8f5e9; color:#2e7d32; border-color:#c8e6c9;"><i class="fas fa-shield-alt"></i> 本番環境（Firestore連携中）</span>';
-                try {
-                    customerData = await fetchFirestoreCustomers();
-                } catch (e) {
-                    console.error("Firestore Fetch Failed", e);
-                    alert("Firestoreからの顧客情報取得に失敗しました。権限・ルールを確認してください。\nダミーデータを表示します。");
-                    customerData = getDummyCustomers();
-                }
+                renderSummary(summary.summary || {});
+                renderCustomers(customers.customers || []);
+                renderOrders(orders.orders || []);
+            } catch (error) {
+                showMessage('dashboard-message', error.message, 'error');
             }
-
-            renderCustomers(customerData);
-            
-            document.getElementById('view-loading').style.display = 'none';
-            document.getElementById('view-dashboard').style.display = 'block';
         }
 
-        // Firestore Fetching
-        async function fetchFirestoreCustomers() {
-            if (!db) throw new Error("Firestore is not initialized.");
-            const querySnapshot = await getDocs(collection(db, "users"));
-            const list = [];
-            querySnapshot.forEach((docSnap) => {
-                const data = docSnap.data();
-                list.push({
-                    date: data.updatedAt ? formatDate(data.updatedAt) : '不明',
-                    name: data.name || '名前なし',
-                    email: data.email || 'メールなし',
-                    phone: data.phone || '電話番号なし',
-                    address: data.address || '住所登録なし'
-                });
-            });
-            // Sort by Date descending
-            return list.sort((a, b) => b.date.localeCompare(a.date));
+        function renderSummary(summary) {
+            $('summary-customers').textContent = Number(summary.customer_count || 0).toLocaleString('ja-JP');
+            $('summary-orders').textContent = Number(summary.order_count || 0).toLocaleString('ja-JP');
+            $('summary-paid').textContent = Number(summary.paid_order_count || 0).toLocaleString('ja-JP');
+            $('summary-sales').textContent = formatYen(summary.total_amount || 0);
         }
 
-        // Render Table Rows
-        function renderCustomers(list) {
-            const tableBody = document.getElementById('customer-list-body');
-            document.getElementById('stats-total-users').textContent = `${list.length} 名`;
-
-            if (list.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 40px; color:#888;">該当する登録顧客がいません。</td></tr>';
+        function renderCustomers(customers) {
+            state.customers = customers;
+            $('customer-count').textContent = `${customers.length}件`;
+            if (!customers.length) {
+                $('customers-body').innerHTML = '<tr><td colspan="5">顧客情報はまだありません。</td></tr>';
                 return;
             }
 
-            tableBody.innerHTML = list.map(user => `
+            $('customers-body').innerHTML = customers.map((customer) => {
+                const crmClass = customer.crm_link_status === 'linked' ? 'ok' : customer.crm_link_status === 'unlinked' ? 'warn' : '';
+                return `
+                    <tr>
+                        <td>
+                            <div class="customer-name">${escapeHtml(customer.name || 'お名前未入力')}</div>
+                            <div>${escapeHtml(customer.email || '')}</div>
+                        </td>
+                        <td>
+                            <div>${escapeHtml(customer.phone || '電話番号未入力')}</div>
+                            <div>${escapeHtml(customer.shipping_address || '').slice(0, 48)}</div>
+                        </td>
+                        <td>
+                            <div>${Number(customer.order_count || 0).toLocaleString('ja-JP')}件</div>
+                            <div>${formatYen(customer.total_amount || 0)}</div>
+                        </td>
+                        <td><span class="admin-pill ${crmClass}">${statusLabel(customer.crm_link_status)}</span></td>
+                        <td><button class="admin-button subtle" type="button" data-customer-id="${customer.id}">管理</button></td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.querySelectorAll('[data-customer-id]').forEach((button) => {
+                button.addEventListener('click', () => loadCustomerDetail(button.dataset.customerId));
+            });
+        }
+
+        function renderOrders(orders) {
+            $('order-count').textContent = `${orders.length}件`;
+            if (!orders.length) {
+                $('orders-body').innerHTML = '<tr><td colspan="5">注文履歴はまだありません。</td></tr>';
+                return;
+            }
+
+            $('orders-body').innerHTML = orders.map((order) => `
                 <tr>
-                    <td><strong>${user.date}</strong></td>
-                    <td><span style="font-weight: 700; color:#333;">${user.name}</span></td>
-                    <td><a href="mailto:${user.email}" style="color:var(--secondary-color);">${user.email}</a></td>
-                    <td><span style="font-family:\'Outfit\',sans-serif;">${user.phone}</span></td>
-                    <td style="line-height:1.6; max-width: 350px; white-space: pre-wrap;">${user.address}</td>
+                    <td>${escapeHtml(order.order_id)}</td>
+                    <td>
+                        <div class="customer-name">${escapeHtml(order.customer_name || 'お名前未入力')}</div>
+                        <div>${escapeHtml(order.customer_email || '')}</div>
+                    </td>
+                    <td>${formatYen(order.amount_total || 0)}</td>
+                    <td>${escapeHtml(order.payment_method || '-')} / ${escapeHtml(order.payment_status || order.status || '-')}</td>
+                    <td>${formatDate(order.created_at)}</td>
                 </tr>
             `).join('');
         }
 
-        // Search Filter
-        document.getElementById('search-box').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            if (!query) {
-                renderCustomers(customerData);
-                return;
+        async function loadCustomerDetail(customerId) {
+            showMessage('dashboard-message', '');
+            try {
+                const data = await requestAdmin(`customer&id=${encodeURIComponent(customerId)}`);
+                renderCustomerDetail(data.customer, data.orders || []);
+            } catch (error) {
+                showMessage('dashboard-message', error.message, 'error');
             }
-            const filtered = customerData.filter(user => 
-                user.name.toLowerCase().includes(query) ||
-                user.email.toLowerCase().includes(query) ||
-                user.phone.toLowerCase().includes(query) ||
-                user.address.toLowerCase().includes(query)
-            );
-            renderCustomers(filtered);
+        }
+
+        function renderCustomerDetail(customer, orders) {
+            state.selectedCustomerId = customer.id;
+            $('detail-empty').hidden = true;
+            $('detail-content').hidden = false;
+            $('detail-status').textContent = statusLabel(customer.crm_link_status);
+            $('detail-status').className = `admin-pill ${customer.crm_link_status === 'linked' ? 'ok' : 'warn'}`;
+            $('detail-uid').textContent = customer.google_uid || '-';
+            $('detail-last-order').textContent = formatDate(customer.last_order_at);
+            $('detail-total').textContent = formatYen(customer.total_amount || 0);
+            $('customer-id').value = customer.id;
+            $('customer-name').value = customer.name || '';
+            $('customer-email').value = customer.email || '';
+            $('customer-phone').value = customer.phone || '';
+            $('customer-address').value = customer.shipping_address || '';
+            $('crm-status').value = customer.crm_link_status || 'unlinked';
+            $('hublink-id').value = customer.hublink_customer_id || '';
+            $('admin-note').value = customer.admin_note || '';
+
+            $('detail-orders').innerHTML = orders.length
+                ? orders.map((order) => `
+                    <article class="order-mini">
+                        <strong>${escapeHtml(order.order_id)} / ${formatYen(order.amount_total || 0)}</strong>
+                        <span>${escapeHtml(order.payment_method || '-')} / ${escapeHtml(order.payment_status || order.status || '-')}</span>
+                        <span>${formatDate(order.created_at)}</span>
+                    </article>
+                `).join('')
+                : '<p class="detail-empty">このお客様の注文履歴はまだありません。</p>';
+        }
+
+        $('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const button = event.submitter;
+            button.disabled = true;
+            showMessage('login-message', '');
+
+            try {
+                await requestAdmin('login', {
+                    method: 'POST',
+                    body: JSON.stringify({ password: $('admin-password').value })
+                });
+                $('admin-password').value = '';
+                setAuthenticated(true);
+                await loadDashboard();
+            } catch (error) {
+                showMessage('login-message', error.message, 'error');
+            } finally {
+                button.disabled = false;
+            }
         });
 
-        // CSV Downloader
-        window.downloadCSV = () => {
-            if (customerData.length === 0) {
-                alert("エクスポートするデータがありません。");
-                return;
-            }
+        $('logout-button').addEventListener('click', async () => {
+            await requestAdmin('logout', { method: 'POST', body: '{}' }).catch(() => {});
+            setAuthenticated(false);
+            showMessage('login-message', 'ログアウトしました。', 'success');
+        });
 
-            // CSV Header
-            let csvContent = "\uFEFF"; // Add BOM for Excel UTF-8 support
-            csvContent += "登録日時,お名前,メールアドレス,電話番号,配送先住所\r\n";
+        $('refresh-button').addEventListener('click', loadDashboard);
 
-            // Add rows
-            customerData.forEach(user => {
-                // Escape double quotes and wrap in quotes for CSV security
-                const name = `"${user.name.replace(/"/g, '""')}"`;
-                const email = `"${user.email.replace(/"/g, '""')}"`;
-                const phone = `"${user.phone.replace(/"/g, '""')}"`;
-                const address = `"${user.address.replace(/"/g, '""')}"`;
-                const date = `"${user.date.replace(/"/g, '""')}"`;
-
-                csvContent += `${date},${name},${email},${phone},${address}\r\n`;
-            });
-
-            // Trigger download
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            
-            const now = new Date();
-            const dateString = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-            link.setAttribute("download", `highlander_customers_${dateString}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        };
-
-        // UI View Toggling helper
-        function showLoginView() {
-            document.getElementById('view-loading').style.display = 'none';
-            document.getElementById('view-dashboard').style.display = 'none';
-            document.getElementById('view-login').style.display = 'block';
-        }
-
-        function showError(text) {
-            const container = document.getElementById('login-message');
-            container.className = 'form-message error';
-            container.textContent = text;
-        }
-
-        // Date formatter
-        function formatDate(isoString) {
+        $('customer-search-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const q = $('customer-search').value.trim();
             try {
-                const d = new Date(isoString);
-                return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-            } catch(e) {
-                return isoString;
+                const data = await requestAdmin(`customers&q=${encodeURIComponent(q)}`);
+                renderCustomers(data.customers || []);
+            } catch (error) {
+                showMessage('dashboard-message', error.message, 'error');
             }
-        }
+        });
 
-        // Mock Dummy Database
-        function getDummyCustomers() {
-            return [
-                {
-                    date: "2026.06.09 14:23",
-                    name: "山田 太郎",
-                    email: "yamada.taro@example.com",
-                    phone: "090-1234-5678",
-                    address: "兵庫県丹波篠山市味間南558-3"
-                },
-                {
-                    date: "2026.06.08 19:45",
-                    name: "佐藤 恵美",
-                    email: "sato.emi@example.net",
-                    phone: "080-9876-5432",
-                    address: "大阪府大阪市中央区大手前1-1-1"
-                },
-                {
-                    date: "2026.06.05 10:12",
-                    name: "田中 健一",
-                    email: "tanaka.k@example.org",
-                    phone: "090-5555-4444",
-                    address: "京都府京都市中京区烏丸通二条下ル秋野々町518"
-                },
-                {
-                    date: "2026.06.02 08:30",
-                    name: "鈴木 一郎",
-                    email: "suzuki.ichiro@example.com",
-                    phone: "070-1111-2222",
-                    address: "東京都新宿区西新宿2-8-1"
-                }
-            ];
-        }
+        $('customer-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const button = event.submitter;
+            button.disabled = true;
+            showMessage('dashboard-message', '');
+
+            try {
+                await requestAdmin('update_customer', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        id: $('customer-id').value,
+                        name: $('customer-name').value,
+                        phone: $('customer-phone').value,
+                        shipping_address: $('customer-address').value,
+                        crm_link_status: $('crm-status').value,
+                        hublink_customer_id: $('hublink-id').value,
+                        admin_note: $('admin-note').value
+                    })
+                });
+                showMessage('dashboard-message', '顧客情報を保存しました。', 'success');
+                await loadDashboard();
+                if (state.selectedCustomerId) await loadCustomerDetail(state.selectedCustomerId);
+            } catch (error) {
+                showMessage('dashboard-message', error.message, 'error');
+            } finally {
+                button.disabled = false;
+            }
+        });
+
+        checkSession();
     </script>
 </body>
-
 </html>
