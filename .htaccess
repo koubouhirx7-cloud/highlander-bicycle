@@ -52,7 +52,7 @@ RewriteRule ^api/microcms-logs$ api/microcms-logs.php [L,QSA]
 
 # Security: block public web access to server-side helpers and secrets.
 RewriteRule ^includes/ - [F,L]
-RewriteRule ^(\.git|node_modules|scripts|docs|content|tmp|output|storage)/ - [F,L]
+RewriteRule ^(\.git|\.agents|node_modules|scripts|docs|content|tmp|output|storage)/ - [F,L]
 
 <Files .env>
     Require all denied
@@ -63,6 +63,10 @@ RewriteRule ^(\.git|node_modules|scripts|docs|content|tmp|output|storage)/ - [F,
 </FilesMatch>
 
 <FilesMatch "\.(log|json|sh|lock)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^(server\.js|package\.json|package-lock\.json|.*\.md)$">
     Require all denied
 </FilesMatch>
 
