@@ -4,6 +4,9 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 
+require_once dirname(__DIR__) . '/includes/env.php';
+require_once dirname(__DIR__) . '/includes/order-storage.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
@@ -12,16 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(["error" => "Method Not Allowed"]);
-    exit;
-}
-
-$token = getEnvValue('HUBLINK_SHOP_TOKEN');
-$tenantId = getEnvValue('HUBLINK_TENANT_ID') ?: '1';
-$endpoint = getEnvValue('HUBLINK_INGEST_URL') ?: 'https://hub-link.jp/api/shop_order.php';
-
-if (!$token) {
-    error_log('HUBLINK_SHOP_TOKEN is not set. Skipping CRM ingest.');
-    echo json_encode(["ok" => false, "skipped" => true]);
     exit;
 }
 
@@ -34,13 +27,32 @@ if (!is_array($data)) {
     exit;
 }
 
+$order = highlander_build_shop_order_from_payload($data);
+$saved = highlander_save_order($order);
+
+$token = highlander_env('HUBLINK_SHOP_TOKEN');
+$tenantId = highlander_env('HUBLINK_TENANT_ID') ?: '1';
+$endpoint = highlander_env('HUBLINK_INGEST_URL') ?: 'https://hub-link.jp/api/shop_order.php';
+
+if (!$token) {
+    error_log('HUBLINK_SHOP_TOKEN is not set. Saved order and skipped CRM ingest.');
+    echo json_encode([
+        "ok" => true,
+        "saved" => $saved,
+        "order_id" => $order['order_id'],
+        "hublink" => ["ok" => false, "skipped" => true],
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 $payload = [
     "tenant_id" => $tenantId,
-    "order_id" => isset($data['order_id']) ? $data['order_id'] : null,
-    "customer" => isset($data['customer']) ? $data['customer'] : null,
-    "items" => isset($data['items']) ? $data['items'] : [],
-    "payment_method" => isset($data['payment_method']) ? $data['payment_method'] : null,
-    "payment_status" => isset($data['payment_status']) ? $data['payment_status'] : null,
+    "order_id" => $order['order_id'],
+    "customer" => $order['customer'],
+    "items" => $order['items'],
+    "amount_total" => $order['amount_total'],
+    "payment_method" => $order['payment_method'],
+    "payment_status" => $order['payment_status'],
 ];
 
 $ch = curl_init($endpoint);
@@ -63,45 +75,92 @@ if (PHP_VERSION_ID < 80500) {
 
 if ($response === false) {
     error_log('HubLink ingest failed: ' . $error);
-    echo json_encode(["ok" => false, "error" => "ingest_failed"]);
+    $hublinkResult = ["ok" => false, "error" => "ingest_failed"];
+    highlander_update_order($order['order_id'], ["hublink_result" => $hublinkResult]);
+    echo json_encode([
+        "ok" => true,
+        "saved" => $saved,
+        "order_id" => $order['order_id'],
+        "hublink" => $hublinkResult,
+    ], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
 $decoded = json_decode($response, true);
-echo json_encode([
+$hublinkResult = [
     "ok" => $httpCode >= 200 && $httpCode < 300,
-    "hublink" => is_array($decoded) ? $decoded : ["raw" => $response],
-]);
+    "status" => $httpCode,
+    "body" => is_array($decoded) ? $decoded : $response,
+];
+highlander_update_order($order['order_id'], ["hublink_result" => $hublinkResult]);
 
-function getEnvValue($key) {
-    if (isset($_ENV[$key]) && $_ENV[$key] !== '') return $_ENV[$key];
-    if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return $_SERVER[$key];
-    $value = getenv($key);
-    if ($value !== false && $value !== '') return $value;
+echo json_encode([
+    "ok" => true,
+    "saved" => $saved,
+    "order_id" => $order['order_id'],
+    "hublink" => $hublinkResult,
+], JSON_UNESCAPED_UNICODE);
 
-    $paths = [
-        dirname(__DIR__) . '/.env',
-        dirname(__DIR__, 2) . '/.env',
+function highlander_build_shop_order_from_payload($data) {
+    $orderId = isset($data['order_id']) ? highlander_sanitize_order_id($data['order_id']) : '';
+    if ($orderId === '') $orderId = highlander_generate_order_id();
+
+    $items = highlander_normalize_payload_items(isset($data['items']) ? $data['items'] : []);
+    $amountTotal = array_reduce($items, function ($sum, $item) {
+        return $sum + intval($item['subtotal']);
+    }, 0);
+
+    $paymentMethod = preg_replace('/[^A-Za-z0-9_-]/', '', (string)($data['payment_method'] ?? 'manual'));
+    $paymentStatus = preg_replace('/[^A-Za-z0-9_-]/', '', (string)($data['payment_status'] ?? 'pending'));
+
+    return [
+        "order_id" => $orderId,
+        "customer" => highlander_normalize_payload_customer(isset($data['customer']) ? $data['customer'] : []),
+        "items" => $items,
+        "amount_total" => $amountTotal,
+        "currency" => "jpy",
+        "payment_method" => $paymentMethod,
+        "payment_status" => $paymentStatus,
+        "status" => $paymentStatus,
+        "source" => "highlander_shop",
     ];
+}
 
-    foreach ($paths as $envPath) {
-        if (!file_exists($envPath)) continue;
-        $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if ($line === '' || strpos($line, '#') === 0 || strpos($line, '=') === false) continue;
+function highlander_normalize_payload_customer($customer) {
+    if (!is_array($customer)) $customer = [];
+    return [
+        "name" => trim((string)($customer['name'] ?? '')),
+        "email" => trim((string)($customer['email'] ?? '')),
+        "phone" => trim((string)($customer['phone'] ?? '')),
+        "address" => trim((string)($customer['address'] ?? '')),
+        "uid" => trim((string)($customer['uid'] ?? '')),
+        "member_logged_in" => !empty($customer['member_logged_in']),
+        "identity_provider" => trim((string)($customer['identity_provider'] ?? '')),
+        "delivery_profile_saved" => !empty($customer['delivery_profile_saved']),
+    ];
+}
 
-            list($name, $value) = explode('=', $line, 2);
-            if (trim($name) !== $key) continue;
+function highlander_normalize_payload_items($items) {
+    if (!is_array($items)) return [];
+    $normalized = [];
+    foreach ($items as $item) {
+        if (!is_array($item)) continue;
+        $id = preg_replace('/[^A-Za-z0-9_-]/', '', (string)($item['id'] ?? ''));
+        $name = trim((string)($item['name'] ?? '商品'));
+        $price = intval($item['price'] ?? 0);
+        $quantity = intval($item['quantity'] ?? 0);
+        if ($quantity <= 0) continue;
+        if ($quantity > 20) $quantity = 20;
+        if ($price < 0) $price = 0;
 
-            $value = trim($value);
-            if (preg_match('/^["\'](.*)["\']$/', $value, $matches)) {
-                $value = $matches[1];
-            }
-            return $value;
-        }
+        $normalized[] = [
+            "id" => $id,
+            "name" => $name,
+            "price" => $price,
+            "quantity" => $quantity,
+            "subtotal" => $price * $quantity,
+        ];
     }
-
-    return null;
+    return $normalized;
 }
 ?>

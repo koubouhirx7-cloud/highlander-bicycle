@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/shop-db.php';
+
 function highlander_order_storage_dir() {
     $dir = dirname(__DIR__) . '/storage/orders';
     if (!is_dir($dir)) {
@@ -29,20 +31,27 @@ function highlander_order_path($orderId) {
 
 function highlander_save_order($order) {
     if (!isset($order['order_id'])) return false;
-    $path = highlander_order_path($order['order_id']);
-    if (!$path) return false;
     $order['updated_at'] = date('c');
     if (!isset($order['created_at'])) {
         $order['created_at'] = date('c');
     }
-    return file_put_contents($path, json_encode($order, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX) !== false;
+
+    $dbSaved = highlander_db_save_order($order);
+
+    $path = highlander_order_path($order['order_id']);
+    if (!$path) return false;
+    $fileSaved = file_put_contents($path, json_encode($order, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX) !== false;
+    return $fileSaved || $dbSaved;
 }
 
 function highlander_load_order($orderId) {
     $path = highlander_order_path($orderId);
-    if (!$path || !is_file($path)) return null;
-    $decoded = json_decode(file_get_contents($path), true);
-    return is_array($decoded) ? $decoded : null;
+    if ($path && is_file($path)) {
+        $decoded = json_decode(file_get_contents($path), true);
+        if (is_array($decoded)) return $decoded;
+    }
+
+    return highlander_db_load_order(highlander_sanitize_order_id($orderId));
 }
 
 function highlander_update_order($orderId, $changes) {
